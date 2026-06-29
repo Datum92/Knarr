@@ -772,18 +772,23 @@ function aiCheckGoldBracelet(color) {
 // ─── UI RENDERING ─────────────────────────────────────────────────────
 function updateUI() {
   if(!G) return;
-  renderPanel('human');
-  renderPanel('computer');
-  renderCrewMarket();
-  renderDestMarket();
-  updateDeckBadges();
-  updateRoundLabel();
+  try {
+    renderPanel('human');
+    renderPanel('computer');
+    renderCrewMarket();
+    renderDestMarket();
+    updateDeckBadges();
+    updateRoundLabel();
 
-  // Active panel
-  document.querySelector('.side-panel--human').classList.toggle('my-turn', G.activePlayer==='human');
-  document.querySelector('.side-panel--opp').classList.toggle('opp-turn', G.activePlayer==='computer');
-  showHide('human-turn-badge', G.activePlayer==='human');
-  showHide('opp-turn-badge', G.activePlayer==='computer');
+    // Active panel
+    document.querySelector('.side-panel--human').classList.toggle('my-turn', G.activePlayer==='human');
+    document.querySelector('.side-panel--opp').classList.toggle('opp-turn', G.activePlayer==='computer');
+    showHide('human-turn-badge', G.activePlayer==='human');
+    showHide('opp-turn-badge', G.activePlayer==='computer');
+  } catch (err) {
+    console.error("UI Render Error:", err);
+    addLog(`⚠️ 畫面渲染錯誤: ${err.message}`, 'bad');
+  }
 }
 
 function renderPanel(pid) {

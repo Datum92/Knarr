@@ -327,11 +327,11 @@ img{display:block}
 }
 .crew-mkt-card img{width:100%;height:100%;object-fit:contain;display:block}
 .crew-mkt-card:hover{transform:translateY(-8px) scale(1.06);box-shadow:0 14px 32px rgba(0,0,0,.55);z-index:5}
-.crew-mkt-card.cblue{border-color:rgba(138,180,248,.55)}
-.crew-mkt-card.cyellow{border-color:rgba(255,215,0,.55)}
-.crew-mkt-card.cgreen{border-color:rgba(134,239,172,.55)}
-.crew-mkt-card.cred{border-color:rgba(252,165,165,.55)}
-.crew-mkt-card.cpurple{border-color:rgba(216,180,254,.55)}
+.crew-mkt-card.crew-slot-blue{border-color:rgba(138,180,248,.55)}
+.crew-mkt-card.crew-slot-yellow{border-color:rgba(255,215,0,.55)}
+.crew-mkt-card.crew-slot-green{border-color:rgba(134,239,172,.55)}
+.crew-mkt-card.crew-slot-red{border-color:rgba(252,165,165,.55)}
+.crew-mkt-card.crew-slot-purple{border-color:rgba(216,180,254,.55)}
 /* Remove old top badge; slot badge now at BOTTOM */
 .crew-mkt-card .cmc-color-badge{display:none}
 /* Fixed slot badge at BOTTOM — matches game board */
