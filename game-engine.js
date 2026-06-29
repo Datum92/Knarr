@@ -1263,6 +1263,14 @@ function renderShipTile(prefix, tileId) {
     d.innerHTML = `<div class="stcol-lbl">${lbl}</div><div class="stcol-icons">${col.map(r=>`<span title="${ICONS[r]?.label}">${ICONS[r]?.sym||r}</span>`).join('')}</div>`;
     el.appendChild(d);
   });
+
+  // Render the ship plate background image
+  const imgEl = document.getElementById(`${prefix}-ship-img`);
+  if(imgEl) {
+    const m = tileId.match(/side_\d+/);
+    const sideNum = m ? m[0] : 'side_001';
+    imgEl.src = `component_images/knarr_core_ship_tile_${sideNum}.png`;
+  }
 }
 
 function renderRepTrack(prefix, rep) {

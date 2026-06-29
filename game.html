@@ -6,7 +6,7 @@
   <title>Knarr — 維京航海桌遊</title>
   <meta name="description" content="Knarr 維京航海策略桌遊網頁版">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="game.css?v=4">
+  <link rel="stylesheet" href="game.css?v=5">
 </head>
 <body>
 
@@ -114,6 +114,10 @@
       <!-- 對手船隻板塊 + 目的地 (combined) -->
       <div class="ship-dest-combined" id="opp-ship-block">
         <div class="block-title">⛵ 船隻板塊 <span class="dest-count-badge">(目的地 <span id="opp-dest-count">0</span>)</span></div>
+        <!-- Ship tile image background -->
+        <div class="ship-tile-image-wrapper">
+          <img id="opp-ship-img" src="" alt="船隻板塊" class="ship-tile-img">
+        </div>
         <div class="ship-trade-cols" id="opp-trade-cols"></div>
         <!-- All destinations stacked on ship tile -->
         <div class="dest-stack-area" id="opp-destinations"></div>
@@ -260,6 +264,10 @@
       <!-- 玩家船隻板塊 + 目的地 (combined) -->
       <div class="ship-dest-combined" id="human-ship-block">
         <div class="block-title">⛵ 船隻板塊 <span class="dest-count-badge">(目的地 <span id="human-dest-count">0</span>)</span></div>
+        <!-- Ship tile image background -->
+        <div class="ship-tile-image-wrapper">
+          <img id="human-ship-img" src="" alt="船隻板塊" class="ship-tile-img">
+        </div>
         <!-- Ship tile trade column icons -->
         <div class="ship-trade-cols" id="human-trade-cols"></div>
         <!-- All destination cards stacked here (overlaid on ship tile area) -->
@@ -345,8 +353,8 @@
 <!-- Toast -->
 <div id="toast" class="toast hidden"></div>
 
-<script src="game-data.js?v=4"></script>
-<script src="game-engine.js?v=4"></script>
+<script src="game-data.js?v=5"></script>
+<script src="game-engine.js?v=5"></script>
 <script>
 // Bootstrap: load JSON data then init UI
 document.addEventListener('DOMContentLoaded', async () => {
