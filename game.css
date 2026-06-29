@@ -204,14 +204,15 @@ img{display:block}
 .hand-block{flex-shrink:0}
 .hand-cards-row{display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;padding-bottom:4px}
 
-/* Big hand card — 2x size */
+/* Big hand card — 2x size, no crop */
 .hand-card{
-  width:136px;height:192px;border-radius:8px;overflow:hidden;
+  width:136px;aspect-ratio:63/88;border-radius:8px;overflow:hidden;
   border:2px solid rgba(201,162,39,.25);cursor:pointer;
   transition:all .22s ease;position:relative;flex-shrink:0;
   box-shadow:0 3px 8px rgba(0,0,0,.4);
+  background:rgba(10,12,22,.9);
 }
-.hand-card img{width:100%;height:100%;object-fit:cover}
+.hand-card img{width:100%;height:100%;object-fit:contain;display:block}
 .hand-card:hover{transform:translateY(-10px) scale(1.05);border-color:var(--gold);box-shadow:0 12px 28px rgba(0,0,0,.5),0 0 18px rgba(201,162,39,.35);z-index:20}
 .hand-card.mode-recruit:hover{border-color:var(--teal);box-shadow:0 12px 28px rgba(0,0,0,.5),0 0 18px rgba(42,157,157,.5)}
 .hand-card.mode-explore-pay:hover{border-color:#a855f7;box-shadow:0 12px 28px rgba(0,0,0,.5),0 0 18px rgba(168,85,247,.4)}
@@ -274,11 +275,13 @@ img{display:block}
 .trade-post-label{color:#d8b4fe}
 .settlement-label{color:#fca5a5}
 
-.dest-market-row{display:flex;gap:10px;flex-wrap:wrap}
+.dest-market-row{display:flex;gap:12px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}
+.dest-market-row::-webkit-scrollbar{height:4px}
+.dest-market-row::-webkit-scrollbar-thumb{background:rgba(201,162,39,.25);border-radius:2px}
 
-/* Large destination market card */
+/* Destination Market — 2x size, image only */
 .dest-mkt-card{
-  width:148px;border-radius:8px;overflow:hidden;
+  width:296px;border-radius:8px;overflow:hidden;
   border:2px solid rgba(201,162,39,.22);cursor:pointer;
   transition:all .25s ease;background:rgba(10,14,26,.85);
   position:relative;flex-shrink:0;
@@ -289,32 +292,26 @@ img{display:block}
 .dest-mkt-card.settlement-card:hover{border-color:#ef4444;box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 16px rgba(239,68,68,.25)}
 .dest-mkt-card.trade-post-card{border-color:rgba(90,26,139,.4)}
 .dest-mkt-card.trade-post-card:hover{border-color:#a855f7;box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 16px rgba(168,85,247,.25)}
-.dest-mkt-card img{width:100%;height:88px;object-fit:cover}
-.dest-mkt-card .dmcard-body{padding:7px 8px}
-.dest-mkt-card .dmcard-name{font-family:'Cinzel',serif;font-size:.65rem;color:var(--text-s);margin-bottom:4px}
-.dest-mkt-card .dmcard-pts-row{display:flex;align-items:baseline;gap:5px;margin-bottom:4px}
-.dest-mkt-card .dmcard-pts{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--gold);line-height:1}
-.dest-mkt-card .dmcard-pts-lbl{font-size:.58rem;color:var(--text-m)}
-.dest-mkt-card .dmcard-cost{font-size:.6rem;color:var(--text-m);margin-bottom:5px}
-.dest-mkt-card .dmcard-rewards{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
-.reward-chip{font-size:.6rem;padding:2px 5px;border-radius:3px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold-lt)}
-.dest-mkt-card .dmcard-trade{display:flex;gap:3px;padding-top:5px;border-top:1px solid rgba(201,162,39,.12)}
-.dmtr-cell{flex:1;text-align:center;font-size:.65rem;color:var(--text-m);padding:2px 0}
+/* Image fills card completely, natural aspect ratio, no crop */
+.dest-mkt-card img{width:100%;height:auto;display:block;object-fit:contain;}
+/* Hide all text body — image only */
+.dest-mkt-card .dmcard-body{display:none}
 
 /* Explore-selectable dest card */
 .dest-mkt-card.selectable-dest{border-color:var(--teal)!important;animation:selectable-pulse 1.5s ease-in-out infinite alternate}
 .dest-mkt-card.selected-dest{border-color:var(--teal)!important;background:rgba(42,157,157,.1);box-shadow:0 0 18px rgba(42,157,157,.4)!important}
 
-/* Crew Market — 2x bigger cards */
+/* Crew Market — 2x bigger cards, no crop */
 .crew-market-row{display:flex;gap:12px;flex-wrap:wrap}
 
 .crew-mkt-card{
-  width:160px;height:224px;border-radius:8px;overflow:hidden;
+  width:160px;aspect-ratio:63/88;border-radius:8px;overflow:hidden;
   border:2px solid rgba(255,255,255,.1);cursor:pointer;
   transition:all .22s ease;position:relative;flex-shrink:0;
   box-shadow:0 4px 14px rgba(0,0,0,.4);
+  background:rgba(10,12,22,.9);
 }
-.crew-mkt-card img{width:100%;height:100%;object-fit:cover}
+.crew-mkt-card img{width:100%;height:100%;object-fit:contain;display:block}
 .crew-mkt-card:hover{transform:translateY(-8px) scale(1.06);box-shadow:0 14px 32px rgba(0,0,0,.55);z-index:5}
 .crew-mkt-card.cblue{border-color:rgba(138,180,248,.55)}
 .crew-mkt-card.cyellow{border-color:rgba(255,215,0,.55)}
