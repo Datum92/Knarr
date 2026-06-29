@@ -283,7 +283,55 @@ function takeSameColorFromMarket(pid, color) {
     refillCrew();
   } else {
     addLog(`  市場無${COLOR_ZH[color]}色船員`, '');
+    // Human player: offer recruit token option
+    if(pid==='human' && p.tokens.recruit_token > 0 && G.zones.crewMarket.length > 0) {
+      showRecruitTokenPick();
+      return; // don't proceed with updateUI yet — wait for player choice
+    }
   }
+  updateUI(); updateActionBtns();
+}
+
+function showRecruitTokenPick() {
+  const p = G.players.human;
+  document.getElementById('recruit-token-available').textContent = p.tokens.recruit_token;
+  const container = document.getElementById('recruit-market-pick');
+  container.innerHTML = '';
+  G.zones.crewMarket.forEach(card => {
+    const div = document.createElement('div');
+    div.className = `recruit-pick-card c${card.color}`;
+    div.title = `${card.name} (${COLOR_ZH[card.color]})`;
+    const colorDot = document.createElement('div');
+    colorDot.className = 'rpcard-color';
+    colorDot.style.background = COLOR_BG[card.color];
+    colorDot.textContent = COLOR_ZH[card.color];
+    const img = document.createElement('img');
+    img.src = GAME_DATA.BASE + card.img;
+    img.alt = card.name;
+    img.onerror = () => { img.style.display='none'; div.style.background=COLOR_BG[card.color]; };
+    div.appendChild(colorDot); div.appendChild(img);
+    div.onclick = () => pickMarketCard(card);
+    container.appendChild(div);
+  });
+  document.getElementById('recruit-token-inline').classList.remove('hidden');
+}
+
+function pickMarketCard(card) {
+  const p = G.players.human;
+  if(p.tokens.recruit_token <= 0) { showToast('招募標記不足！','bad'); return; }
+  const idx = G.zones.crewMarket.findIndex(c=>c.id===card.id);
+  if(idx === -1) { showToast('找不到該牌！','bad'); return; }
+  p.tokens.recruit_token--;
+  const taken = G.zones.crewMarket.splice(idx,1)[0];
+  p.hand.push(taken);
+  refillCrew();
+  addLog(`  花費⚡招募標記，選取 ${taken.name}（${COLOR_ZH[taken.color]}色）到手牌`, 'good');
+  skipRecruitTokenPick();
+}
+
+function skipRecruitTokenPick() {
+  document.getElementById('recruit-token-inline').classList.add('hidden');
+  updateUI(); updateActionBtns();
 }
 
 // ── Explore Mode ──
@@ -775,10 +823,16 @@ function renderPanel(pid) {
     showHide('action-chip', G.mainActionDone);
   }
 
-  // Destinations owned
+  // Destinations owned — stacked display
   const destEl = document.getElementById(`${pre}-destinations`);
   destEl.innerHTML = '';
-  p.destinations.forEach(d=>{ destEl.appendChild(buildOwnedDestCard(d, false)); });
+  if(p.destinations.length > 0) {
+    // Group by type (settlement / trade_post)
+    const settle = p.destinations.filter(d=>d.id.includes('settlement'));
+    const trade  = p.destinations.filter(d=>!d.id.includes('settlement'));
+    if(settle.length > 0) destEl.appendChild(buildStackedDests(settle, false));
+    if(trade.length  > 0) destEl.appendChild(buildStackedDests(trade,  false));
+  }
   document.getElementById(`${pre}-dest-count`).textContent = p.destinations.length;
 
   // Reserved (human only)
@@ -889,17 +943,47 @@ function buildOwnedDestCard(dest, isReserved) {
   return d;
 }
 
+// Build a stacked pile of same-type destination cards (latest on top, offset for depth effect)
+function buildStackedDests(dests, isReserved) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'dest-stack-wrapper';
+  // Show all as stacked, top card visible
+  dests.forEach((dest, i) => {
+    const card = buildOwnedDestCard(dest, isReserved);
+    card.style.position = 'absolute';
+    card.style.top = `${i * 4}px`;
+    card.style.left = `${i * 4}px`;
+    card.style.zIndex = i + 1;
+    wrapper.appendChild(card);
+  });
+  // Set wrapper height to accommodate the stack
+  const baseH = 120; // approximate card height
+  wrapper.style.height = `${baseH + (dests.length-1)*4}px`;
+  wrapper.style.width = `${90 + (dests.length-1)*4}px`;
+  return wrapper;
+}
+
 function renderCrewMarket() {
   const el = document.getElementById('crew-market');
   el.innerHTML = '';
-  G.zones.crewMarket.forEach(card=>{
+  G.zones.crewMarket.forEach(card => {
     const div = document.createElement('div');
     div.className = `crew-mkt-card c${card.color}`;
     div.title = `${card.name}\n${COLOR_ZH[card.color]}色 — ${ICONS[card.resource]?.label}`;
 
-    const bar = document.createElement('div');
-    bar.className = 'cmc-bar';
-    bar.style.background = COLOR_BG[card.color];
+    // Color badge bar at top
+    const colorBadge = document.createElement('div');
+    colorBadge.className = 'cmc-color-badge';
+    colorBadge.style.background = COLOR_BG[card.color];
+    colorBadge.style.borderBottom = `2px solid ${COLOR_TEXT[card.color]}`;
+    const dot = document.createElement('span');
+    dot.className = 'cmc-color-dot';
+    dot.style.background = COLOR_TEXT[card.color];
+    const label = document.createElement('span');
+    label.className = 'cmc-color-label';
+    label.textContent = COLOR_ZH[card.color];
+    label.style.color = COLOR_TEXT[card.color];
+    colorBadge.appendChild(dot); colorBadge.appendChild(label);
 
     const img = document.createElement('img');
     img.src = GAME_DATA.BASE + card.img;
@@ -911,8 +995,8 @@ function renderCrewMarket() {
     res.textContent = ICONS[card.resource]?.sym || '?';
     res.style.color = ICONS[card.resource]?.col || '#fff';
 
-    div.appendChild(bar); div.appendChild(img); div.appendChild(res);
-    div.onclick = ()=>showCardInfoModal(card);
+    div.appendChild(colorBadge); div.appendChild(img); div.appendChild(res);
+    div.onclick = () => showCardInfoModal(card);
     el.appendChild(div);
   });
 }

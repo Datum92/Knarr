@@ -198,6 +198,14 @@
             <button class="small-btn cancel-btn" onclick="cancelExplore()">✕ 取消</button>
           </div>
         </div>
+        <!-- 招募後：使用招募標記選任意市場牌 (inline) -->
+        <div id="recruit-token-inline" class="recruit-token-inline hidden">
+          <div class="recruit-token-title">⚡ 市場無同色船員！花費 1 枚招募標記，可任選一張市場牌加入手牌（你有 <span id="recruit-token-available">0</span> 枚）</div>
+          <div class="recruit-market-cards" id="recruit-market-pick"></div>
+          <div style="margin-top:6px;display:flex;gap:8px">
+            <button class="small-btn cancel-btn" onclick="skipRecruitTokenPick()">✕ 略過，不選</button>
+          </div>
+        </div>
       </section>
 
       <!-- 事件記錄 -->
