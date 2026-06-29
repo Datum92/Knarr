@@ -1,0 +1,286 @@
+{
+  "schema_version": "0.1",
+  "language": "zh-TW",
+  "source": {
+    "component_manifest": "component_image_manifest.csv",
+    "rulebook_trade_page": "rulebook_images/knarr_core_rules_p008.png",
+    "rulebook_icon_page": "rulebook_images/knarr_core_rules_p009.png",
+    "extraction_method": "manual visual inspection from ship tile images and rulebook trade rule"
+  },
+  "trade_rule": {
+    "cost_to_columns": [
+      {
+        "silver_bracelet": 1,
+        "columns_taken": [
+          0
+        ]
+      },
+      {
+        "silver_bracelet": 2,
+        "columns_taken": [
+          0,
+          1
+        ]
+      },
+      {
+        "silver_bracelet": 3,
+        "columns_taken": [
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "columns_apply_to": [
+      "selected_ship_tile_side",
+      "owned_destination_cards"
+    ],
+    "column_order": [
+      "left",
+      "middle",
+      "right"
+    ]
+  },
+  "sides": [
+    {
+      "id": "knarr_core_ship_tile_1_side_001",
+      "physical_tile_id": "knarr_core_ship_tile_1",
+      "source_file": "component_images/knarr_core_ship_tile_side_001.png",
+      "manifest_sequence": 1,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_1_side_002",
+      "physical_tile_id": "knarr_core_ship_tile_1",
+      "source_file": "component_images/knarr_core_ship_tile_side_002.png",
+      "manifest_sequence": 2,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_2_side_003",
+      "physical_tile_id": "knarr_core_ship_tile_2",
+      "source_file": "component_images/knarr_core_ship_tile_side_003.png",
+      "manifest_sequence": 3,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_2_side_004",
+      "physical_tile_id": "knarr_core_ship_tile_2",
+      "source_file": "component_images/knarr_core_ship_tile_side_004.png",
+      "manifest_sequence": 4,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_3_side_005",
+      "physical_tile_id": "knarr_core_ship_tile_3",
+      "source_file": "component_images/knarr_core_ship_tile_side_005.png",
+      "manifest_sequence": 5,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_3_side_006",
+      "physical_tile_id": "knarr_core_ship_tile_3",
+      "source_file": "component_images/knarr_core_ship_tile_side_006.png",
+      "manifest_sequence": 6,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_4_side_007",
+      "physical_tile_id": "knarr_core_ship_tile_4",
+      "source_file": "component_images/knarr_core_ship_tile_side_007.png",
+      "manifest_sequence": 7,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    {
+      "id": "knarr_core_ship_tile_4_side_008",
+      "physical_tile_id": "knarr_core_ship_tile_4",
+      "source_file": "component_images/knarr_core_ship_tile_side_008.png",
+      "manifest_sequence": 8,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    }
+  ]
+}

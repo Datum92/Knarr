@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "language": "zh-TW",
+  "source": {
+    "component_file": "component_images/knarr_core_board_001.png",
+    "inspection_artifacts": [
+      "outputs/inspection/board_reputation_crop.png",
+      "outputs/inspection/board_reputation_toprow_zoom.png"
+    ],
+    "extraction_method": "manual visual inspection from main board image"
+  },
+  "boards": [
+    {
+      "id": "board_main",
+      "type": "main_board",
+      "source_file": "component_images/knarr_core_board_001.png",
+      "reputation_track": {
+        "track_id": "main_reputation_track",
+        "row_count": 4,
+        "start_position": 0,
+        "max_position": 14,
+        "score_rule": "at_turn_start_score_highest_threshold_at_or_below_position",
+        "score_thresholds": [
+          {
+            "min_position": 0,
+            "score": 0
+          },
+          {
+            "min_position": 3,
+            "score": 1
+          },
+          {
+            "min_position": 6,
+            "score": 2
+          },
+          {
+            "min_position": 10,
+            "score": 3
+          },
+          {
+            "min_position": 14,
+            "score": 5
+          }
+        ],
+        "confidence": "high",
+        "notes": "依主板聲望軌可見格位資料化：起點為 0，給分格為第 3/6/10/14 格。玩家回合開始取得目前位置已達到的最高給分格分數。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,422 @@
+/* ═══════════════════════════════════════════════════════════════
+   KNARR — Viking Board Game  |  Complete UI v2
+   更大卡牌 · 桌遊桌面布局 · 直覺操作
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+/* ─── Variables ─── */
+:root {
+  --gold:        #c9a227;
+  --gold-lt:     #f0cc6e;
+  --gold-dk:     #7a5010;
+  --teal:        #2a9d9d;
+  --teal-dk:     #0d3d3d;
+  --night:       #07090f;
+  --night-mid:   #0e1420;
+  --night-lt:    #18222f;
+  --panel-bg:    rgba(8,12,22,0.92);
+  --border-gold: rgba(201,162,39,0.35);
+  --parchment:   #f0e8d0;
+  --text-s:      #b8a878;
+  --text-m:      #706045;
+
+  /* crew colors */
+  --c-blue:   #1a4fa8; --c-blue-t: #8ab4f8; --c-blue-glow: rgba(26,79,168,0.55);
+  --c-yellow: #b08000; --c-yellow-t:#ffd700; --c-yellow-glow:rgba(176,128,0,0.55);
+  --c-green:  #1a7a35; --c-green-t: #86efac; --c-green-glow: rgba(26,122,53,0.55);
+  --c-red:    #8b1a1a; --c-red-t:   #fca5a5; --c-red-glow:   rgba(139,26,26,0.55);
+  --c-purple: #5a1a8b; --c-purple-t:#d8b4fe; --c-purple-glow:rgba(90,26,139,0.55);
+}
+
+/* ─── Reset ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'IM Fell English',Georgia,serif;background:var(--night);color:var(--parchment);font-size:13px}
+button{cursor:pointer;font-family:inherit}
+img{display:block}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:rgba(201,162,39,0.25);border-radius:2px}
+
+/* ─── Screens ─── */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;z-index:1}
+.screen.active{display:flex}
+.hidden{display:none!important}
+
+/* ═══════════════ INTRO ═══════════════ */
+#screen-intro{align-items:center;justify-content:center}
+
+.intro-bg{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 25%, rgba(0,212,200,.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(201,162,39,.07) 0%, transparent 50%),
+    linear-gradient(145deg,#030608 0%,#08141f 45%,#060e18 100%);
+}
+.aurora{
+  position:absolute;top:0;left:0;right:0;height:40%;
+  background:radial-gradient(ellipse 100% 60% at 50% -5%,rgba(0,245,160,.18) 0%,rgba(0,200,220,.12) 35%,transparent 70%);
+  animation:aurora-pulse 7s ease-in-out infinite alternate;
+}
+@keyframes aurora-pulse{0%{opacity:.5;transform:scaleX(.88) translateY(-6px)}100%{opacity:1;transform:scaleX(1.12) translateY(6px)}}
+.waves{
+  position:absolute;bottom:0;left:0;right:0;height:140px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 140'%3E%3Cpath fill='rgba(13,61,61,0.35)' d='M0,70L60,62C120,54,240,38,360,43C480,48,600,74,720,74C840,74,960,48,1080,43C1200,38,1320,54,1380,62L1440,70L1440,140L0,140Z'/%3E%3Cpath fill='rgba(20,45,70,0.55)' d='M0,100L80,94C160,88,320,76,480,82C640,88,800,106,960,106C1120,106,1280,88,1360,80L1440,72L1440,140L0,140Z'/%3E%3C/svg%3E") bottom/cover;
+}
+
+.intro-content{position:relative;z-index:1;text-align:center;padding:44px 52px;max-width:520px;background:rgba(7,9,15,0.82);border:1px solid var(--border-gold);border-radius:16px;backdrop-filter:blur(14px);box-shadow:0 0 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(201,162,39,.18)}
+.gold-bar{height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--teal),var(--gold),transparent);margin:12px 0}
+.valknut-logo{font-size:2.8rem;color:var(--gold);filter:drop-shadow(0 0 14px rgba(201,162,39,.7));animation:rune-glow 3s ease-in-out infinite alternate;margin-bottom:8px}
+@keyframes rune-glow{0%{filter:drop-shadow(0 0 6px rgba(201,162,39,.4))}100%{filter:drop-shadow(0 0 22px rgba(201,162,39,.95))}}
+.game-title{font-family:'Cinzel Decorative',serif;font-size:4.2rem;font-weight:900;letter-spacing:.35em;background:linear-gradient(135deg,var(--gold-lt),var(--gold),var(--gold-dk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.game-subtitle{font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:.55em;color:var(--teal);margin:.5rem 0 1.4rem;text-transform:uppercase}
+.intro-desc{color:var(--text-s);line-height:1.75;margin-bottom:2rem;font-size:.9rem}
+.intro-desc strong{color:var(--gold-lt)}
+.intro-btns{display:flex;gap:12px;justify-content:center}
+
+/* ─── Buttons ─── */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border:none;border-radius:8px;font-family:'Cinzel',serif;font-size:.9rem;font-weight:700;background:linear-gradient(135deg,var(--gold-dk),var(--gold),var(--gold-dk));color:#1a0a00;box-shadow:0 4px 16px rgba(201,162,39,.35),inset 0 1px 0 rgba(255,255,255,.2);transition:all .2s;letter-spacing:.04em}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(201,162,39,.55)}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn-large{padding:14px 36px;font-size:1.05rem}
+.btn-ghost{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border:1px solid var(--border-gold);border-radius:8px;background:rgba(255,255,255,.04);color:var(--text-s);font-family:'Cinzel',serif;font-size:.85rem;transition:all .2s}
+.btn-ghost:hover{background:rgba(255,255,255,.08);color:var(--parchment);border-color:var(--gold)}
+
+/* ═══════════════ SETUP ═══════════════ */
+#screen-setup{align-items:center;justify-content:center}
+.setup-panel{position:relative;z-index:1;background:var(--panel-bg);border:1px solid var(--border-gold);border-radius:16px;padding:36px 40px;width:700px;max-width:95vw;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.panel-title{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--gold);text-align:center;margin-bottom:28px;letter-spacing:.08em}
+.setup-row{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:24px}
+.setup-col{display:flex;flex-direction:column;gap:10px}
+.setup-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold-lt);letter-spacing:.12em;text-transform:uppercase}
+.text-input{background:rgba(255,255,255,.05);border:1px solid var(--border-gold);border-radius:6px;color:var(--parchment);font-family:'IM Fell English',serif;font-size:1rem;padding:8px 12px;transition:border-color .2s}
+.text-input:focus{outline:none;border-color:var(--gold)}
+.toggle-row{display:flex;align-items:center;gap:10px}
+.toggle-desc{font-size:.8rem;color:var(--text-s);line-height:1.4}
+.toggle-switch{position:relative;display:inline-block;width:42px;height:22px;flex-shrink:0}
+.toggle-switch input{display:none}
+.toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,.08);border:1px solid var(--border-gold);border-radius:22px;cursor:pointer;transition:.3s}
+.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:var(--text-s);border-radius:50%;transition:.3s}
+.toggle-switch input:checked + .toggle-slider{background:rgba(201,162,39,.2);border-color:var(--gold)}
+.toggle-switch input:checked + .toggle-slider:before{transform:translateX(20px);background:var(--gold)}
+.ship-tile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;flex:1}
+.ship-tile-option{border:2px solid rgba(201,162,39,.2);border-radius:8px;padding:10px;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.02);text-align:center}
+.ship-tile-option:hover{border-color:var(--gold);background:rgba(201,162,39,.07)}
+.ship-tile-option.selected{border-color:var(--gold);background:rgba(201,162,39,.14);box-shadow:0 0 14px rgba(201,162,39,.22)}
+.ship-tile-option .tile-id{font-family:'Cinzel',serif;font-size:.72rem;color:var(--gold-lt);margin-bottom:4px}
+.ship-tile-option .tile-cols{font-size:.65rem;color:var(--text-s);line-height:1.5}
+.setup-actions{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+
+/* ═══════════════ GAME SCREEN ═══════════════ */
+#screen-game{background:linear-gradient(160deg,#04060c 0%,#091320 50%,#050a14 100%);overflow:hidden}
+
+/* Top Bar */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:44px;background:rgba(4,6,12,.95);border-bottom:1px solid rgba(201,162,39,.22);flex-shrink:0}
+.topbar-brand{font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--gold);letter-spacing:.18em;filter:drop-shadow(0 0 6px rgba(201,162,39,.4))}
+.topbar-phase{display:flex;align-items:center;gap:10px}
+.phase-chip{font-family:'Cinzel',serif;font-size:.78rem;padding:3px 12px;border:1px solid rgba(42,157,157,.4);border-radius:4px;color:var(--teal);background:rgba(42,157,157,.1);animation:phase-glow 2.5s ease-in-out infinite alternate}
+@keyframes phase-glow{0%{box-shadow:none}100%{box-shadow:0 0 8px rgba(42,157,157,.3)}}
+.round-chip{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text-s)}
+.topbar-actions{display:flex;gap:6px}
+.icon-btn{background:none;border:1px solid rgba(201,162,39,.2);border-radius:5px;color:var(--text-s);font-size:.95rem;padding:4px 8px;transition:all .2s}
+.icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ─── Main Board Layout ─── */
+.game-board{
+  display:grid;
+  grid-template-columns: 260px 1fr 420px;
+  height:calc(100vh - 44px);
+  overflow:hidden;
+}
+
+/* ─── Side Panels ─── */
+.side-panel{display:flex;flex-direction:column;gap:6px;padding:8px 10px;overflow-y:auto;overflow-x:hidden;background:rgba(4,6,12,.85);border-right:1px solid rgba(201,162,39,.12)}
+.side-panel--human{border-right:none;border-left:1px solid rgba(201,162,39,.12)}
+.side-panel::-webkit-scrollbar{width:3px}
+.side-panel::-webkit-scrollbar-thumb{background:rgba(201,162,39,.18)}
+
+/* Player Card */
+.player-card{border-radius:8px;padding:8px 10px;border:1px solid rgba(201,162,39,.18)}
+.opp-card{background:rgba(15,20,35,.5)}
+.human-card{background:rgba(15,20,35,.7);border-color:rgba(201,162,39,.3)}
+.pcard-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.pcard-avatar{font-size:1.4rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border-radius:50%;flex-shrink:0}
+.pcard-info{flex:1;min-width:0}
+.pcard-name{font-family:'Cinzel',serif;font-size:.82rem;color:var(--gold-lt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.turn-badge{font-size:.62rem;color:var(--teal);background:rgba(42,157,157,.15);border:1px solid rgba(42,157,157,.3);border-radius:3px;padding:1px 6px;margin-top:2px;display:inline-block;animation:blink 1.2s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.pcard-score{text-align:center;flex-shrink:0}
+.pcard-score span{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:var(--gold);line-height:1;filter:drop-shadow(0 0 6px rgba(201,162,39,.4))}
+.pcard-score small{display:block;font-size:.58rem;color:var(--text-m);font-family:'Cinzel',serif}
+
+/* Reputation */
+.rep-block{padding:6px 0;border-top:1px solid rgba(201,162,39,.1)}
+.rep-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.rep-track-label{font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-m);letter-spacing:.08em}
+.rep-value{font-size:.6rem;color:var(--text-s)}
+.rep-track-bar{display:flex;gap:2px;flex-wrap:nowrap}
+.rep-cell{width:12px;height:12px;border-radius:2px;background:rgba(255,255,255,.04);border:1px solid rgba(201,162,39,.12);flex-shrink:0;position:relative}
+.rep-cell.milestone{border-color:rgba(201,162,39,.35);background:rgba(201,162,39,.07)}
+.rep-cell.filled{background:var(--gold-dk);border-color:var(--gold-lt)}
+.rep-cell.current{background:var(--gold);border-color:var(--gold-lt);box-shadow:0 0 7px rgba(201,162,39,.7)}
+
+/* Tokens */
+.token-row{display:flex;flex-wrap:wrap;gap:5px;padding-top:6px}
+.token-chip{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.2);font-size:.82rem;font-family:'Cinzel',serif;font-weight:600;color:var(--parchment)}
+.traded-chip{color:var(--gold);border-color:var(--gold-dk)}
+.action-chip{color:var(--teal);border-color:rgba(42,157,157,.4);animation:phase-glow 1.5s ease-in-out infinite alternate}
+
+/* Block titles */
+.block-title{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold-lt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.block-hint{font-size:.6rem;color:var(--text-m);font-family:'IM Fell English',serif;font-style:italic;text-transform:none;letter-spacing:0}
+.reserved-label{color:var(--gold);margin-top:6px}
+
+/* ─── Crew Grid ─── */
+.crew-area-block{flex-shrink:0}
+.human-crew-block{flex-shrink:0}
+.crew-grid{display:flex;gap:3px}
+.crew-lane{flex:1;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .2s;min-width:0}
+.crew-lane:hover{border-color:rgba(201,162,39,.3)}
+.lane-header{font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;text-align:center;padding:3px 1px}
+.lane-blue{background:rgba(26,79,168,.55);color:var(--c-blue-t)}
+.lane-yellow{background:rgba(176,128,0,.55);color:var(--c-yellow-t)}
+.lane-green{background:rgba(26,122,53,.55);color:var(--c-green-t)}
+.lane-red{background:rgba(139,26,26,.55);color:var(--c-red-t)}
+.lane-purple{background:rgba(90,26,139,.55);color:var(--c-purple-t)}
+.lane-cards{padding:3px 2px;display:flex;flex-direction:column;gap:2px;min-height:22px}
+
+/* Crew card in crew area — 2x size image */
+.crew-area-card{
+  width:100%;height:64px;border-radius:5px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.1);
+  cursor:default;transition:transform .15s;
+}
+.crew-area-card img{width:100%;height:100%;object-fit:cover;object-position:top}
+.crew-area-card .card-res-badge{
+  position:absolute;bottom:2px;right:3px;
+  background:rgba(0,0,0,.78);border-radius:3px;font-size:.75rem;padding:1px 4px;color:rgba(255,255,255,.9)
+}
+.blue-lane .crew-area-card{border-color:rgba(138,180,248,.35)}
+.yellow-lane .crew-area-card{border-color:rgba(255,215,0,.35)}
+.green-lane .crew-area-card{border-color:rgba(134,239,172,.35)}
+.red-lane .crew-area-card{border-color:rgba(252,165,165,.35)}
+.purple-lane .crew-area-card{border-color:rgba(216,180,254,.35)}
+
+/* ─── Hand Cards ─── */
+.hand-block{flex-shrink:0}
+.hand-cards-row{display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;padding-bottom:4px}
+
+/* Big hand card — 2x size */
+.hand-card{
+  width:136px;height:192px;border-radius:8px;overflow:hidden;
+  border:2px solid rgba(201,162,39,.25);cursor:pointer;
+  transition:all .22s ease;position:relative;flex-shrink:0;
+  box-shadow:0 3px 8px rgba(0,0,0,.4);
+}
+.hand-card img{width:100%;height:100%;object-fit:cover}
+.hand-card:hover{transform:translateY(-10px) scale(1.05);border-color:var(--gold);box-shadow:0 12px 28px rgba(0,0,0,.5),0 0 18px rgba(201,162,39,.35);z-index:20}
+.hand-card.mode-recruit:hover{border-color:var(--teal);box-shadow:0 12px 28px rgba(0,0,0,.5),0 0 18px rgba(42,157,157,.5)}
+.hand-card.mode-explore-pay:hover{border-color:#a855f7;box-shadow:0 12px 28px rgba(0,0,0,.5),0 0 18px rgba(168,85,247,.4)}
+.hand-card.selected-pay{border-color:#a855f7!important;opacity:.55;transform:translateY(-4px)}
+.hand-card .hcard-color-bar{position:absolute;top:0;left:0;right:0;height:6px}
+.hand-card .hcard-res{position:absolute;bottom:4px;right:5px;background:rgba(0,0,0,.78);border-radius:3px;font-size:.85rem;padding:1px 5px}
+
+/* Recruit/Explore mode highlight on hand card */
+.hand-card.selectable{border-color:var(--teal)!important;animation:selectable-pulse 1.5s ease-in-out infinite alternate}
+@keyframes selectable-pulse{0%{box-shadow:0 0 6px rgba(42,157,157,.3)}100%{box-shadow:0 0 20px rgba(42,157,157,.8)}}
+.hand-card.selectable-pay{border-color:#a855f7!important;animation:pay-pulse 1.5s ease-in-out infinite alternate}
+@keyframes pay-pulse{0%{box-shadow:0 0 6px rgba(168,85,247,.3)}100%{box-shadow:0 0 20px rgba(168,85,247,.8)}}
+
+/* ─── Destination Cards (player area) ─── */
+.dest-block{flex-shrink:0}
+.human-dest-block{flex:1}
+.dest-cards-row{display:flex;flex-wrap:wrap;gap:4px}
+
+.dest-owned-card{
+  width:90px;border-radius:6px;overflow:hidden;border:2px solid rgba(201,162,39,.2);
+  cursor:pointer;transition:all .2s;background:rgba(15,20,35,.7);flex-shrink:0;
+}
+.dest-owned-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.dest-owned-card img{width:100%;height:52px;object-fit:cover}
+.dest-owned-card .dcard-body{padding:4px 5px}
+.dest-owned-card .dcard-name{font-family:'Cinzel',serif;font-size:.55rem;color:var(--text-s);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dest-owned-card .dcard-pts{font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--gold)}
+.dest-owned-card .dcard-trade{display:flex;gap:2px;margin-top:3px;padding-top:3px;border-top:1px solid rgba(201,162,39,.1)}
+.dest-owned-card .dtr-cell{flex:1;text-align:center;font-size:.6rem;color:var(--text-m)}
+.dest-owned-card.settlement-owned{border-color:rgba(139,26,26,.4)}
+.dest-owned-card.trade-post-owned{border-color:rgba(90,26,139,.4)}
+.dest-owned-card.reserved-dest{border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.06)}
+
+/* ─── Ship Tile Block ─── */
+.ship-tile-block{flex-shrink:0;background:rgba(255,255,255,.02);border:1px solid rgba(201,162,39,.13);border-radius:6px;padding:6px 8px}
+.ship-trade-cols{display:flex;gap:5px;margin-top:5px}
+.stcol{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(201,162,39,.1);border-radius:4px;padding:4px;text-align:center}
+.stcol-lbl{font-size:.58rem;color:var(--text-m);font-family:'Cinzel',serif;margin-bottom:3px}
+.stcol-icons{font-size:.75rem}
+
+/* ═══════════════ CENTER BOARD ═══════════════ */
+.center-board{
+  display:flex;flex-direction:column;gap:6px;
+  padding:8px 12px;overflow-y:auto;overflow-x:hidden;
+  background:radial-gradient(ellipse at center top,rgba(26,58,92,.12) 0%,transparent 60%);
+}
+
+.board-section{background:rgba(8,12,22,.75);border:1px solid rgba(201,162,39,.2);border-radius:10px;padding:10px 14px;flex-shrink:0}
+
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-family:'Cinzel',serif;font-size:.82rem;color:var(--gold-lt);font-weight:600;letter-spacing:.04em}
+.deck-badges{display:flex;gap:6px}
+.deck-badge{font-size:.65rem;padding:2px 7px;border-radius:3px;font-family:'Cinzel',serif}
+.trade-badge{background:rgba(90,26,139,.2);border:1px solid rgba(168,85,247,.3);color:#d8b4fe}
+.settle-badge{background:rgba(139,26,26,.2);border:1px solid rgba(252,165,165,.3);color:#fca5a5}
+.crew-badge{background:rgba(42,157,157,.1);border:1px solid rgba(42,157,157,.3);color:var(--teal)}
+
+/* Destination Market */
+.dest-market-wrap{}
+.market-row-label{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;margin-bottom:5px;font-weight:600}
+.trade-post-label{color:#d8b4fe}
+.settlement-label{color:#fca5a5}
+
+.dest-market-row{display:flex;gap:10px;flex-wrap:wrap}
+
+/* Large destination market card */
+.dest-mkt-card{
+  width:148px;border-radius:8px;overflow:hidden;
+  border:2px solid rgba(201,162,39,.22);cursor:pointer;
+  transition:all .25s ease;background:rgba(10,14,26,.85);
+  position:relative;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.4);
+}
+.dest-mkt-card:hover{transform:translateY(-5px) scale(1.03);border-color:var(--gold);box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 18px rgba(201,162,39,.25);z-index:5}
+.dest-mkt-card.settlement-card{border-color:rgba(139,26,26,.4)}
+.dest-mkt-card.settlement-card:hover{border-color:#ef4444;box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 16px rgba(239,68,68,.25)}
+.dest-mkt-card.trade-post-card{border-color:rgba(90,26,139,.4)}
+.dest-mkt-card.trade-post-card:hover{border-color:#a855f7;box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 16px rgba(168,85,247,.25)}
+.dest-mkt-card img{width:100%;height:88px;object-fit:cover}
+.dest-mkt-card .dmcard-body{padding:7px 8px}
+.dest-mkt-card .dmcard-name{font-family:'Cinzel',serif;font-size:.65rem;color:var(--text-s);margin-bottom:4px}
+.dest-mkt-card .dmcard-pts-row{display:flex;align-items:baseline;gap:5px;margin-bottom:4px}
+.dest-mkt-card .dmcard-pts{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--gold);line-height:1}
+.dest-mkt-card .dmcard-pts-lbl{font-size:.58rem;color:var(--text-m)}
+.dest-mkt-card .dmcard-cost{font-size:.6rem;color:var(--text-m);margin-bottom:5px}
+.dest-mkt-card .dmcard-rewards{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
+.reward-chip{font-size:.6rem;padding:2px 5px;border-radius:3px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.2);color:var(--gold-lt)}
+.dest-mkt-card .dmcard-trade{display:flex;gap:3px;padding-top:5px;border-top:1px solid rgba(201,162,39,.12)}
+.dmtr-cell{flex:1;text-align:center;font-size:.65rem;color:var(--text-m);padding:2px 0}
+
+/* Explore-selectable dest card */
+.dest-mkt-card.selectable-dest{border-color:var(--teal)!important;animation:selectable-pulse 1.5s ease-in-out infinite alternate}
+.dest-mkt-card.selected-dest{border-color:var(--teal)!important;background:rgba(42,157,157,.1);box-shadow:0 0 18px rgba(42,157,157,.4)!important}
+
+/* Crew Market — 2x bigger cards */
+.crew-market-row{display:flex;gap:12px;flex-wrap:wrap}
+
+.crew-mkt-card{
+  width:160px;height:224px;border-radius:8px;overflow:hidden;
+  border:2px solid rgba(255,255,255,.1);cursor:pointer;
+  transition:all .22s ease;position:relative;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.4);
+}
+.crew-mkt-card img{width:100%;height:100%;object-fit:cover}
+.crew-mkt-card:hover{transform:translateY(-8px) scale(1.06);box-shadow:0 14px 32px rgba(0,0,0,.55);z-index:5}
+.crew-mkt-card.cblue{border-color:rgba(138,180,248,.55)}
+.crew-mkt-card.cyellow{border-color:rgba(255,215,0,.55)}
+.crew-mkt-card.cgreen{border-color:rgba(134,239,172,.55)}
+.crew-mkt-card.cred{border-color:rgba(252,165,165,.55)}
+.crew-mkt-card.cpurple{border-color:rgba(216,180,254,.55)}
+.crew-mkt-card .cmc-bar{position:absolute;top:0;left:0;right:0;height:6px}
+.crew-mkt-card .cmc-res{position:absolute;bottom:5px;right:6px;background:rgba(0,0,0,.82);border-radius:4px;font-size:.9rem;padding:2px 6px}
+
+/* ─── Action Zone ─── */
+.action-zone{background:rgba(5,8,14,.85);border:1px solid rgba(201,162,39,.28);border-radius:10px;padding:10px 14px;flex-shrink:0}
+.action-zone-label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold-lt);letter-spacing:.06em;margin-bottom:8px}
+.action-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+
+.act-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);transition:all .22s;font-family:'Cinzel',serif}
+.act-btn:disabled{opacity:.28;cursor:not-allowed}
+.act-btn:not(:disabled):hover{transform:translateY(-2px)}
+.act-icon{font-size:1.4rem;line-height:1}
+.act-name{font-size:.72rem;font-weight:700;color:var(--parchment)}
+.act-hint{font-size:.58rem;color:var(--text-m);font-family:'IM Fell English',serif}
+
+.act-trade:not(:disabled){border-color:rgba(201,162,39,.35);background:rgba(201,162,39,.05)}
+.act-trade:not(:disabled):hover{border-color:var(--gold);background:rgba(201,162,39,.1);box-shadow:0 0 12px rgba(201,162,39,.2)}
+.act-recruit:not(:disabled){border-color:rgba(100,180,255,.35);background:rgba(100,180,255,.04)}
+.act-recruit:not(:disabled):hover{border-color:#64b4ff;box-shadow:0 0 12px rgba(100,180,255,.2)}
+.act-explore:not(:disabled){border-color:rgba(42,157,157,.35);background:rgba(42,157,157,.04)}
+.act-explore:not(:disabled):hover{border-color:var(--teal);box-shadow:0 0 12px rgba(42,157,157,.2)}
+.act-end:not(:disabled){border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.03)}
+.act-end:not(:disabled):hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.07)}
+
+/* Trade inline */
+.trade-inline{margin-top:10px;background:rgba(201,162,39,.05);border:1px solid rgba(201,162,39,.22);border-radius:7px;padding:10px 12px}
+.trade-inline-title{font-family:'Cinzel',serif;font-size:.72rem;color:var(--gold-lt);margin-bottom:8px}
+.trade-inline-btns{display:flex;gap:7px;flex-wrap:wrap}
+.trade-opt-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 14px;border:1px solid rgba(201,162,39,.3);border-radius:6px;background:rgba(201,162,39,.08);color:var(--parchment);transition:all .2s;flex:1;min-width:110px}
+.trade-opt-btn:hover{background:rgba(201,162,39,.18);border-color:var(--gold)}
+.trade-cost{font-family:'Cinzel',serif;font-size:.8rem;font-weight:700;color:var(--gold)}
+.trade-gain{font-size:.65rem;color:var(--text-s)}
+.trade-cancel-btn{padding:9px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--text-m);font-size:.75rem;font-family:'Cinzel',serif;transition:all .2s}
+.trade-cancel-btn:hover{background:rgba(255,255,255,.08)}
+
+/* Explore inline */
+.explore-inline{margin-top:10px;background:rgba(42,157,157,.05);border:1px solid rgba(42,157,157,.25);border-radius:7px;padding:10px 12px}
+.explore-inline-title{font-family:'Cinzel',serif;font-size:.72rem;color:var(--teal);margin-bottom:7px;line-height:1.5}
+.explore-inline-state{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.75rem;color:var(--text-s);font-family:'Cinzel',serif}
+.small-btn{padding:4px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:var(--text-s);font-size:.68rem;font-family:'Cinzel',serif;transition:all .2s}
+.small-btn:hover:not(:disabled){background:rgba(255,255,255,.1);color:var(--parchment)}
+.small-btn:disabled{opacity:.3;cursor:not-allowed}
+.confirm-btn{border-color:rgba(42,157,157,.5)!important;color:var(--teal)!important}
+.confirm-btn:not(:disabled):hover{background:rgba(42,157,157,.15)!important;box-shadow:0 0 8px rgba(42,157,157,.3)}
+.cancel-btn{border-color:rgba(252,165,165,.3)!important;color:#fca5a5!important}
+
+/* ─── Event Log ─── */
+.event-log{position:fixed;right:290px;bottom:16px;width:310px;max-height:260px;background:rgba(5,8,15,.97);border:1px solid rgba(201,162,39,.25);border-radius:10px;z-index:200;display:flex;flex-direction:column;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.log-hdr{display:flex;align-items:center;justify-content:space-between;padding:7px 12px;border-bottom:1px solid rgba(201,162,39,.12);font-family:'Cinzel',serif;font-size:.72rem;color:var(--gold-lt)}
+.log-close-btn{background:none;border:none;color:var(--text-m);font-size:.8rem;cursor:pointer}
+.log-close-btn:hover{color:var(--parchment)}
+.log-body{overflow-y:auto;padding:5px 10px;flex:1}
+.log-entry{font-size:.68rem;color:var(--text-s);padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03);line-height:1.45}
+.log-entry.important{color:var(--gold-lt);font-weight:700}
+.log-entry.good{color:#86efac}
+.log-entry.bad{color:#fca5a5}
+.log-entry.turn-hdr{color:var(--teal);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.06em;padding-top:5px}
+
+/* ═══════════════ GAMEOVER ═══════════════ */
+#screen-gameover{align-items:center;justify-content:center}
+.gameover-panel{position:relative;z-index:1;text-align:center;background:rgba(5,8,15,.92);border:1px solid rgba(201,162,39,.38);border-radius:16px;padding:52px 60px;max-width:500px;width:90vw;box-shadow:0 0 60px rgba(0,0,0,.7),0 0 40px rgba(201,162,39,.06)}
+.gameover-panel h2{font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold);margin:16px 0}
+.gameover-result{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--parchment);margin:14px 0}
+.gameover-scores{display:flex;justify-content:center;gap:36px;margin:24px 0}
+.gscore-block{text-align:center}
+.gscore-name{font-family:'Cinzel',serif;font-size:.78rem;color:var(--text-m);margin-bottom:4px}
+.gscore-val{font-family:'Cinzel Decorative',serif;font-size:2.6rem;color:var(--gold)}
+.gameover-btns{display:flex;justify-content:center;gap:12px;margin-top:18px}
+
+/* ═══════════════ MODALS ═══════════════ */
+.modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center}
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(5px)}
+.modal-box{position:relative;z-index:1;background:rgba(7,10,18,.98);border:1px solid rgba(201,162,39,.38);border-radius:14px;padding:28px 32px;max-width:480px;width:92vw;max-height:88vh;overflow-y:auto;box-shadow:0 0 60px rgba(0,0,0,.7),0 0 30px rgba(201,162,39,.07),inset 0 1px 0 rgba(201,162,39,.18);animation:modal-in .22s ease}
+@keyframes modal-in{from{opacity:0;transform:scale(.94) translateY(-10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+.modal-card-box{max-width:520px;display:flex;flex-direction:row;gap:20px;padding:24px 28px;align-items:flex-start}
+.modal-full-card-img{width:160px;border-radius:8px;flex-shrink:0;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.modal-card-detail{flex:1}
+.modal-card-detail h3{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-lt);margin-bottom:10px}
+.modal-card-detail p{font-size:.8rem;color:var(--text-s);line-height:1.6;margin-bottom:5px}
+.modal-title{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);margin-bottom:12px;letter-spacing:.05em}
+.modal-desc{font-size:.82rem;color:var(--text-s);margin-bottom:14px;line-height:1.65}
+.reserve-dest-row{display:flex;flex-wrap:wrap;gap:8px}
+
+.modal-rules-box{max-width:600px}
+.rules-body h4{font-family:'Cinzel',serif;font-size:.88rem;color:var(--gold-lt);margin:14px 0 5px}
+.rules-body p,.rules-body li{font-size:.8rem;color:var(--text-s);line-height:1.65;margin-bottom:4px}
+.rules-body ol{padding-left:20px}
+
+/* ─── Toast ─── */
+.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:rgba(7,10,18,.97);border:1px solid rgba(201,162,39,.38);border-radius:8px;padding:10px 22px;font-family:'Cinzel',serif;font-size:.82rem;color:var(--parchment);z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.5);backdrop-filter:blur(10px);animation:toast-in .2s ease;white-space:nowrap}
+@keyframes toast-in{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.toast.good{border-color:rgba(134,239,172,.5);color:#86efac}
+.toast.bad{border-color:rgba(252,165,165,.5);color:#fca5a5}
+.toast.gold{border-color:var(--gold);color:var(--gold-lt)}
+
+/* Active panel glow */
+.side-panel--human.my-turn{box-shadow:inset 0 0 30px rgba(42,157,157,.07)}
+.side-panel--opp.opp-turn{box-shadow:inset 0 0 20px rgba(255,100,100,.04)}

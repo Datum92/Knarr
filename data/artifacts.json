@@ -1,0 +1,158 @@
+{
+  "schema_version": "0.3",
+  "language": "zh-TW",
+  "module_id": "relic_variant",
+  "artifacts": [
+    {
+      "id": "knarr_relic_windsock",
+      "name_zh": "風向標",
+      "condition_zh": "完成 5 色橫排",
+      "effect_zh": "立即執行一次探索，仍需支付探索費用。",
+      "abilities": [
+        {
+          "id": "windsock_ability",
+          "effect_class": "triggered",
+          "timing_window": "action.after_main",
+          "text_zh": "若完成 5 色橫排，立即執行一次探索，仍需支付探索費用。",
+          "parsed_summary": {
+            "condition": "完成 5 色橫排",
+            "effect": "立即執行一次探索，仍需支付探索費用。"
+          },
+          "confidence": "high"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "knarr_relic_gold_bracelet",
+      "name_zh": "金臂鐲",
+      "condition_zh": "招募行動放入的同色船員剛好是第 3 張",
+      "effect_zh": "可預留 1 張目的地卡，並立即補同類型目的地市場；每位玩家最多同時預留 2 張。",
+      "abilities": [
+        {
+          "id": "gold_bracelet_ability",
+          "effect_class": "triggered",
+          "timing_window": "action.recruit.commit",
+          "text_zh": "若招募行動放入的同色船員剛好是第 3 張，可預留 1 張目的地卡，並立即補同類型目的地市場；每位玩家最多同時預留 2 張。",
+          "parsed_summary": {
+            "condition": "招募行動放入的同色船員剛好是第 3 張",
+            "effect": "預留 1 張目的地卡；立即從同類型牌庫補公開市場；預留上限 2 張。"
+          },
+          "confidence": "high",
+          "effects": [
+            {
+              "op": "reserve_destination",
+              "max_reserved": 2
+            },
+            {
+              "op": "refill_destination_market",
+              "timing": "immediate",
+              "same_type_only": true
+            }
+          ]
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "knarr_relic_cauldron",
+      "name_zh": "大煮釜",
+      "condition_zh": "招募行動放入的同色船員剛好是第 2 張",
+      "effect_zh": "本次拿取公開船員時可從 5 張任選。",
+      "abilities": [
+        {
+          "id": "cauldron_ability",
+          "effect_class": "replacement",
+          "timing_window": "action.recruit.take_market_card",
+          "text_zh": "若招募行動放入的同色船員剛好是第 2 張，本次拿取公開船員時可從 5 張任選。",
+          "parsed_summary": {
+            "condition": "招募行動放入的同色船員剛好是第 2 張",
+            "effect": "本次拿取公開船員時可從 5 張任選。"
+          },
+          "confidence": "high"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "knarr_relic_iron_helmet",
+      "name_zh": "鐵戰盔",
+      "condition_zh": "探索取得定居點卡，並將其放在貿易點卡上方且相鄰",
+      "effect_zh": "立即執行一次招募。",
+      "abilities": [
+        {
+          "id": "iron_helmet_ability",
+          "effect_class": "triggered",
+          "timing_window": "action.explore.after",
+          "text_zh": "若探索取得定居點卡，並將其放在貿易點卡上方且相鄰，立即執行一次招募。",
+          "parsed_summary": {
+            "condition": "探索取得定居點卡，並將其放在貿易點卡上方且相鄰",
+            "effect": "立即執行一次招募。"
+          },
+          "confidence": "high"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "knarr_relic_mead_cup",
+      "name_zh": "蜜酒杯",
+      "condition_zh": "執行探索行動",
+      "effect_zh": "可棄置 1 張版圖下方公開船員卡，並用船員牌庫頂牌替換。",
+      "abilities": [
+        {
+          "id": "mead_cup_ability",
+          "effect_class": "activated",
+          "timing_window": "action.explore.after",
+          "text_zh": "若執行探索行動，可棄置 1 張版圖下方公開船員卡，並用船員牌庫頂牌替換。",
+          "parsed_summary": {
+            "condition": "執行探索行動",
+            "effect": "可棄置 1 張版圖下方公開船員卡，並用船員牌庫頂牌替換。"
+          },
+          "confidence": "high"
+        }
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "knarr_relic_silver_coin",
+      "name_zh": "銀錢幣",
+      "condition_zh": "招募行動放入的同色船員是第 4 張或更多",
+      "effect_zh": "獲得 1 點勝利分數。",
+      "abilities": [
+        {
+          "id": "silver_coin_ability",
+          "effect_class": "triggered",
+          "timing_window": "action.recruit.commit",
+          "text_zh": "若招募行動放入的同色船員是第 4 張或更多，獲得 1 點勝利分數。",
+          "parsed_summary": {
+            "condition": "招募行動放入的同色船員是第 4 張或更多",
+            "effect": "獲得 1 點勝利分數。"
+          },
+          "confidence": "medium"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "knarr_relic_amulet",
+      "name_zh": "護身符",
+      "condition_zh": "透過招募或探索完成一條由 5 種不同顏色船員構成的橫排",
+      "effect_zh": "獲得 1 枚銀臂鐲、1 枚招募標記與 1 點聲望值。",
+      "abilities": [
+        {
+          "id": "amulet_ability",
+          "effect_class": "triggered",
+          "timing_window": "action.after_main",
+          "text_zh": "若透過招募或探索完成一條由 5 種不同顏色船員構成的橫排，獲得 1 枚銀臂鐲、1 枚招募標記與 1 點聲望值。",
+          "parsed_summary": {
+            "condition": "透過招募或探索完成一條由 5 種不同顏色船員構成的橫排",
+            "effect": "獲得 1 枚銀臂鐲、1 枚招募標記與 1 點聲望值。"
+          },
+          "confidence": "high"
+        }
+      ],
+      "confidence": "high"
+    }
+  ]
+}

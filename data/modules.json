@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.3",
+  "modules": [
+    {
+      "id": "core",
+      "name_zh": "核心遊戲",
+      "required": true,
+      "default_enabled": true,
+      "dependencies": []
+    },
+    {
+      "id": "relic_variant",
+      "name_zh": "聖物遊戲變體",
+      "required": false,
+      "default_enabled": false,
+      "dependencies": [
+        "core"
+      ],
+      "setup": {
+        "relic_selection": "random_one_by_default",
+        "two_player_recommended_relic": "蜜酒杯",
+        "gold_bracelet_refill": "reserve_destination_then_immediately_refill_same_type_market"
+      }
+    }
+  ],
+  "future_play_mode": {
+    "player_count": 2,
+    "players": [
+      "human",
+      "computer"
+    ],
+    "ui_status": "not_started"
+  }
+}

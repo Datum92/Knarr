@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knarr — 維京航海桌遊</title>
+  <meta name="description" content="Knarr 維京航海策略桌遊網頁版">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════ INTRO ═══════════════════════════ -->
+<div id="screen-intro" class="screen active">
+  <div class="intro-bg"><div class="aurora"></div><div class="waves"></div></div>
+  <div class="intro-content">
+    <div class="gold-bar"></div>
+    <div class="valknut-logo">᛭</div>
+    <h1 class="game-title">KNARR</h1>
+    <p class="game-subtitle">維 京 航 海 征 服</p>
+    <p class="intro-desc">率領維京船隊，招募精銳船員，探索未知目的地，建立強大貿易帝國。率先達到 <strong>40 分</strong>觸發終局，最終分數最高者獲勝！</p>
+    <div class="intro-btns">
+      <button class="btn-primary btn-large" onclick="startSetup()">⛵ 啟航出發</button>
+      <button class="btn-ghost" onclick="showRules()">📜 遊戲規則</button>
+    </div>
+    <div class="gold-bar"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ SETUP ═══════════════════════════ -->
+<div id="screen-setup" class="screen">
+  <div class="intro-bg"><div class="aurora"></div></div>
+  <div class="setup-panel">
+    <h2 class="panel-title">⚓ 遊戲準備</h2>
+    <div class="setup-row">
+      <div class="setup-col">
+        <label class="setup-label">你的艦長名稱</label>
+        <input type="text" id="player-name-input" class="text-input" placeholder="維京艦長" maxlength="12" value="維京艦長">
+        <label class="setup-label" style="margin-top:16px">聖物模組</label>
+        <div class="toggle-row">
+          <label class="toggle-switch"><input type="checkbox" id="relic-toggle" checked><span class="toggle-slider"></span></label>
+          <span class="toggle-desc">金臂鐲 — 招募第3張同色船員時，可預留1張目的地</span>
+        </div>
+      </div>
+      <div class="setup-col">
+        <label class="setup-label">選擇你的船隻板塊</label>
+        <div id="ship-tile-selector" class="ship-tile-grid"></div>
+      </div>
+    </div>
+    <div class="setup-actions">
+      <button class="btn-ghost" onclick="showScreen('screen-intro')">← 返回</button>
+      <button class="btn-primary btn-large" onclick="initGame()">🚢 準備就緒，啟航！</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ GAME SCREEN ═══════════════════════════ -->
+<div id="screen-game" class="screen">
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="topbar-brand">⚔ KNARR</div>
+    <div class="topbar-phase">
+      <span class="phase-chip" id="phase-label">等待開始</span>
+      <span class="round-chip" id="round-label">回合 1</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="toggleLog()" title="事件記錄">📋</button>
+      <button class="icon-btn" onclick="showRules()" title="規則說明">📜</button>
+    </div>
+  </header>
+
+  <!-- ════ MAIN BOARD ════ -->
+  <div class="game-board">
+
+    <!-- ── COL A: 對手面板 ── -->
+    <aside class="side-panel side-panel--opp">
+      <div class="player-card opp-card">
+        <div class="pcard-header">
+          <div class="pcard-avatar">🤖</div>
+          <div class="pcard-info">
+            <div class="pcard-name">電腦對手</div>
+            <div class="turn-badge hidden" id="opp-turn-badge">▶ 思考中...</div>
+          </div>
+          <div class="pcard-score"><span id="opp-score">0</span><small>分</small></div>
+        </div>
+        <!-- Reputation -->
+        <div class="rep-block">
+          <div class="rep-row">
+            <span class="rep-track-label">聲望軌</span>
+            <span class="rep-value">🔰<span id="opp-rep">0</span> → <span id="opp-rep-pts">0</span>分/回合</span>
+          </div>
+          <div class="rep-track-bar" id="opp-rep-track"></div>
+        </div>
+        <!-- Tokens -->
+        <div class="token-row">
+          <div class="token-chip" title="招募標記">⚡<span id="opp-recruit">1</span></div>
+          <div class="token-chip" title="銀臂鐲">⭕<span id="opp-bracelet">1</span></div>
+        </div>
+      </div>
+
+      <!-- 對手船員區 -->
+      <div class="crew-area-block">
+        <div class="block-title">船員區</div>
+        <div class="crew-grid" id="opp-crew-grid">
+          <div class="crew-lane blue-lane"><div class="lane-header lane-blue">藍</div><div class="lane-cards" id="opp-crew-blue"></div></div>
+          <div class="crew-lane yellow-lane"><div class="lane-header lane-yellow">黃</div><div class="lane-cards" id="opp-crew-yellow"></div></div>
+          <div class="crew-lane green-lane"><div class="lane-header lane-green">綠</div><div class="lane-cards" id="opp-crew-green"></div></div>
+          <div class="crew-lane red-lane"><div class="lane-header lane-red">紅</div><div class="lane-cards" id="opp-crew-red"></div></div>
+          <div class="crew-lane purple-lane"><div class="lane-header lane-purple">紫</div><div class="lane-cards" id="opp-crew-purple"></div></div>
+        </div>
+      </div>
+
+      <!-- 對手目的地 -->
+      <div class="dest-block">
+        <div class="block-title">目的地 (<span id="opp-dest-count">0</span>)</div>
+        <div class="dest-cards-row" id="opp-destinations"></div>
+      </div>
+
+      <!-- 對手船隻板塊 -->
+      <div class="ship-tile-block" id="opp-ship-block">
+        <div class="block-title">⛵ 船隻板塊</div>
+        <div class="ship-trade-cols" id="opp-trade-cols"></div>
+      </div>
+    </aside>
+
+    <!-- ── COL B: 中央主板 ── -->
+    <main class="center-board">
+
+      <!-- 目的地市場 -->
+      <section class="board-section">
+        <div class="section-title">
+          <span>🗺 目的地市場</span>
+          <span class="deck-badges">
+            <span class="deck-badge trade-badge">貿易點堆 <b id="trade-post-deck-count">20</b></span>
+            <span class="deck-badge settle-badge">定居點堆 <b id="settlement-deck-count">15</b></span>
+          </span>
+        </div>
+        <div class="dest-market-wrap">
+          <div class="market-row-label trade-post-label">貿易點</div>
+          <div class="dest-market-row" id="trade-post-market"></div>
+          <div class="market-row-label settlement-label" style="margin-top:8px">定居點</div>
+          <div class="dest-market-row" id="settlement-market"></div>
+        </div>
+      </section>
+
+      <!-- 船員市場 -->
+      <section class="board-section">
+        <div class="section-title">
+          <span>👥 船員市場</span>
+          <span class="deck-badge crew-badge">牌堆 <b id="crew-deck-count">0</b></span>
+        </div>
+        <div class="crew-market-row" id="crew-market"></div>
+      </section>
+
+      <!-- 行動區 -->
+      <section class="action-zone" id="action-zone">
+        <div class="action-zone-label" id="action-zone-label">等待回合開始...</div>
+        <div class="action-btns" id="action-btns">
+          <button id="btn-trade" class="act-btn act-trade" onclick="doTrade()" disabled>
+            <span class="act-icon">💰</span>
+            <span class="act-name">貿易</span>
+            <span class="act-hint">花費銀臂鐲</span>
+          </button>
+          <button id="btn-recruit" class="act-btn act-recruit" onclick="enterRecruitMode()" disabled>
+            <span class="act-icon">⚡</span>
+            <span class="act-name">招募船員</span>
+            <span class="act-hint">點選手牌</span>
+          </button>
+          <button id="btn-explore" class="act-btn act-explore" onclick="enterExploreMode()" disabled>
+            <span class="act-icon">🧭</span>
+            <span class="act-name">探索目的地</span>
+            <span class="act-hint">點選目的地</span>
+          </button>
+          <button id="btn-end-turn" class="act-btn act-end" onclick="endTurn()" disabled>
+            <span class="act-icon">➡</span>
+            <span class="act-name">結束回合</span>
+          </button>
+        </div>
+        <!-- 貿易選項 (inline) -->
+        <div id="trade-inline" class="trade-inline hidden">
+          <div class="trade-inline-title">選擇銀臂鐲數量（你有 <span id="trade-bracelet-count">0</span> 枚）</div>
+          <div class="trade-inline-btns">
+            <button class="trade-opt-btn" onclick="executeTrade(1)"><span class="trade-cost">1 枚⭕</span><span class="trade-gain">取得左欄資源</span></button>
+            <button class="trade-opt-btn" onclick="executeTrade(2)"><span class="trade-cost">2 枚⭕</span><span class="trade-gain">左欄 + 中欄</span></button>
+            <button class="trade-opt-btn" onclick="executeTrade(3)"><span class="trade-cost">3 枚⭕</span><span class="trade-gain">左 + 中 + 右欄</span></button>
+            <button class="trade-cancel-btn" onclick="cancelTrade()">✕ 取消</button>
+          </div>
+        </div>
+        <!-- 探索費用說明 (inline) -->
+        <div id="explore-inline" class="explore-inline hidden">
+          <div class="explore-inline-title">探索模式：先點選目的地，再從手牌/船員區選擇4張同色船員支付（可用⚡代替）</div>
+          <div class="explore-inline-state">
+            已選目的地：<span id="sel-dest-name">—</span> ／
+            已選費用：<span id="sel-crew-count">0</span>/4 張 ＋ <span id="sel-token-count">0</span> 枚⚡
+            <button class="small-btn" id="explore-use-token-btn" onclick="useTokenForExplore()" disabled>使用⚡代替</button>
+            <button class="small-btn confirm-btn" id="confirm-explore-btn" onclick="confirmExplore()" disabled>✓ 確認探索</button>
+            <button class="small-btn cancel-btn" onclick="cancelExplore()">✕ 取消</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 事件記錄 -->
+      <div id="event-log" class="event-log hidden">
+        <div class="log-hdr">📋 事件記錄 <button class="log-close-btn" onclick="toggleLog()">✕</button></div>
+        <div class="log-body" id="log-entries"></div>
+      </div>
+    </main>
+
+    <!-- ── COL C: 玩家面板 ── -->
+    <aside class="side-panel side-panel--human">
+      <div class="player-card human-card">
+        <div class="pcard-header">
+          <div class="pcard-avatar">🧑‍✈️</div>
+          <div class="pcard-info">
+            <div class="pcard-name" id="human-player-name">維京艦長</div>
+            <div class="turn-badge" id="human-turn-badge">▶ 你的回合</div>
+          </div>
+          <div class="pcard-score"><span id="human-score">0</span><small>分</small></div>
+        </div>
+        <!-- Reputation -->
+        <div class="rep-block">
+          <div class="rep-row">
+            <span class="rep-track-label">聲望軌</span>
+            <span class="rep-value">🔰<span id="human-rep">0</span> → <span id="human-rep-pts">0</span>分/回合</span>
+          </div>
+          <div class="rep-track-bar" id="human-rep-track"></div>
+        </div>
+        <!-- Tokens -->
+        <div class="token-row">
+          <div class="token-chip" title="招募標記">⚡<span id="human-recruit">1</span></div>
+          <div class="token-chip" title="銀臂鐲">⭕<span id="human-bracelet">1</span></div>
+          <div class="token-chip traded-chip" id="traded-chip" style="display:none">💰已貿</div>
+          <div class="token-chip action-chip" id="action-chip" style="display:none">⚔主行動</div>
+        </div>
+      </div>
+
+      <!-- 玩家手牌 -->
+      <div class="hand-block" id="hand-block">
+        <div class="block-title">手牌 (<span id="hand-count">0</span>) <span class="block-hint" id="hand-hint">— 點牌招募</span></div>
+        <div class="hand-cards-row" id="human-hand"></div>
+      </div>
+
+      <!-- 玩家船員區 -->
+      <div class="crew-area-block human-crew-block">
+        <div class="block-title">船員區 <span class="block-hint">— 點欄位查看資源</span></div>
+        <div class="crew-grid" id="human-crew-grid">
+          <div class="crew-lane blue-lane" onclick="showCrewColResource('blue')"><div class="lane-header lane-blue">藍</div><div class="lane-cards" id="human-crew-blue"></div></div>
+          <div class="crew-lane yellow-lane" onclick="showCrewColResource('yellow')"><div class="lane-header lane-yellow">黃</div><div class="lane-cards" id="human-crew-yellow"></div></div>
+          <div class="crew-lane green-lane" onclick="showCrewColResource('green')"><div class="lane-header lane-green">綠</div><div class="lane-cards" id="human-crew-green"></div></div>
+          <div class="crew-lane red-lane" onclick="showCrewColResource('red')"><div class="lane-header lane-red">紅</div><div class="lane-cards" id="human-crew-red"></div></div>
+          <div class="crew-lane purple-lane" onclick="showCrewColResource('purple')"><div class="lane-header lane-purple">紫</div><div class="lane-cards" id="human-crew-purple"></div></div>
+        </div>
+      </div>
+
+      <!-- 玩家目的地 -->
+      <div class="dest-block human-dest-block">
+        <div class="block-title">目的地 (<span id="human-dest-count">0</span>)</div>
+        <div class="dest-cards-row" id="human-destinations"></div>
+        <div class="block-title reserved-label" id="reserved-title" style="display:none">🔖 預留 (<span id="reserved-count">0</span>)</div>
+        <div class="dest-cards-row" id="human-reserved"></div>
+      </div>
+
+      <!-- 玩家船隻板塊 -->
+      <div class="ship-tile-block" id="human-ship-block">
+        <div class="block-title">⛵ 船隻板塊</div>
+        <div class="ship-trade-cols" id="human-trade-cols"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ GAMEOVER ═══════════════════════════ -->
+<div id="screen-gameover" class="screen">
+  <div class="intro-bg"><div class="aurora"></div></div>
+  <div class="gameover-panel">
+    <div class="valknut-logo">ᚱ</div>
+    <h2 id="gameover-title">遊戲結束</h2>
+    <div class="gameover-result" id="gameover-result"></div>
+    <div class="gameover-scores" id="gameover-scores"></div>
+    <div class="gameover-btns">
+      <button class="btn-primary" onclick="showScreen('screen-intro')">⚓ 返回主畫面</button>
+      <button class="btn-ghost" onclick="restartGame()">🔄 再來一局</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ MODALS ═══════════════════════════ -->
+
+<!-- 卡牌資訊 -->
+<div id="modal-card-info" class="modal hidden">
+  <div class="modal-overlay" onclick="closeModal('modal-card-info')"></div>
+  <div class="modal-box modal-card-box">
+    <img id="modal-card-img" src="" alt="" class="modal-full-card-img">
+    <div class="modal-card-detail">
+      <h3 id="modal-card-name"></h3>
+      <div id="modal-card-body"></div>
+      <button class="btn-ghost" onclick="closeModal('modal-card-info')">關閉</button>
+    </div>
+  </div>
+</div>
+
+<!-- 金臂鐲預留 -->
+<div id="modal-reserve" class="modal hidden">
+  <div class="modal-overlay"></div>
+  <div class="modal-box">
+    <h3 class="modal-title">🔱 金臂鐲觸發！</h3>
+    <p class="modal-desc">同色船員剛好是第 3 張！選擇一張目的地預留（上限 2 張）。</p>
+    <div class="reserve-dest-row" id="reserve-dest-list"></div>
+    <button class="btn-ghost" style="margin-top:12px" onclick="skipReserve()">略過，不預留</button>
+  </div>
+</div>
+
+<!-- 規則說明 -->
+<div id="modal-rules" class="modal hidden">
+  <div class="modal-overlay" onclick="closeModal('modal-rules')"></div>
+  <div class="modal-box modal-rules-box">
+    <h3 class="modal-title">📜 Knarr 遊戲規則</h3>
+    <div class="rules-body">
+      <h4>🎯 勝利目標</h4>
+      <p>任一玩家達 40 分觸發終局，完成本輪後分數最高者獲勝。</p>
+      <h4>🔄 回合流程</h4>
+      <ol>
+        <li><b>聲望給分</b>：回合開始依聲望軌位置得分（格3→1分, 格6→2分, 格10→3分, 格14→5分）</li>
+        <li><b>行前貿易</b>（可選）：花費銀臂鐲取得船隻板塊欄位資源</li>
+        <li><b>主行動</b>（必選一）：招募船員 或 探索目的地</li>
+        <li><b>行後貿易</b>（可選）：若本回合尚未貿易</li>
+        <li><b>結束回合</b></li>
+      </ol>
+      <h4>⚡ 招募船員</h4>
+      <p>從手牌打出 1 張船員卡放入對應顏色欄位，取得該欄所有可見資源圖標，然後從市場補 1 張同色牌到手（若無同色可花招募標記任選 1 張）。</p>
+      <h4>🧭 探索目的地</h4>
+      <p>選擇市場或預留目的地，支付 4 張同色船員卡（招募標記可各代替 1 張），取得右上角獎勵。</p>
+      <h4>💰 貿易</h4>
+      <p>花費 1/2/3 枚銀臂鐲，對應解鎖船隻板塊左欄 / 左+中欄 / 全欄，取得欄位資源及所有已取得目的地卡的相同欄位資源。每回合最多貿易一次。</p>
+      <h4>🔱 金臂鐲聖物（可選模組）</h4>
+      <p>當招募的同色船員剛好是第 3 張時，可預留 1 張目的地卡（每人上限 2 張預留）。</p>
+    </div>
+    <button class="btn-ghost" onclick="closeModal('modal-rules')">關閉</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="game-data.js"></script>
+<script src="game-engine.js"></script>
+<script>
+// Bootstrap: load JSON data then init UI
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadGameData();
+  showScreen('screen-intro');
+});
+</script>
+</body>
+</html>

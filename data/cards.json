@@ -1,0 +1,3428 @@
+{
+  "schema_version": "0.3",
+  "language": "zh-TW",
+  "source": {
+    "card_folder": "card_images",
+    "image_manifest": "manifests/card_image_manifest.csv",
+    "extraction_method": "manual visual transcription from audit sheets; crew icons and destination icons high confidence after high-res manual audit"
+  },
+  "card_backs": {
+    "crew": "card_images/knarr_core_crew_back.png",
+    "settlement": "card_images/knarr_core_settlement_back.png",
+    "trade_post": "card_images/knarr_core_trade_post_back.png",
+    "relic": "card_images/knarr_relic_variant_relic_back.png"
+  },
+  "icon_legend": {
+    "victory_point": "勝利分數",
+    "silver_bracelet": "銀臂鐲標記",
+    "recruit_token": "招募標記",
+    "reputation": "聲望值",
+    "draw_crew_card": "從船員牌庫頂部抽取並放置 1 張船員",
+    "same_color_any_4_cost": "探索費用：同色任意 4 張船員卡；招募標記可各代替 1 張。",
+    "empty_trade_column": "此貿易欄無資源圖標。"
+  },
+  "effect_class_defaults": {
+    "immediate": {
+      "timing_window": "action.resolve_immediate",
+      "complete_resolution_required": true
+    },
+    "activated": {
+      "timing_window": "resolution.resolve_activated",
+      "complete_resolution_required": false
+    },
+    "triggered": {
+      "timing_window": "trigger.check",
+      "complete_resolution_required": false
+    },
+    "replacement": {
+      "timing_window": "replacement.before_event",
+      "complete_resolution_required": null
+    },
+    "setup": {
+      "timing_window": "setup",
+      "complete_resolution_required": true
+    }
+  },
+  "cards": [
+    {
+      "id": "knarr_core_crew_001",
+      "source_file": "card_images/knarr_core_crew_001.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_02.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 1,
+      "side": "front",
+      "name_zh": "藍色維京船員 01",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_002",
+      "source_file": "card_images/knarr_core_crew_002.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_03.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 2,
+      "side": "front",
+      "name_zh": "藍色維京船員 02",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_003",
+      "source_file": "card_images/knarr_core_crew_003.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_04.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 3,
+      "side": "front",
+      "name_zh": "藍色維京船員 03",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_004",
+      "source_file": "card_images/knarr_core_crew_004.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_05.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 4,
+      "side": "front",
+      "name_zh": "藍色維京船員 04",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_005",
+      "source_file": "card_images/knarr_core_crew_005.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_06.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 5,
+      "side": "front",
+      "name_zh": "藍色維京船員 05",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_006",
+      "source_file": "card_images/knarr_core_crew_006.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_07.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 6,
+      "side": "front",
+      "name_zh": "藍色維京船員 06",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_007",
+      "source_file": "card_images/knarr_core_crew_007.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_08.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 7,
+      "side": "front",
+      "name_zh": "藍色維京船員 07",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_008",
+      "source_file": "card_images/knarr_core_crew_008.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_09.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 8,
+      "side": "front",
+      "name_zh": "藍色維京船員 08",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_009",
+      "source_file": "card_images/knarr_core_crew_009.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_10.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 9,
+      "side": "front",
+      "name_zh": "藍色維京船員 09",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_010",
+      "source_file": "card_images/knarr_core_crew_010.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_11.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 10,
+      "side": "front",
+      "name_zh": "藍色維京船員 10",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "blue",
+      "color_zh": "藍色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_011",
+      "source_file": "card_images/knarr_core_crew_011.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_12.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 11,
+      "side": "front",
+      "name_zh": "黃色維京船員 11",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_012",
+      "source_file": "card_images/knarr_core_crew_012.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_13.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 12,
+      "side": "front",
+      "name_zh": "黃色維京船員 12",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_013",
+      "source_file": "card_images/knarr_core_crew_013.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_14.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 13,
+      "side": "front",
+      "name_zh": "黃色維京船員 13",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_014",
+      "source_file": "card_images/knarr_core_crew_014.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_15.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 14,
+      "side": "front",
+      "name_zh": "黃色維京船員 14",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_015",
+      "source_file": "card_images/knarr_core_crew_015.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_16.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 15,
+      "side": "front",
+      "name_zh": "黃色維京船員 15",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_016",
+      "source_file": "card_images/knarr_core_crew_016.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_17.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 16,
+      "side": "front",
+      "name_zh": "黃色維京船員 16",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_017",
+      "source_file": "card_images/knarr_core_crew_017.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_18.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 17,
+      "side": "front",
+      "name_zh": "黃色維京船員 17",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_018",
+      "source_file": "card_images/knarr_core_crew_018.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_19.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 18,
+      "side": "front",
+      "name_zh": "黃色維京船員 18",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_019",
+      "source_file": "card_images/knarr_core_crew_019.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_20.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 19,
+      "side": "front",
+      "name_zh": "黃色維京船員 19",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_020",
+      "source_file": "card_images/knarr_core_crew_020.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_21.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 20,
+      "side": "front",
+      "name_zh": "黃色維京船員 20",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "yellow",
+      "color_zh": "黃色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_021",
+      "source_file": "card_images/knarr_core_crew_021.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_22.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 21,
+      "side": "front",
+      "name_zh": "綠色維京船員 21",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_022",
+      "source_file": "card_images/knarr_core_crew_022.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_23.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 22,
+      "side": "front",
+      "name_zh": "綠色維京船員 22",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_023",
+      "source_file": "card_images/knarr_core_crew_023.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_24.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 23,
+      "side": "front",
+      "name_zh": "綠色維京船員 23",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_024",
+      "source_file": "card_images/knarr_core_crew_024.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_25.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 24,
+      "side": "front",
+      "name_zh": "綠色維京船員 24",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_025",
+      "source_file": "card_images/knarr_core_crew_025.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_26.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 25,
+      "side": "front",
+      "name_zh": "綠色維京船員 25",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_026",
+      "source_file": "card_images/knarr_core_crew_026.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_27.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 26,
+      "side": "front",
+      "name_zh": "綠色維京船員 26",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_027",
+      "source_file": "card_images/knarr_core_crew_027.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_28.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 27,
+      "side": "front",
+      "name_zh": "綠色維京船員 27",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_028",
+      "source_file": "card_images/knarr_core_crew_028.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_29.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 28,
+      "side": "front",
+      "name_zh": "綠色維京船員 28",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_029",
+      "source_file": "card_images/knarr_core_crew_029.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_30.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 29,
+      "side": "front",
+      "name_zh": "綠色維京船員 29",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_030",
+      "source_file": "card_images/knarr_core_crew_030.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_31.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 30,
+      "side": "front",
+      "name_zh": "綠色維京船員 30",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "green",
+      "color_zh": "綠色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_031",
+      "source_file": "card_images/knarr_core_crew_031.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_32.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 31,
+      "side": "front",
+      "name_zh": "紅色維京船員 31",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_032",
+      "source_file": "card_images/knarr_core_crew_032.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_33.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 32,
+      "side": "front",
+      "name_zh": "紅色維京船員 32",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_033",
+      "source_file": "card_images/knarr_core_crew_033.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_34.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 33,
+      "side": "front",
+      "name_zh": "紅色維京船員 33",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_034",
+      "source_file": "card_images/knarr_core_crew_034.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_35.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 34,
+      "side": "front",
+      "name_zh": "紅色維京船員 34",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_035",
+      "source_file": "card_images/knarr_core_crew_035.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_36.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 35,
+      "side": "front",
+      "name_zh": "紅色維京船員 35",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_036",
+      "source_file": "card_images/knarr_core_crew_036.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_37.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 36,
+      "side": "front",
+      "name_zh": "紅色維京船員 36",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_037",
+      "source_file": "card_images/knarr_core_crew_037.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_38.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 37,
+      "side": "front",
+      "name_zh": "紅色維京船員 37",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_038",
+      "source_file": "card_images/knarr_core_crew_038.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_39.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 38,
+      "side": "front",
+      "name_zh": "紅色維京船員 38",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_039",
+      "source_file": "card_images/knarr_core_crew_039.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_40.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 39,
+      "side": "front",
+      "name_zh": "紅色維京船員 39",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_040",
+      "source_file": "card_images/knarr_core_crew_040.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_41.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 40,
+      "side": "front",
+      "name_zh": "紅色維京船員 40",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "red",
+      "color_zh": "紅色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_041",
+      "source_file": "card_images/knarr_core_crew_041.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_42.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 41,
+      "side": "front",
+      "name_zh": "紫色維京船員 41",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_042",
+      "source_file": "card_images/knarr_core_crew_042.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_43.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 42,
+      "side": "front",
+      "name_zh": "紫色維京船員 42",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_043",
+      "source_file": "card_images/knarr_core_crew_043.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_44.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 43,
+      "side": "front",
+      "name_zh": "紫色維京船員 43",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "silver_bracelet"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "silver_bracelet",
+      "top_resource_name_zh": "銀臂鐲標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_044",
+      "source_file": "card_images/knarr_core_crew_044.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_45.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 44,
+      "side": "front",
+      "name_zh": "紫色維京船員 44",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_045",
+      "source_file": "card_images/knarr_core_crew_045.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_46.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 45,
+      "side": "front",
+      "name_zh": "紫色維京船員 45",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "recruit_token"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "recruit_token",
+      "top_resource_name_zh": "招募標記",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_046",
+      "source_file": "card_images/knarr_core_crew_046.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_47.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 46,
+      "side": "front",
+      "name_zh": "紫色維京船員 46",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": null,
+      "valid_player_counts": [
+        2,
+        3,
+        4
+      ],
+      "usable_in_two_player": true
+    },
+    {
+      "id": "knarr_core_crew_047",
+      "source_file": "card_images/knarr_core_crew_047.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_48.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 47,
+      "side": "front",
+      "name_zh": "紫色維京船員 47",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_048",
+      "source_file": "card_images/knarr_core_crew_048.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_49.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 48,
+      "side": "front",
+      "name_zh": "紫色維京船員 48",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_049",
+      "source_file": "card_images/knarr_core_crew_049.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_50.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 49,
+      "side": "front",
+      "name_zh": "紫色維京船員 49",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "victory_point"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "victory_point",
+      "top_resource_name_zh": "勝利分數",
+      "player_count_marker": 4,
+      "valid_player_counts": [
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_crew_050",
+      "source_file": "card_images/knarr_core_crew_050.png",
+      "original_file": "card/card1/維京船員卡牌_頁面_51.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "crew",
+      "subtype": "crew",
+      "sequence": 50,
+      "side": "front",
+      "name_zh": "紫色維京船員 50",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "color": "purple",
+      "color_zh": "紫色",
+      "resource_icons": [
+        "reputation"
+      ],
+      "notes": "已依 crew audit sheet 人工校對頂端資源圖標與左下角人數標記。",
+      "top_resource_icon": "reputation",
+      "top_resource_name_zh": "聲望值",
+      "player_count_marker": 3,
+      "valid_player_counts": [
+        3,
+        4
+      ],
+      "usable_in_two_player": false
+    },
+    {
+      "id": "knarr_core_settlement_001",
+      "source_file": "card_images/knarr_core_settlement_001.png",
+      "original_file": "card/card2/定居點卡牌_頁面_02.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 1,
+      "side": "front",
+      "name_zh": "定居點 01",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 8,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 8,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_002",
+      "source_file": "card_images/knarr_core_settlement_002.png",
+      "original_file": "card/card2/定居點卡牌_頁面_03.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 2,
+      "side": "front",
+      "name_zh": "定居點 02",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 6,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 6,
+          "name_zh": "勝利分數"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_003",
+      "source_file": "card_images/knarr_core_settlement_003.png",
+      "original_file": "card/card2/定居點卡牌_頁面_04.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 3,
+      "side": "front",
+      "name_zh": "定居點 03",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 7,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 7,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "reputation",
+          "amount": 2,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_004",
+      "source_file": "card_images/knarr_core_settlement_004.png",
+      "original_file": "card/card2/定居點卡牌_頁面_05.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 4,
+      "side": "front",
+      "name_zh": "定居點 04",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 6,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 6,
+          "name_zh": "勝利分數"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_005",
+      "source_file": "card_images/knarr_core_settlement_005.png",
+      "original_file": "card/card2/定居點卡牌_頁面_06.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 5,
+      "side": "front",
+      "name_zh": "定居點 05",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 5,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 5,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_006",
+      "source_file": "card_images/knarr_core_settlement_006.png",
+      "original_file": "card/card2/定居點卡牌_頁面_07.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 6,
+      "side": "front",
+      "name_zh": "定居點 06",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 5,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 5,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_007",
+      "source_file": "card_images/knarr_core_settlement_007.png",
+      "original_file": "card/card2/定居點卡牌_頁面_08.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 7,
+      "side": "front",
+      "name_zh": "定居點 07",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 9,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 9,
+          "name_zh": "勝利分數"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_008",
+      "source_file": "card_images/knarr_core_settlement_008.png",
+      "original_file": "card/card2/定居點卡牌_頁面_09.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 8,
+      "side": "front",
+      "name_zh": "定居點 08",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 6,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 6,
+          "name_zh": "勝利分數"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_009",
+      "source_file": "card_images/knarr_core_settlement_009.png",
+      "original_file": "card/card2/定居點卡牌_頁面_10.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 9,
+      "side": "front",
+      "name_zh": "定居點 09",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 4,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 4,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_010",
+      "source_file": "card_images/knarr_core_settlement_010.png",
+      "original_file": "card/card2/定居點卡牌_頁面_11.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 10,
+      "side": "front",
+      "name_zh": "定居點 10",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 6,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 6,
+          "name_zh": "勝利分數"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_011",
+      "source_file": "card_images/knarr_core_settlement_011.png",
+      "original_file": "card/card2/定居點卡牌_頁面_12.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 11,
+      "side": "front",
+      "name_zh": "定居點 11",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 5,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 5,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_012",
+      "source_file": "card_images/knarr_core_settlement_012.png",
+      "original_file": "card/card2/定居點卡牌_頁面_13.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 12,
+      "side": "front",
+      "name_zh": "定居點 12",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 6,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 6,
+          "name_zh": "勝利分數"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_013",
+      "source_file": "card_images/knarr_core_settlement_013.png",
+      "original_file": "card/card2/定居點卡牌_頁面_14.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 13,
+      "side": "front",
+      "name_zh": "定居點 13",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 4,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 4,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_014",
+      "source_file": "card_images/knarr_core_settlement_014.png",
+      "original_file": "card/card2/定居點卡牌_頁面_15.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 14,
+      "side": "front",
+      "name_zh": "定居點 14",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 8,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 8,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_settlement_015",
+      "source_file": "card_images/knarr_core_settlement_015.png",
+      "original_file": "card/card2/定居點卡牌_頁面_16.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "settlement",
+      "sequence": 15,
+      "side": "front",
+      "name_zh": "定居點 15",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": 7,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "settlement",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "victory_point",
+          "amount": 7,
+          "name_zh": "勝利分數"
+        },
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_001",
+      "source_file": "card_images/knarr_core_trade_post_001.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_02.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 1,
+      "side": "front",
+      "name_zh": "貿易點 01",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        "draw_crew_card",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_002",
+      "source_file": "card_images/knarr_core_trade_post_002.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_03.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 2,
+      "side": "front",
+      "name_zh": "貿易點 02",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        null,
+        "recruit_token"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_003",
+      "source_file": "card_images/knarr_core_trade_post_003.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_04.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 3,
+      "side": "front",
+      "name_zh": "貿易點 03",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "reputation",
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_004",
+      "source_file": "card_images/knarr_core_trade_post_004.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_05.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 4,
+      "side": "front",
+      "name_zh": "貿易點 04",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        "reputation",
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_005",
+      "source_file": "card_images/knarr_core_trade_post_005.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_06.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 5,
+      "side": "front",
+      "name_zh": "貿易點 05",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_006",
+      "source_file": "card_images/knarr_core_trade_post_006.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_07.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 6,
+      "side": "front",
+      "name_zh": "貿易點 06",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_007",
+      "source_file": "card_images/knarr_core_trade_post_007.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_08.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 7,
+      "side": "front",
+      "name_zh": "貿易點 07",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [],
+      "trade_column_icons": [
+        "victory_point",
+        "victory_point",
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_008",
+      "source_file": "card_images/knarr_core_trade_post_008.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_09.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 8,
+      "side": "front",
+      "name_zh": "貿易點 08",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "recruit_token",
+          "amount": 2,
+          "name_zh": "招募標記"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "recruit_token",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_009",
+      "source_file": "card_images/knarr_core_trade_post_009.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_10.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 9,
+      "side": "front",
+      "name_zh": "貿易點 09",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        }
+      ],
+      "trade_column_icons": [
+        "recruit_token",
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_010",
+      "source_file": "card_images/knarr_core_trade_post_010.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_11.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 10,
+      "side": "front",
+      "name_zh": "貿易點 10",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_011",
+      "source_file": "card_images/knarr_core_trade_post_011.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_12.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 11,
+      "side": "front",
+      "name_zh": "貿易點 11",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_012",
+      "source_file": "card_images/knarr_core_trade_post_012.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_13.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 12,
+      "side": "front",
+      "name_zh": "貿易點 12",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_013",
+      "source_file": "card_images/knarr_core_trade_post_013.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_14.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 13,
+      "side": "front",
+      "name_zh": "貿易點 13",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        },
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_014",
+      "source_file": "card_images/knarr_core_trade_post_014.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_15.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 14,
+      "side": "front",
+      "name_zh": "貿易點 14",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "reputation",
+          "amount": 2,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        "reputation"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_015",
+      "source_file": "card_images/knarr_core_trade_post_015.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_16.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 15,
+      "side": "front",
+      "name_zh": "貿易點 15",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "reputation",
+          "amount": 1,
+          "name_zh": "聲望值"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_016",
+      "source_file": "card_images/knarr_core_trade_post_016.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_17.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 16,
+      "side": "front",
+      "name_zh": "貿易點 16",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        "reputation",
+        "recruit_token"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_017",
+      "source_file": "card_images/knarr_core_trade_post_017.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_18.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 17,
+      "side": "front",
+      "name_zh": "貿易點 17",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        }
+      ],
+      "trade_column_icons": [
+        "victory_point",
+        "reputation",
+        "recruit_token"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_018",
+      "source_file": "card_images/knarr_core_trade_post_018.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_19.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 18,
+      "side": "front",
+      "name_zh": "貿易點 18",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "recruit_token",
+          "amount": 1,
+          "name_zh": "招募標記"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        null
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_019",
+      "source_file": "card_images/knarr_core_trade_post_019.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_20.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 19,
+      "side": "front",
+      "name_zh": "貿易點 19",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        "draw_crew_card",
+        null,
+        "victory_point"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_core_trade_post_020",
+      "source_file": "card_images/knarr_core_trade_post_020.png",
+      "original_file": "card/card3/貿易點卡牌_頁面_21.png",
+      "set_id": "core",
+      "module_id": "core",
+      "type": "destination",
+      "subtype": "trade_post",
+      "sequence": 20,
+      "side": "front",
+      "name_zh": "貿易點 20",
+      "cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "destination_type": "trade_post",
+      "exploration_cost": {
+        "type": "same_color_any",
+        "crew_cards": 4,
+        "can_substitute_recruit_tokens": true,
+        "source": "user_confirmed_2026-06-16",
+        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+      },
+      "reward_icons": [
+        {
+          "icon": "silver_bracelet",
+          "amount": 1,
+          "name_zh": "銀臂鐲標記"
+        },
+        {
+          "icon": "draw_crew_card",
+          "amount": 1,
+          "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+        }
+      ],
+      "trade_column_icons": [
+        null,
+        "victory_point",
+        "draw_crew_card"
+      ],
+      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "icon_audit_confidence": "high",
+      "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
+    },
+    {
+      "id": "knarr_relic_variant_relic_001",
+      "source_file": "card_images/knarr_relic_variant_relic_001.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_2.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 1,
+      "side": "front",
+      "name_zh": "風向標",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "notes": "聖物名稱依規則頁與聯絡表順序整理；建議最後由使用者確認。",
+      "icon_audit": {
+        "visual_trigger": "helmet/recruit icon",
+        "ability_id": "windsock_ability"
+      }
+    },
+    {
+      "id": "knarr_relic_variant_relic_002",
+      "source_file": "card_images/knarr_relic_variant_relic_002.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_3.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 2,
+      "side": "front",
+      "name_zh": "金臂鐲",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "medium",
+      "notes": "金臂鐲：預留目的地後立即補同類型目的地市場；每位玩家最多同時預留 2 張。",
+      "icon_audit": {
+        "visual_trigger": "reserve destination, max 2",
+        "ability_id": "gold_bracelet_ability"
+      }
+    },
+    {
+      "id": "knarr_relic_variant_relic_003",
+      "source_file": "card_images/knarr_relic_variant_relic_003.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_4.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 3,
+      "side": "front",
+      "name_zh": "大煮釜",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "notes": "聖物名稱依規則頁與聯絡表順序整理；建議最後由使用者確認。",
+      "icon_audit": {
+        "visual_trigger": "five-color row",
+        "ability_id": "cauldron_ability"
+      }
+    },
+    {
+      "id": "knarr_relic_variant_relic_004",
+      "source_file": "card_images/knarr_relic_variant_relic_004.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_5.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 4,
+      "side": "front",
+      "name_zh": "鐵戰盔",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "notes": "聖物名稱依規則頁與聯絡表順序整理；建議最後由使用者確認。",
+      "icon_audit": {
+        "visual_trigger": "draw/extra crew cards",
+        "ability_id": "iron_helmet_ability"
+      }
+    },
+    {
+      "id": "knarr_relic_variant_relic_005",
+      "source_file": "card_images/knarr_relic_variant_relic_005.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_6.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 5,
+      "side": "front",
+      "name_zh": "蜜酒杯",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "notes": "聖物名稱依規則頁與聯絡表順序整理；建議最後由使用者確認。",
+      "icon_audit": {
+        "visual_trigger": "refresh icon",
+        "ability_id": "mead_cup_ability"
+      }
+    },
+    {
+      "id": "knarr_relic_variant_relic_006",
+      "source_file": "card_images/knarr_relic_variant_relic_006.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_7.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 6,
+      "side": "front",
+      "name_zh": "銀錢幣",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "medium",
+      "notes": "聖物名稱依規則頁與聯絡表順序整理；建議最後由使用者確認。",
+      "icon_audit": {
+        "visual_trigger": "victory point",
+        "ability_id": "silver_coin_ability"
+      }
+    },
+    {
+      "id": "knarr_relic_variant_relic_007",
+      "source_file": "card_images/knarr_relic_variant_relic_007.png",
+      "original_file": "card/card4/聖物卡牌(遊戲變體)_頁面_8.png",
+      "set_id": "relic_variant",
+      "module_id": "relic_variant",
+      "type": "relic",
+      "subtype": "relic",
+      "sequence": 7,
+      "side": "front",
+      "name_zh": "護身符",
+      "cost": null,
+      "points": null,
+      "abilities": [],
+      "confidence": "high",
+      "notes": "聖物名稱依規則頁與聯絡表順序整理；建議最後由使用者確認。",
+      "icon_audit": {
+        "visual_trigger": "silver, recruit, reputation",
+        "ability_id": "amulet_ability"
+      }
+    }
+  ],
+  "setup_filtering": {
+    "2_players": "移除左下角標有 3 或 4 的維京船員卡。",
+    "3_players": "移除左下角標有 4 的維京船員卡。",
+    "4_players": "使用全部維京船員卡。"
+  }
+}

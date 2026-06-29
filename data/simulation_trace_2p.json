@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "status": "representative_flow_complete",
+  "modules_tested": [
+    {
+      "core": true,
+      "relic_variant": false
+    },
+    {
+      "core": true,
+      "relic_variant": true,
+      "active_relic": "knarr_relic_mead_cup"
+    }
+  ],
+  "assumptions": [
+    "起始設置採暫定值，不視為官方規則。",
+    "卡牌圖標尚未逐張校對，模擬使用代表性資源。"
+  ],
+  "checks": {
+    "turn_structure": "pass",
+    "recruit_action": "pass",
+    "explore_action": "pass_with_assumptions",
+    "trade_action": "pass",
+    "relic_variant_toggle": "pass",
+    "victory_check_window": "pass"
+  }
+}

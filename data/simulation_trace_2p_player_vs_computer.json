@@ -1,0 +1,1820 @@
+{
+  "schema_version": "0.1",
+  "simulation_id": "knarr_2p_human_vs_computer_2026-06-16",
+  "seed": 20260616,
+  "mode": "human_vs_computer",
+  "modules": {
+    "core": true,
+    "relic_variant": true,
+    "active_relic": "knarr_relic_gold_bracelet"
+  },
+  "status": "game_end",
+  "turn": 20,
+  "active_player_id": "human",
+  "board": {
+    "id": "board_main",
+    "type": "main_board",
+    "source_file": "component_images/knarr_core_board_001.png",
+    "reputation_track": {
+      "track_id": "main_reputation_track",
+      "row_count": 4,
+      "start_position": 0,
+      "max_position": 14,
+      "score_rule": "at_turn_start_score_highest_threshold_at_or_below_position",
+      "score_thresholds": [
+        {
+          "min_position": 0,
+          "score": 0
+        },
+        {
+          "min_position": 3,
+          "score": 1
+        },
+        {
+          "min_position": 6,
+          "score": 2
+        },
+        {
+          "min_position": 10,
+          "score": 3
+        },
+        {
+          "min_position": 14,
+          "score": 5
+        }
+      ],
+      "confidence": "high",
+      "notes": "依主板聲望軌可見格位資料化：起點為 0，給分格為第 3/6/10/14 格。玩家回合開始取得目前位置已達到的最高給分格分數。"
+    }
+  },
+  "ship_tiles_by_id": {
+    "knarr_core_ship_tile_1_side_001": {
+      "id": "knarr_core_ship_tile_1_side_001",
+      "physical_tile_id": "knarr_core_ship_tile_1",
+      "source_file": "component_images/knarr_core_ship_tile_side_001.png",
+      "manifest_sequence": 1,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_1_side_002": {
+      "id": "knarr_core_ship_tile_1_side_002",
+      "physical_tile_id": "knarr_core_ship_tile_1",
+      "source_file": "component_images/knarr_core_ship_tile_side_002.png",
+      "manifest_sequence": 2,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_2_side_003": {
+      "id": "knarr_core_ship_tile_2_side_003",
+      "physical_tile_id": "knarr_core_ship_tile_2",
+      "source_file": "component_images/knarr_core_ship_tile_side_003.png",
+      "manifest_sequence": 3,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_2_side_004": {
+      "id": "knarr_core_ship_tile_2_side_004",
+      "physical_tile_id": "knarr_core_ship_tile_2",
+      "source_file": "component_images/knarr_core_ship_tile_side_004.png",
+      "manifest_sequence": 4,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_3_side_005": {
+      "id": "knarr_core_ship_tile_3_side_005",
+      "physical_tile_id": "knarr_core_ship_tile_3",
+      "source_file": "component_images/knarr_core_ship_tile_side_005.png",
+      "manifest_sequence": 5,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_3_side_006": {
+      "id": "knarr_core_ship_tile_3_side_006",
+      "physical_tile_id": "knarr_core_ship_tile_3",
+      "source_file": "component_images/knarr_core_ship_tile_side_006.png",
+      "manifest_sequence": 6,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_4_side_007": {
+      "id": "knarr_core_ship_tile_4_side_007",
+      "physical_tile_id": "knarr_core_ship_tile_4",
+      "source_file": "component_images/knarr_core_ship_tile_side_007.png",
+      "manifest_sequence": 7,
+      "face_index_on_physical_tile": 1,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [],
+        [
+          "recruit_token"
+        ],
+        []
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    },
+    "knarr_core_ship_tile_4_side_008": {
+      "id": "knarr_core_ship_tile_4_side_008",
+      "physical_tile_id": "knarr_core_ship_tile_4",
+      "source_file": "component_images/knarr_core_ship_tile_side_008.png",
+      "manifest_sequence": 8,
+      "face_index_on_physical_tile": 2,
+      "trade_columns": [
+        [
+          "draw_crew_card",
+          "draw_crew_card"
+        ],
+        [
+          "recruit_token"
+        ],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "top_printed_columns": [
+        [
+          "victory_point"
+        ],
+        [],
+        [
+          "silver_bracelet"
+        ]
+      ],
+      "trade_columns_confidence": "high",
+      "top_printed_columns_confidence": "high",
+      "notes": "貿易欄依規則頁 8 的左/中/右三欄讀取；基礎/進階中文標籤不硬猜，模擬與未來引擎用 side_id 明確選面。"
+    }
+  },
+  "players": {
+    "human": {
+      "id": "human",
+      "name": "玩家",
+      "controller": "human",
+      "score": 40,
+      "reputation": 4,
+      "ship_tile_side_id": "knarr_core_ship_tile_1_side_001",
+      "traded_this_turn": false,
+      "tokens": {
+        "recruit_token": 0,
+        "silver_bracelet": 0
+      },
+      "hand": [
+        {
+          "id": "knarr_core_crew_043",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 43,
+          "color": "purple",
+          "top_resource_icon": "silver_bracelet",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        },
+        {
+          "id": "knarr_core_crew_004",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 4,
+          "color": "blue",
+          "top_resource_icon": "silver_bracelet",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        },
+        {
+          "id": "knarr_core_crew_006",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 6,
+          "color": "blue",
+          "top_resource_icon": "recruit_token",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      ],
+      "crew_area": {
+        "red": [
+          {
+            "id": "knarr_core_crew_035",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 35,
+            "color": "red",
+            "top_resource_icon": "recruit_token",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          },
+          {
+            "id": "knarr_core_crew_033",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 33,
+            "color": "red",
+            "top_resource_icon": "silver_bracelet",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          }
+        ],
+        "yellow": [
+          {
+            "id": "knarr_core_crew_020",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 20,
+            "color": "yellow",
+            "top_resource_icon": "victory_point",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          }
+        ],
+        "green": [
+          {
+            "id": "knarr_core_crew_025",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 25,
+            "color": "green",
+            "top_resource_icon": "recruit_token",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          },
+          {
+            "id": "knarr_core_crew_024",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 24,
+            "color": "green",
+            "top_resource_icon": "recruit_token",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          }
+        ],
+        "blue": [],
+        "purple": []
+      },
+      "destinations": [
+        {
+          "id": "knarr_core_settlement_015",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 15,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 7,
+              "name_zh": "勝利分數"
+            },
+            {
+              "icon": "silver_bracelet",
+              "amount": 1,
+              "name_zh": "銀臂鐲標記"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            null,
+            "victory_point"
+          ],
+          "points": 7
+        },
+        {
+          "id": "knarr_core_settlement_002",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 2,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 6,
+              "name_zh": "勝利分數"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            "victory_point",
+            null
+          ],
+          "points": 6
+        },
+        {
+          "id": "knarr_core_settlement_001",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 1,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 8,
+              "name_zh": "勝利分數"
+            },
+            {
+              "icon": "draw_crew_card",
+              "amount": 1,
+              "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            null,
+            "victory_point"
+          ],
+          "points": 8
+        },
+        {
+          "id": "knarr_core_settlement_011",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 11,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 5,
+              "name_zh": "勝利分數"
+            },
+            {
+              "icon": "silver_bracelet",
+              "amount": 1,
+              "name_zh": "銀臂鐲標記"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            null,
+            "victory_point"
+          ],
+          "points": 5
+        },
+        {
+          "id": "knarr_core_settlement_006",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 6,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 5,
+              "name_zh": "勝利分數"
+            },
+            {
+              "icon": "reputation",
+              "amount": 1,
+              "name_zh": "聲望值"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            null,
+            "victory_point"
+          ],
+          "points": 5
+        }
+      ],
+      "reserved_destinations": []
+    },
+    "computer": {
+      "id": "computer",
+      "name": "電腦",
+      "controller": "computer",
+      "score": 28,
+      "reputation": 1,
+      "ship_tile_side_id": "knarr_core_ship_tile_2_side_003",
+      "traded_this_turn": false,
+      "tokens": {
+        "recruit_token": 0,
+        "silver_bracelet": 0
+      },
+      "hand": [
+        {
+          "id": "knarr_core_crew_002",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 2,
+          "color": "blue",
+          "top_resource_icon": "reputation",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        },
+        {
+          "id": "knarr_core_crew_008",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 8,
+          "color": "blue",
+          "top_resource_icon": "victory_point",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        },
+        {
+          "id": "knarr_core_crew_037",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 37,
+          "color": "red",
+          "top_resource_icon": "victory_point",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      ],
+      "crew_area": {
+        "red": [
+          {
+            "id": "knarr_core_crew_038",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 38,
+            "color": "red",
+            "top_resource_icon": "victory_point",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          },
+          {
+            "id": "knarr_core_crew_032",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 32,
+            "color": "red",
+            "top_resource_icon": "silver_bracelet",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          }
+        ],
+        "yellow": [],
+        "green": [],
+        "blue": [
+          {
+            "id": "knarr_core_crew_007",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 7,
+            "color": "blue",
+            "top_resource_icon": "victory_point",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          }
+        ],
+        "purple": [
+          {
+            "id": "knarr_core_crew_046",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 46,
+            "color": "purple",
+            "top_resource_icon": "victory_point",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          },
+          {
+            "id": "knarr_core_crew_044",
+            "type": "crew",
+            "subtype": "crew",
+            "sequence": 44,
+            "color": "purple",
+            "top_resource_icon": "recruit_token",
+            "reward_icons": [],
+            "trade_column_icons": [],
+            "points": null
+          }
+        ]
+      },
+      "destinations": [
+        {
+          "id": "knarr_core_settlement_004",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 4,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 6,
+              "name_zh": "勝利分數"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            "victory_point",
+            null
+          ],
+          "points": 6
+        },
+        {
+          "id": "knarr_core_settlement_005",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 5,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 5,
+              "name_zh": "勝利分數"
+            },
+            {
+              "icon": "recruit_token",
+              "amount": 1,
+              "name_zh": "招募標記"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            null,
+            "victory_point"
+          ],
+          "points": 5
+        },
+        {
+          "id": "knarr_core_settlement_008",
+          "type": "destination",
+          "subtype": "settlement",
+          "sequence": 8,
+          "color": null,
+          "top_resource_icon": null,
+          "reward_icons": [
+            {
+              "icon": "victory_point",
+              "amount": 6,
+              "name_zh": "勝利分數"
+            }
+          ],
+          "trade_column_icons": [
+            null,
+            "victory_point",
+            null
+          ],
+          "points": 6
+        }
+      ],
+      "reserved_destinations": []
+    }
+  },
+  "zones": {
+    "crew_deck": [
+      {
+        "id": "knarr_core_crew_016",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 16,
+        "color": "yellow",
+        "top_resource_icon": "victory_point",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_017",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 17,
+        "color": "yellow",
+        "top_resource_icon": "victory_point",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_018",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 18,
+        "color": "yellow",
+        "top_resource_icon": "victory_point",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      }
+    ],
+    "crew_discard": [
+      {
+        "id": "knarr_core_crew_021",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 21,
+        "color": "green",
+        "top_resource_icon": "reputation",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_027",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 27,
+        "color": "green",
+        "top_resource_icon": "victory_point",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_028",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 28,
+        "color": "green",
+        "top_resource_icon": "victory_point",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_013",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 13,
+        "color": "yellow",
+        "top_resource_icon": "silver_bracelet",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_015",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 15,
+        "color": "yellow",
+        "top_resource_icon": "recruit_token",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_019",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 19,
+        "color": "yellow",
+        "top_resource_icon": "victory_point",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_045",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 45,
+        "color": "purple",
+        "top_resource_icon": "recruit_token",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_042",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 42,
+        "color": "purple",
+        "top_resource_icon": "silver_bracelet",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      },
+      {
+        "id": "knarr_core_crew_041",
+        "type": "crew",
+        "subtype": "crew",
+        "sequence": 41,
+        "color": "purple",
+        "top_resource_icon": "reputation",
+        "reward_icons": [],
+        "trade_column_icons": [],
+        "points": null
+      }
+    ],
+    "crew_market": [
+      {
+        "slot_color": "red",
+        "card": {
+          "id": "knarr_core_crew_022",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 22,
+          "color": "green",
+          "top_resource_icon": "silver_bracelet",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      },
+      {
+        "slot_color": "yellow",
+        "card": {
+          "id": "knarr_core_crew_011",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 11,
+          "color": "yellow",
+          "top_resource_icon": "reputation",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      },
+      {
+        "slot_color": "green",
+        "card": {
+          "id": "knarr_core_crew_001",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 1,
+          "color": "blue",
+          "top_resource_icon": "reputation",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      },
+      {
+        "slot_color": "blue",
+        "card": {
+          "id": "knarr_core_crew_012",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 12,
+          "color": "yellow",
+          "top_resource_icon": "reputation",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      },
+      {
+        "slot_color": "purple",
+        "card": {
+          "id": "knarr_core_crew_039",
+          "type": "crew",
+          "subtype": "crew",
+          "sequence": 39,
+          "color": "red",
+          "top_resource_icon": "victory_point",
+          "reward_icons": [],
+          "trade_column_icons": [],
+          "points": null
+        }
+      }
+    ],
+    "trade_post_deck": [
+      {
+        "id": "knarr_core_trade_post_020",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 20,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          "draw_crew_card"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_006",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 6,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_016",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 16,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          "reputation",
+          "recruit_token"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_012",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 12,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_018",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 18,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_009",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 9,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          }
+        ],
+        "trade_column_icons": [
+          "recruit_token",
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_017",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 17,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          "reputation",
+          "recruit_token"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_003",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 3,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "reputation",
+          "victory_point"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_019",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 19,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          "draw_crew_card",
+          null,
+          "victory_point"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_015",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 15,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_005",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 5,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          null,
+          "victory_point"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_002",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 2,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          null,
+          "recruit_token"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_008",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 8,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "recruit_token",
+            "amount": 2,
+            "name_zh": "招募標記"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "recruit_token",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_010",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 10,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_004",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 4,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          }
+        ],
+        "trade_column_icons": [
+          "reputation",
+          null,
+          "victory_point"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_014",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 14,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "reputation",
+            "amount": 2,
+            "name_zh": "聲望值"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          "reputation"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_001",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 1,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          "draw_crew_card",
+          null
+        ],
+        "points": null
+      }
+    ],
+    "trade_post_market": [
+      {
+        "id": "knarr_core_trade_post_013",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 13,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          null
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_007",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 7,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [],
+        "trade_column_icons": [
+          "victory_point",
+          "victory_point",
+          "victory_point"
+        ],
+        "points": null
+      },
+      {
+        "id": "knarr_core_trade_post_011",
+        "type": "destination",
+        "subtype": "trade_post",
+        "sequence": 11,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          }
+        ],
+        "trade_column_icons": [
+          "victory_point",
+          null,
+          "victory_point"
+        ],
+        "points": null
+      }
+    ],
+    "settlement_deck": [
+      {
+        "id": "knarr_core_settlement_007",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 7,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 9,
+            "name_zh": "勝利分數"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          null,
+          "victory_point"
+        ],
+        "points": 9
+      },
+      {
+        "id": "knarr_core_settlement_003",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 3,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 7,
+            "name_zh": "勝利分數"
+          },
+          {
+            "icon": "reputation",
+            "amount": 2,
+            "name_zh": "聲望值"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          null,
+          "victory_point"
+        ],
+        "points": 7
+      },
+      {
+        "id": "knarr_core_settlement_012",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 12,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 6,
+            "name_zh": "勝利分數"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          null
+        ],
+        "points": 6
+      },
+      {
+        "id": "knarr_core_settlement_010",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 10,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 6,
+            "name_zh": "勝利分數"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          "victory_point",
+          null
+        ],
+        "points": 6
+      }
+    ],
+    "settlement_market": [
+      {
+        "id": "knarr_core_settlement_009",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 9,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 4,
+            "name_zh": "勝利分數"
+          },
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          null,
+          "victory_point"
+        ],
+        "points": 4
+      },
+      {
+        "id": "knarr_core_settlement_013",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 13,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 4,
+            "name_zh": "勝利分數"
+          },
+          {
+            "icon": "silver_bracelet",
+            "amount": 1,
+            "name_zh": "銀臂鐲標記"
+          },
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          },
+          {
+            "icon": "reputation",
+            "amount": 1,
+            "name_zh": "聲望值"
+          },
+          {
+            "icon": "draw_crew_card",
+            "amount": 1,
+            "name_zh": "從船員牌庫頂部抽取並放置 1 張船員"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          null,
+          "victory_point"
+        ],
+        "points": 4
+      },
+      {
+        "id": "knarr_core_settlement_014",
+        "type": "destination",
+        "subtype": "settlement",
+        "sequence": 14,
+        "color": null,
+        "top_resource_icon": null,
+        "reward_icons": [
+          {
+            "icon": "victory_point",
+            "amount": 8,
+            "name_zh": "勝利分數"
+          },
+          {
+            "icon": "recruit_token",
+            "amount": 1,
+            "name_zh": "招募標記"
+          }
+        ],
+        "trade_column_icons": [
+          null,
+          null,
+          "victory_point"
+        ],
+        "points": 8
+      }
+    ]
+  },
+  "turn_order": [
+    "computer",
+    "human"
+  ],
+  "log": [
+    "設置：玩家 船員區放入 黃船員12/聲望。",
+    "設置：玩家 船員區放入 綠船員25/招募標記。",
+    "設置：電腦 船員區放入 紫船員46/勝利分數。",
+    "設置：電腦 船員區放入 黃船員17/勝利分數。",
+    "命運標記隨機抽選：電腦 先手。",
+    "Turn 1: 電腦 回合開始，聲望給分 0。",
+    "電腦 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "電腦 因圖標抽放 藍船員04/銀臂鐲，不拿取該卡資源。來源：貿易",
+    "電腦 因圖標抽放 紫船員44/招募標記，不拿取該卡資源。來源：貿易",
+    "電腦 招募 藍船員08/勝利分數。",
+    "電腦 獲得 1 枚銀臂鐲。來源：藍色縱列",
+    "電腦 獲得 1 分。來源：藍色縱列",
+    "電腦 依 藍色市場格拿取 藍船員02/聲望 到手牌。",
+    "Turn 2: 玩家 回合開始，聲望給分 0。",
+    "玩家 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "玩家 因圖標抽放 紅船員35/招募標記，不拿取該卡資源。來源：貿易",
+    "玩家 因圖標抽放 黃船員19/勝利分數，不拿取該卡資源。來源：貿易",
+    "玩家 招募 黃船員11/聲望。",
+    "玩家 聲望 +1。來源：黃色縱列",
+    "玩家 獲得 1 分。來源：黃色縱列",
+    "玩家 聲望 +1。來源：黃色縱列",
+    "金臂鐲觸發：玩家 預留 定居點15。",
+    "金臂鐲裁定：預留後立即補同類型目的地市場。",
+    "玩家 依 黃色市場格拿取 紫船員43/銀臂鐲 到手牌。",
+    "Turn 3: 電腦 回合開始，聲望給分 0。",
+    "電腦 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "電腦 因圖標抽放 藍船員01/聲望，不拿取該卡資源。來源：貿易",
+    "電腦 因圖標抽放 藍船員06/招募標記，不拿取該卡資源。來源：貿易",
+    "電腦 探索取得 定居點04，支付 藍色船員 4 張。",
+    "電腦 獲得 6 分。來源：定居點04",
+    "Turn 4: 玩家 回合開始，聲望給分 0。",
+    "玩家 探索取得 定居點15，支付 黃色船員 3 張與招募標記 1 枚。",
+    "玩家 獲得 7 分。來源：定居點15",
+    "玩家 獲得 1 枚銀臂鐲。來源：定居點15",
+    "玩家 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "玩家 因圖標抽放 黃船員18/勝利分數，不拿取該卡資源。來源：貿易",
+    "玩家 因圖標抽放 紫船員42/銀臂鐲，不拿取該卡資源。來源：貿易",
+    "Turn 5: 電腦 回合開始，聲望給分 0。",
+    "電腦 招募 紅船員38/勝利分數。",
+    "電腦 獲得 1 分。來源：紅色縱列",
+    "電腦 依 紅色市場格拿取 綠船員27/勝利分數 到手牌。",
+    "Turn 6: 玩家 回合開始，聲望給分 0。",
+    "玩家 招募 紅船員33/銀臂鐲。",
+    "玩家 獲得 1 枚招募標記。來源：紅色縱列",
+    "玩家 獲得 1 枚銀臂鐲。來源：紅色縱列",
+    "玩家 依 紅色市場格拿取 黃船員15/招募標記 到手牌。",
+    "玩家 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "玩家 因圖標抽放 紫船員45/招募標記，不拿取該卡資源。來源：貿易",
+    "玩家 因圖標抽放 綠船員24/招募標記，不拿取該卡資源。來源：貿易",
+    "Turn 7: 電腦 回合開始，聲望給分 0。",
+    "電腦 招募 紅船員32/銀臂鐲。",
+    "電腦 獲得 1 分。來源：紅色縱列",
+    "電腦 獲得 1 枚銀臂鐲。來源：紅色縱列",
+    "電腦 依 紅色市場格拿取 黃船員16/勝利分數 到手牌。",
+    "電腦 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "電腦 因圖標抽放 綠船員28/勝利分數，不拿取該卡資源。來源：貿易",
+    "電腦 因圖標抽放 黃船員20/勝利分數，不拿取該卡資源。來源：貿易",
+    "Turn 8: 玩家 回合開始，聲望給分 0。",
+    "玩家 招募 紫船員41/聲望。",
+    "玩家 獲得 1 枚銀臂鐲。來源：紫色縱列",
+    "玩家 獲得 1 枚招募標記。來源：紫色縱列",
+    "玩家 聲望 +1。來源：紫色縱列",
+    "金臂鐲觸發：玩家 預留 定居點02。",
+    "金臂鐲裁定：預留後立即補同類型目的地市場。",
+    "玩家 依 紫色市場格拿取 黃船員13/銀臂鐲 到手牌。",
+    "玩家 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "船員牌庫耗盡：洗混棄牌堆形成新牌庫。",
+    "玩家 因圖標抽放 黃船員12/聲望，不拿取該卡資源。來源：貿易",
+    "玩家 因圖標抽放 黃船員11/聲望，不拿取該卡資源。來源：貿易",
+    "Turn 9: 電腦 回合開始，聲望給分 0。",
+    "電腦 招募 黃船員16/勝利分數。",
+    "電腦 獲得 1 分。來源：黃色縱列",
+    "電腦 獲得 1 分。來源：黃色縱列",
+    "電腦 獲得 1 分。來源：黃色縱列",
+    "金臂鐲觸發：電腦 預留 定居點05。",
+    "金臂鐲裁定：預留後立即補同類型目的地市場。",
+    "電腦 依 黃色市場格拿取 藍船員07/勝利分數 到手牌。",
+    "Turn 10: 玩家 回合開始，聲望給分 1。",
+    "玩家 探索取得 定居點02，支付 黃色船員 3 張與招募標記 1 枚。",
+    "玩家 獲得 6 分。來源：定居點02",
+    "Turn 11: 電腦 回合開始，聲望給分 0。",
+    "電腦 探索取得 定居點05，支付 黃色船員 3 張與招募標記 1 枚。",
+    "電腦 獲得 5 分。來源：定居點05",
+    "電腦 獲得 1 枚招募標記。來源：定居點05",
+    "Turn 12: 玩家 回合開始，聲望給分 1。",
+    "玩家 探索取得 定居點01，支付 紫色船員 3 張與招募標記 1 枚。",
+    "玩家 獲得 8 分。來源：定居點01",
+    "玩家 因圖標抽放 黃船員19/勝利分數，不拿取該卡資源。來源：定居點01",
+    "Turn 13: 電腦 回合開始，聲望給分 0。",
+    "電腦 招募 綠船員27/勝利分數。",
+    "電腦 獲得 1 分。來源：綠色縱列",
+    "電腦 獲得 1 分。來源：綠色縱列",
+    "電腦 依 綠色市場格拿取 綠船員21/聲望 到手牌。",
+    "Turn 14: 玩家 回合開始，聲望給分 1。",
+    "玩家 招募 黃船員15/招募標記。",
+    "玩家 獲得 1 分。來源：黃色縱列",
+    "玩家 獲得 1 枚招募標記。來源：黃色縱列",
+    "玩家 依 黃色市場格拿取 藍船員04/銀臂鐲 到手牌。",
+    "Turn 15: 電腦 回合開始，聲望給分 0。",
+    "電腦 招募 綠船員21/聲望。",
+    "電腦 獲得 1 分。來源：綠色縱列",
+    "電腦 獲得 1 分。來源：綠色縱列",
+    "電腦 聲望 +1。來源：綠色縱列",
+    "金臂鐲觸發：電腦 預留 定居點08。",
+    "金臂鐲裁定：預留後立即補同類型目的地市場。",
+    "電腦 依 綠色市場格拿取 藍船員08/勝利分數 到手牌。",
+    "Turn 16: 玩家 回合開始，聲望給分 1。",
+    "玩家 招募 黃船員13/銀臂鐲。",
+    "玩家 獲得 1 分。來源：黃色縱列",
+    "玩家 獲得 1 枚招募標記。來源：黃色縱列",
+    "玩家 獲得 1 枚銀臂鐲。來源：黃色縱列",
+    "金臂鐲觸發：玩家 預留 定居點11。",
+    "金臂鐲裁定：預留後立即補同類型目的地市場。",
+    "玩家 依 黃色市場格拿取 藍船員06/招募標記 到手牌。",
+    "船員牌庫耗盡：洗混棄牌堆形成新牌庫。",
+    "玩家 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "玩家 因圖標抽放 紫船員41/聲望，不拿取該卡資源。來源：貿易",
+    "玩家 因圖標抽放 紫船員42/銀臂鐲，不拿取該卡資源。來源：貿易",
+    "Turn 17: 電腦 回合開始，聲望給分 0。",
+    "電腦 探索取得 定居點08，支付 綠色船員 3 張與招募標記 1 枚。",
+    "電腦 獲得 6 分。來源：定居點08",
+    "Turn 18: 玩家 回合開始，聲望給分 1。",
+    "玩家 探索取得 定居點11，支付 黃色船員 3 張與招募標記 1 枚。",
+    "玩家 獲得 5 分。來源：定居點11",
+    "玩家 獲得 1 枚銀臂鐲。來源：定居點11",
+    "玩家 花 1 銀臂鐲執行貿易，取得最左欄資源。",
+    "玩家 因圖標抽放 紫船員45/招募標記，不拿取該卡資源。來源：貿易",
+    "玩家 因圖標抽放 黃船員20/勝利分數，不拿取該卡資源。來源：貿易",
+    "Turn 19: 電腦 回合開始，聲望給分 0。",
+    "電腦 招募 藍船員07/勝利分數。",
+    "電腦 獲得 1 分。來源：藍色縱列",
+    "電腦 依 藍色市場格拿取 紅船員37/勝利分數 到手牌。",
+    "Turn 20: 玩家 回合開始，聲望給分 1。",
+    "玩家 探索取得 定居點06，支付 紫色船員 3 張與招募標記 1 枚。",
+    "玩家 獲得 5 分。來源：定居點06",
+    "玩家 聲望 +1。來源：定居點06"
+  ],
+  "issues": [],
+  "winner": [
+    "human"
+  ],
+  "summary": {
+    "human": {
+      "score": 40,
+      "reputation": 4,
+      "tokens": {
+        "recruit_token": 0,
+        "silver_bracelet": 0
+      },
+      "hand_size": 3,
+      "crew_counts": {
+        "red": 2,
+        "yellow": 1,
+        "green": 2,
+        "blue": 0,
+        "purple": 0
+      },
+      "destinations": [
+        "定居點15",
+        "定居點02",
+        "定居點01",
+        "定居點11",
+        "定居點06"
+      ],
+      "reserved": [],
+      "ship_tile_side_id": "knarr_core_ship_tile_1_side_001"
+    },
+    "computer": {
+      "score": 28,
+      "reputation": 1,
+      "tokens": {
+        "recruit_token": 0,
+        "silver_bracelet": 0
+      },
+      "hand_size": 3,
+      "crew_counts": {
+        "red": 2,
+        "yellow": 0,
+        "green": 0,
+        "blue": 1,
+        "purple": 2
+      },
+      "destinations": [
+        "定居點04",
+        "定居點05",
+        "定居點08"
+      ],
+      "reserved": [],
+      "ship_tile_side_id": "knarr_core_ship_tile_2_side_003"
+    }
+  },
+  "zones_summary": {
+    "crew_deck": 3,
+    "crew_discard": 9,
+    "trade_post_deck": 17,
+    "settlement_deck": 4,
+    "trade_post_market": [
+      "貿易點13",
+      "貿易點07",
+      "貿易點11"
+    ],
+    "settlement_market": [
+      "定居點09",
+      "定居點13",
+      "定居點14"
+    ]
+  }
+}

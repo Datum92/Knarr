@@ -1,0 +1,69 @@
+{
+  "schema_version": "0.1",
+  "presets": [
+    {
+      "id": "knarr_2p_human_vs_computer_core_relic_gold_bracelet",
+      "name_zh": "2 人玩家 vs 電腦：核心 + 金臂鐲測試",
+      "player_count": 2,
+      "players": [
+        {
+          "id": "human",
+          "display_name": "玩家",
+          "controller": "human"
+        },
+        {
+          "id": "computer",
+          "display_name": "電腦",
+          "controller": "computer"
+        }
+      ],
+      "crew_deck_filter": {
+        "remove_player_count_markers": [
+          3,
+          4
+        ],
+        "rule_source": "遊戲起始設置1.png"
+      },
+      "markets": {
+        "crew_market_slots": 5,
+        "trade_post_market_slots": 3,
+        "settlement_market_slots": 3,
+        "destination_deck_empty_refill": "do_not_refill"
+      },
+      "starting_state": {
+        "score": 0,
+        "reputation": 0,
+        "crew_area_cards": {
+          "count": 2,
+          "constraint": "different_colors"
+        },
+        "hand_size": 3,
+        "tokens_on_ship": {
+          "recruit_token": 1,
+          "silver_bracelet": 1
+        }
+      },
+      "starting_player": {
+        "method": "random_fate_token_draw"
+      },
+      "modules": {
+        "core": true,
+        "relic_variant": true,
+        "active_relic": "knarr_relic_gold_bracelet"
+      },
+      "notes": [
+        "此 preset 用於文字模擬與未來 UI 引擎測試，不建立 UI。",
+        "聲望軌與船隻板塊貿易欄已資料化；目的地圖標已完成 high-confidence 校對。"
+      ],
+      "ship_tile_selection": {
+        "data_file": "data/ship_tiles.json",
+        "method": "explicit_side_id_for_text_simulation",
+        "assignments": {
+          "human": "knarr_core_ship_tile_1_side_001",
+          "computer": "knarr_core_ship_tile_2_side_003"
+        },
+        "notes": "UI 尚未製作；文字模擬用明確 side_id 選面，避免猜測基礎/進階標籤。"
+      }
+    }
+  ]
+}

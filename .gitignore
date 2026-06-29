@@ -1,0 +1,15 @@
+# IDE / Editor
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln
+*.docstate
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.log

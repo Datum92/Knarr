@@ -1,0 +1,111 @@
+{
+  "schema_version": "0.3",
+  "language": "zh-TW",
+  "source": {
+    "component_manifest": "manifests/component_image_manifest.csv",
+    "rulebook_images": "rulebook_images",
+    "board_data": "data/boards.json",
+    "ship_tile_data": "data/ship_tiles.json"
+  },
+  "resources": [
+    {
+      "id": "victory_point",
+      "name_zh": "勝利分數",
+      "limit": null
+    },
+    {
+      "id": "reputation",
+      "name_zh": "聲望值",
+      "limit": "reputation_track"
+    },
+    {
+      "id": "recruit_token",
+      "name_zh": "招募標記",
+      "limit": 3
+    },
+    {
+      "id": "silver_bracelet",
+      "name_zh": "銀臂鐲標記",
+      "limit": 3
+    },
+    {
+      "id": "draw_crew_card",
+      "name_zh": "抽取船員",
+      "limit": null
+    }
+  ],
+  "components": [
+    {
+      "id": "board_main",
+      "type": "board",
+      "count": 1,
+      "source_file": "component_images/knarr_core_board_001.png",
+      "data_file": "data/boards.json",
+      "notes": "聲望軌給分表已資料化。"
+    },
+    {
+      "id": "ship_tiles",
+      "type": "ship_tile",
+      "count": 4,
+      "image_count": 8,
+      "side_mapping_confidence": "high",
+      "notes": "8 面船隻板塊已用 side_id 資料化貿易欄與船帆印刷圖標；基礎/進階中文標籤不硬猜，模擬與引擎以 side_id 明確選面。",
+      "data_file": "data/ship_tiles.json"
+    },
+    {
+      "id": "recruit_tokens",
+      "type": "token",
+      "count": 12,
+      "max_per_player": 3
+    },
+    {
+      "id": "silver_bracelet_tokens",
+      "type": "token",
+      "count": 12,
+      "max_per_player": 3
+    },
+    {
+      "id": "score_markers",
+      "type": "marker",
+      "count": 4
+    },
+    {
+      "id": "reputation_markers",
+      "type": "marker",
+      "count": 4
+    },
+    {
+      "id": "fate_tokens",
+      "type": "token",
+      "count": 4,
+      "notes": "設置時只使用本局船隻顏色對應的命運標記，隨機抽 1 枚決定起始玩家。"
+    }
+  ],
+  "setup": {
+    "player_count_supported_for_future_ui": [
+      2
+    ],
+    "future_ui_mode": "human_vs_computer",
+    "starting_score": 0,
+    "starting_reputation": 0,
+    "starting_hand_size": 3,
+    "starting_crew_area_cards": {
+      "count": 2,
+      "constraint": "different_colors",
+      "source": "遊戲起始設置1.png"
+    },
+    "starting_tokens_on_ship": {
+      "recruit_token": 1,
+      "silver_bracelet": 1,
+      "source": "遊戲起始設置1.png"
+    },
+    "personal_token_cap": {
+      "recruit_token": 3,
+      "silver_bracelet": 3
+    },
+    "starting_player": {
+      "method": "random_fate_token_draw",
+      "source": "遊戲起始設置2.png"
+    }
+  }
+}
