@@ -395,8 +395,11 @@ function selectExploreDest(destId, isReserved, isSettlement) {
   exploreCtx.paidCards = [];
   exploreCtx.tokensUsed = 0;
 
+  const dest = findDest(destId);
+  const costDesc = dest ? getCostDesc(dest) : '任意同色船員 4 張';
+
   uiMode = 'explore-pay';
-  document.getElementById('action-zone-label').textContent = '探索模式：從船員區或手牌選擇4張同色船員付費';
+  document.getElementById('action-zone-label').textContent = `探索模式：請點選所需船員（費用需求：${costDesc}）`;
   document.getElementById('hand-hint').textContent = '— 點牌付費';
 
   clearHighlights();
@@ -406,29 +409,28 @@ function selectExploreDest(destId, isReserved, isSettlement) {
 }
 
 function togglePayCard(handIdx) {
-  // Hand card payment during explore
   if(uiMode!=='explore-pay') return;
   const p = G.players.human;
   const card = p.hand[handIdx];
   if(!card) return;
-
-  // Must all be same color
-  const existingColor = exploreCtx.paidCards.find(pc=>pc.source==='hand');
-  if(existingColor && existingColor.color!==card.color) {
-    showToast('必須使用同色船員！','bad'); return;
-  }
-  const crewColor = exploreCtx.paidCards.length>0 ? exploreCtx.paidCards[0].color : null;
-  if(crewColor && crewColor!==card.color) {
-    showToast('必須使用同色船員！','bad'); return;
-  }
 
   const key = `hand_${handIdx}`;
   const exi = exploreCtx.paidCards.findIndex(pc=>pc.key===key);
   if(exi!==-1) {
     exploreCtx.paidCards.splice(exi,1);
   } else {
-    const needed = 4 - exploreCtx.tokensUsed - exploreCtx.paidCards.length;
-    if(needed<=0){ showToast('已選足4張！','bad'); return; }
+    const tempPaid = [...exploreCtx.paidCards, {key, source:'hand', handIdx, color:card.color, card}];
+    const dest = findDest(exploreCtx.destId);
+    const check = checkExplorePayment(dest, tempPaid, exploreCtx.tokensUsed);
+    if(check.valid === false && check.reason) {
+      showToast(check.reason, 'bad');
+      return;
+    }
+    const maxCards = check.maxCards || 4;
+    if(tempPaid.length + exploreCtx.tokensUsed > maxCards) {
+      showToast('已選足費用！', 'bad');
+      return;
+    }
     exploreCtx.paidCards.push({key, source:'hand', handIdx, color:card.color, card});
   }
   updateExploreSummary();
@@ -436,25 +438,28 @@ function togglePayCard(handIdx) {
 }
 
 function togglePayCrewCard(color, crewIdx) {
-  // Crew area card payment during explore
   if(uiMode!=='explore-pay') return;
   const p = G.players.human;
   const card = p.crew[color][crewIdx];
   if(!card) return;
-
-  // Color constraint
-  const crewColor = exploreCtx.paidCards.length>0 ? exploreCtx.paidCards[0].color : null;
-  if(crewColor && crewColor!==color) {
-    showToast('必須使用同色船員！','bad'); return;
-  }
 
   const key = `crew_${color}_${crewIdx}`;
   const exi = exploreCtx.paidCards.findIndex(pc=>pc.key===key);
   if(exi!==-1) {
     exploreCtx.paidCards.splice(exi,1);
   } else {
-    const needed = 4 - exploreCtx.tokensUsed - exploreCtx.paidCards.length;
-    if(needed<=0){ showToast('已選足4張！','bad'); return; }
+    const tempPaid = [...exploreCtx.paidCards, {key, source:'crew', color, crewIdx, card}];
+    const dest = findDest(exploreCtx.destId);
+    const check = checkExplorePayment(dest, tempPaid, exploreCtx.tokensUsed);
+    if(check.valid === false && check.reason) {
+      showToast(check.reason, 'bad');
+      return;
+    }
+    const maxCards = check.maxCards || 4;
+    if(tempPaid.length + exploreCtx.tokensUsed > maxCards) {
+      showToast('已選足費用！', 'bad');
+      return;
+    }
     exploreCtx.paidCards.push({key, source:'crew', color, crewIdx, card});
   }
   updateExploreSummary();
@@ -463,47 +468,140 @@ function togglePayCrewCard(color, crewIdx) {
 
 function useTokenForExplore() {
   const p = G.players.human;
-  const totalSelected = exploreCtx.paidCards.length + exploreCtx.tokensUsed;
-  if(totalSelected>=4){ showToast('已達4張費用！','bad'); return; }
-  if(p.tokens.recruit_token<=0){ showToast('招募標記不足！','bad'); return; }
+  const dest = findDest(exploreCtx.destId);
+  if(!dest) return;
+  const check = checkExplorePayment(dest, exploreCtx.paidCards, exploreCtx.tokensUsed);
+  const maxCards = check.maxCards || 4;
+  const total = exploreCtx.paidCards.length + exploreCtx.tokensUsed;
+
+  if(total >= maxCards){ showToast('已達費用上限！','bad'); return; }
+  if(p.tokens.recruit_token <= 0){ showToast('招募標記不足！','bad'); return; }
   if(exploreCtx.tokensUsed >= p.tokens.recruit_token){ showToast('招募標記不足！','bad'); return; }
   exploreCtx.tokensUsed++;
   updateExploreSummary();
 }
 
+function checkExplorePayment(dest, paidCards, tokensUsed) {
+  const cost = dest.cost || {type: 'same_color', count: 4};
+  const paidColors = paidCards.map(c => c.color);
+
+  if (cost.type === 'same_color') {
+    const requiredCount = cost.count;
+    if (paidColors.length === 0) {
+      return { valid: tokensUsed >= requiredCount, maxCards: requiredCount };
+    }
+    const firstColor = paidColors[0];
+    const allSame = paidColors.every(c => c === firstColor);
+    if (!allSame) return { valid: false, reason: '必須使用相同顏色的船員！' };
+    const total = paidColors.length + tokensUsed;
+    return { valid: total >= requiredCount, maxCards: requiredCount };
+  }
+
+  if (cost.type === 'different') {
+    const requiredCount = cost.count;
+    const uniqueColors = new Set(paidColors);
+    if (uniqueColors.size !== paidColors.length) {
+      return { valid: false, reason: '必須使用不同顏色的船員！' };
+    }
+    const total = paidColors.length + tokensUsed;
+    return { valid: total >= requiredCount, maxCards: requiredCount };
+  }
+
+  if (cost.type === 'specified') {
+    const requiredList = [...cost.list];
+    let unmatchedRequired = [...requiredList];
+    let unmatchedPaid = [];
+
+    paidColors.forEach(color => {
+      const idx = unmatchedRequired.indexOf(color);
+      if (idx !== -1) {
+        unmatchedRequired.splice(idx, 1);
+      } else {
+        unmatchedPaid.push(color);
+      }
+    });
+
+    if (unmatchedPaid.length > 0) {
+      return { valid: false, reason: '選擇的船員顏色不符合目的地要求！' };
+    }
+
+    const neededTokens = unmatchedRequired.length;
+    return { 
+      valid: tokensUsed >= neededTokens, 
+      maxCards: requiredList.length,
+      neededTokens: neededTokens
+    };
+  }
+
+  return { valid: false, reason: '未知的費用類型' };
+}
+
+function getCostDesc(dest) {
+  const cost = dest.cost || {type: 'same_color', count: 4};
+  if (cost.type === 'same_color') {
+    return `任意同色 ${cost.count}張`;
+  }
+  if (cost.type === 'different') {
+    return `不同顏色 ${cost.count}張`;
+  }
+  if (cost.type === 'specified') {
+    const counts = {};
+    cost.list.forEach(c => counts[c] = (counts[c]||0) + 1);
+    return Object.entries(counts).map(([color, amt]) => `${COLOR_ZH[color]}色 ${amt}張`).join(' ＋ ');
+  }
+  return '任意同色 4張';
+}
+
 function updateExploreSummary() {
-  const total = exploreCtx.paidCards.length + exploreCtx.tokensUsed;
   const dest = findDest(exploreCtx.destId);
-  document.getElementById('sel-dest-name').textContent = dest ? dest.name : '—';
+  if(!dest) {
+    document.getElementById('sel-dest-name').textContent = '—';
+    document.getElementById('sel-crew-count').textContent = '0';
+    document.getElementById('sel-token-count').textContent = '0';
+    document.getElementById('explore-use-token-btn').disabled = true;
+    document.getElementById('confirm-explore-btn').disabled = true;
+    return;
+  }
+
+  const check = checkExplorePayment(dest, exploreCtx.paidCards, exploreCtx.tokensUsed);
+  document.getElementById('sel-dest-name').textContent = `${dest.name}（需 ${getCostDesc(dest)}）`;
   document.getElementById('sel-crew-count').textContent = exploreCtx.paidCards.length;
   document.getElementById('sel-token-count').textContent = exploreCtx.tokensUsed;
 
   const tokenBtn = document.getElementById('explore-use-token-btn');
   const confirmBtn = document.getElementById('confirm-explore-btn');
   const p = G.players.human;
-  tokenBtn.disabled = total>=4 || p.tokens.recruit_token<=exploreCtx.tokensUsed;
-  confirmBtn.disabled = !(total>=4 && exploreCtx.destId);
+
+  const maxCards = check.maxCards || 4;
+  const total = exploreCtx.paidCards.length + exploreCtx.tokensUsed;
+  
+  tokenBtn.disabled = total >= maxCards || p.tokens.recruit_token <= exploreCtx.tokensUsed;
+  confirmBtn.disabled = !check.valid;
 }
 
 function confirmExplore() {
   const p = G.players.human;
   const destId = exploreCtx.destId;
   if(!destId){ showToast('請先選擇目的地','bad'); return; }
-  const total = exploreCtx.paidCards.length + exploreCtx.tokensUsed;
-  if(total<4){ showToast('費用不足（需4張/枚）','bad'); return; }
+  const dest = findDest(destId);
+  if(!dest){ showToast('找不到目的地！','bad'); return; }
+
+  const check = checkExplorePayment(dest, exploreCtx.paidCards, exploreCtx.tokensUsed);
+  if(!check.valid) {
+    showToast('費用不符合要求！', 'bad');
+    return;
+  }
 
   // Find and remove dest from market/reserved
-  let dest = null;
   let fromType = null;
   if(exploreCtx.destIsReserved) {
     const ri = p.reserved.findIndex(d=>d.id===destId);
-    if(ri!==-1){ dest=p.reserved.splice(ri,1)[0]; fromType='reserved'; }
+    if(ri!==-1){ p.reserved.splice(ri,1); fromType='reserved'; }
   } else {
     let si = G.zones.settleMarket.findIndex(d=>d.id===destId);
-    if(si!==-1){ dest=G.zones.settleMarket.splice(si,1)[0]; fromType='settle'; }
-    else { let ti=G.zones.tradeMarket.findIndex(d=>d.id===destId); if(ti!==-1){ dest=G.zones.tradeMarket.splice(ti,1)[0]; fromType='trade'; } }
+    if(si!==-1){ G.zones.settleMarket.splice(si,1); fromType='settle'; }
+    else { let ti=G.zones.tradeMarket.findIndex(d=>d.id===destId); if(ti!==-1){ G.zones.tradeMarket.splice(ti,1); fromType='trade'; } }
   }
-  if(!dest){ showToast('找不到目的地！','bad'); return; }
 
   // Pay crew cards (remove from crew/hand, sorted desc by idx to avoid index shift)
   const paidSorted = [...exploreCtx.paidCards].sort((a,b)=>{
@@ -515,7 +613,6 @@ function confirmExplore() {
       const idx = p.hand.findIndex(c=>c.id===pc.card.id && !G._removed_hand?.[c.id]);
       if(idx!==-1){ G.zones.crewDiscard.push(p.hand.splice(idx,1)[0]); }
     } else {
-      const remaining = p.crew[pc.color].filter(c=>c.id!==pc.card.id);
       const idx = p.crew[pc.color].findIndex(c=>c.id===pc.card.id);
       if(idx!==-1){ G.zones.crewDiscard.push(p.crew[pc.color].splice(idx,1)[0]); }
     }
@@ -690,38 +787,109 @@ function aiTrade() {
   addLog(`電腦 花${amt}枚⭕貿易`, '');
 }
 
+function aiCanPayDest(p, dest) {
+  const cost = dest.cost || {type: 'same_color', count: 4};
+  const availableCrews = [];
+  p.hand.forEach((card, idx) => {
+    availableCrews.push({ source: 'hand', color: card.color, card, handIdx: idx });
+  });
+  COLORS.forEach(col => {
+    p.crew[col].forEach((card, idx) => {
+      availableCrews.push({ source: 'crew', color: col, card, crewIdx: idx });
+    });
+  });
+
+  const availableTokens = p.tokens.recruit_token;
+
+  if (cost.type === 'same_color') {
+    const count = cost.count;
+    for (const color of COLORS) {
+      const matchingCrews = availableCrews.filter(c => c.color === color);
+      if (matchingCrews.length + availableTokens >= count) {
+        const cardsToPay = matchingCrews.slice(0, Math.min(count, matchingCrews.length));
+        const tokensToPay = count - cardsToPay.length;
+        return { possible: true, cards: cardsToPay, tokens: tokensToPay };
+      }
+    }
+  } else if (cost.type === 'different') {
+    const count = cost.count;
+    const uniqueColorGroups = {};
+    availableCrews.forEach(c => {
+      if (!uniqueColorGroups[c.color]) {
+        uniqueColorGroups[c.color] = c;
+      }
+    });
+    const uniqueCrews = Object.values(uniqueColorGroups);
+    if (uniqueCrews.length + availableTokens >= count) {
+      const cardsToPay = uniqueCrews.slice(0, Math.min(count, uniqueCrews.length));
+      const tokensToPay = count - cardsToPay.length;
+      return { possible: true, cards: cardsToPay, tokens: tokensToPay };
+    }
+  } else if (cost.type === 'specified') {
+    const reqList = [...cost.list];
+    const chosenCards = [];
+    let unmatchedReq = [...reqList];
+
+    unmatchedReq = unmatchedReq.filter(reqColor => {
+      const idx = availableCrews.findIndex(c => c.color === reqColor && !chosenCards.includes(c));
+      if (idx !== -1) {
+        chosenCards.push(availableCrews[idx]);
+        return false;
+      }
+      return true;
+    });
+
+    if (availableTokens >= unmatchedReq.length) {
+      return { possible: true, cards: chosenCards, tokens: unmatchedReq.length };
+    }
+  }
+
+  return { possible: false };
+}
+
 function aiExplore() {
   const p = G.players.computer;
   const allDests = [...G.zones.settleMarket,...G.zones.tradeMarket,...p.reserved];
-  for(const color of COLORS) {
-    const handCards = p.hand.filter(c=>c.color===color);
-    const crewCards = p.crew[color];
-    const total = handCards.length + crewCards.length + p.tokens.recruit_token;
-    if(total>=4 && allDests.length>0) {
-      const dest = allDests.reduce((b,d)=>(d.points||0)>=(b.points||0)?d:b, allDests[0]);
-      // Pay
-      let toPay=4;
-      // Use hand first
-      [...handCards].forEach(c=>{ if(toPay>0){ const i=p.hand.findIndex(x=>x.id===c.id); if(i!==-1){G.zones.crewDiscard.push(p.hand.splice(i,1)[0]);toPay--;} } });
-      // Use crew area
-      for(let i=crewCards.length-1;i>=0&&toPay>0;i--){ G.zones.crewDiscard.push(p.crew[color].splice(i,1)[0]);toPay--; }
-      // Tokens
-      while(toPay>0&&p.tokens.recruit_token>0){p.tokens.recruit_token--;toPay--;}
+  if(!allDests.length) return false;
 
-      // Remove from market
+  const scSorted = [...allDests].sort((a,b) => (b.points||0) - (a.points||0));
+
+  for(const dest of scSorted) {
+    const payResult = aiCanPayDest(p, dest);
+    if(payResult.possible) {
+      const paidSorted = [...payResult.cards].sort((a,b)=>{
+        if(a.source==='crew' && b.source==='crew') return b.crewIdx - a.crewIdx;
+        return 0;
+      });
+
+      paidSorted.forEach(pc => {
+        if(pc.source==='hand') {
+          const idx = p.hand.findIndex(c=>c.id===pc.card.id);
+          if(idx!==-1) G.zones.crewDiscard.push(p.hand.splice(idx,1)[0]);
+        } else {
+          const idx = p.crew[pc.color].findIndex(c=>c.id===pc.card.id);
+          if(idx!==-1) G.zones.crewDiscard.push(p.crew[pc.color].splice(idx,1)[0]);
+        }
+      });
+
+      p.tokens.recruit_token -= payResult.tokens;
+      p.destinations.push(dest);
+
       let ft=null;
       let si=G.zones.settleMarket.findIndex(d=>d.id===dest.id);
       if(si!==-1){G.zones.settleMarket.splice(si,1);ft='settle';}
       else{let ti=G.zones.tradeMarket.findIndex(d=>d.id===dest.id);if(ti!==-1){G.zones.tradeMarket.splice(ti,1);ft='trade';}
       else{let ri=p.reserved.findIndex(d=>d.id===dest.id);if(ri!==-1)p.reserved.splice(ri,1);}}
 
-      p.destinations.push(dest);
-      addLog(`電腦 探索取得 ${dest.name}`, 'good');
+      addLog(`電腦 探索取得 ${dest.name}（花費船員卡 ${payResult.cards.length}張 ＋ 招募標記 ${payResult.tokens}枚）`, 'good');
       if(dest.rewards) dest.rewards.forEach(r=>applyRes('computer',r.icon,r.amount,dest.name));
       if(ft==='settle') refillDest('settle',3); else if(ft==='trade') refillDest('trade',3);
 
-      // AI gold bracelet
-      if(G.relicOn) aiCheckGoldBracelet(color);
+      if(G.relicOn) {
+        COLORS.forEach(col => {
+          if(p.crew[col].length === 3) aiCheckGoldBracelet(col);
+        });
+      }
       return true;
     }
   }
