@@ -250,9 +250,19 @@ img{display:block}
 .dest-owned-card.trade-post-owned{border-color:rgba(90,26,139,.4)}
 .dest-owned-card.reserved-dest{border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.06)}
 
-/* ─── Ship Tile Block ─── */
-.ship-tile-block{flex-shrink:0;background:rgba(255,255,255,.02);border:1px solid rgba(201,162,39,.13);border-radius:6px;padding:6px 8px}
-.ship-trade-cols{display:flex;gap:5px;margin-top:5px}
+/* ─── Ship Tile + Destination Combined Block ─── */
+.ship-tile-block,.ship-dest-combined{
+  flex-shrink:0;background:rgba(255,255,255,.02);
+  border:1px solid rgba(201,162,39,.18);border-radius:7px;padding:7px 9px;
+}
+.ship-trade-cols{display:flex;gap:5px;margin-top:4px}
+/* Dest stack area inside the combined block */
+.dest-stack-area{
+  position:relative;margin-top:6px;
+}
+/* The stack wrapper INSIDE dest-stack-area drives the height via inline style */
+.dest-stack-wrapper{position:relative;flex-shrink:0}
+.dest-count-badge{font-size:.62rem;color:var(--text-m);font-family:'IM Fell English',serif}
 .stcol{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(201,162,39,.1);border-radius:4px;padding:4px;text-align:center}
 .stcol-lbl{font-size:.58rem;color:var(--text-m);font-family:'Cinzel',serif;margin-bottom:3px}
 .stcol-icons{font-size:.75rem}
@@ -322,20 +332,30 @@ img{display:block}
 .crew-mkt-card.cgreen{border-color:rgba(134,239,172,.55)}
 .crew-mkt-card.cred{border-color:rgba(252,165,165,.55)}
 .crew-mkt-card.cpurple{border-color:rgba(216,180,254,.55)}
-.crew-mkt-card .cmc-color-badge{
-  position:absolute;top:0;left:0;right:0;height:28px;
+/* Remove old top badge; slot badge now at BOTTOM */
+.crew-mkt-card .cmc-color-badge{display:none}
+/* Fixed slot badge at BOTTOM — matches game board */
+.crew-mkt-card .cmc-slot-badge{
+  position:absolute;bottom:0;left:0;right:0;height:28px;
   display:flex;align-items:center;gap:6px;padding:0 8px;
-  z-index:2;
+  z-index:3;
 }
 .crew-mkt-card .cmc-color-dot{
   width:10px;height:10px;border-radius:50%;flex-shrink:0;
   border:1px solid rgba(255,255,255,.4);
 }
-.crew-mkt-card .cmc-color-label{
-  font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;
-  letter-spacing:.06em;text-shadow:0 1px 3px rgba(0,0,0,.8);
+/* Empty slot state */
+.crew-mkt-card.empty-slot{
+  background:rgba(10,12,22,.4);
+  border-style:dashed;
+  border-color:rgba(255,255,255,.1);
 }
-.crew-mkt-card .cmc-res{position:absolute;bottom:5px;right:6px;background:rgba(0,0,0,.82);border-radius:4px;font-size:.9rem;padding:2px 6px}
+.cmc-empty{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:.72rem;color:rgba(255,255,255,.15);
+  padding-bottom:28px; /* leave room for slot badge */
+}
+.crew-mkt-card .cmc-res{position:absolute;bottom:32px;right:6px;background:rgba(0,0,0,.82);border-radius:4px;font-size:.9rem;padding:2px 6px}
 
 /* ─── Action Zone ─── */
 .action-zone{background:rgba(5,8,14,.85);border:1px solid rgba(201,162,39,.28);border-radius:10px;padding:10px 14px;flex-shrink:0}

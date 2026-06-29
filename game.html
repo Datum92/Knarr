@@ -111,16 +111,12 @@
         </div>
       </div>
 
-      <!-- 對手目的地 -->
-      <div class="dest-block">
-        <div class="block-title">目的地 (<span id="opp-dest-count">0</span>)</div>
-        <div class="dest-cards-row" id="opp-destinations"></div>
-      </div>
-
-      <!-- 對手船隻板塊 -->
-      <div class="ship-tile-block" id="opp-ship-block">
-        <div class="block-title">⛵ 船隻板塊</div>
+      <!-- 對手船隻板塊 + 目的地 (combined) -->
+      <div class="ship-dest-combined" id="opp-ship-block">
+        <div class="block-title">⛵ 船隻板塊 <span class="dest-count-badge">(目的地 <span id="opp-dest-count">0</span>)</span></div>
         <div class="ship-trade-cols" id="opp-trade-cols"></div>
+        <!-- All destinations stacked on ship tile -->
+        <div class="dest-stack-area" id="opp-destinations"></div>
       </div>
     </aside>
 
@@ -261,18 +257,16 @@
         </div>
       </div>
 
-      <!-- 玩家目的地 -->
-      <div class="dest-block human-dest-block">
-        <div class="block-title">目的地 (<span id="human-dest-count">0</span>)</div>
-        <div class="dest-cards-row" id="human-destinations"></div>
+      <!-- 玩家船隻板塊 + 目的地 (combined) -->
+      <div class="ship-dest-combined" id="human-ship-block">
+        <div class="block-title">⛵ 船隻板塊 <span class="dest-count-badge">(目的地 <span id="human-dest-count">0</span>)</span></div>
+        <!-- Ship tile trade column icons -->
+        <div class="ship-trade-cols" id="human-trade-cols"></div>
+        <!-- All destination cards stacked here (overlaid on ship tile area) -->
+        <div class="dest-stack-area" id="human-destinations"></div>
+        <!-- Reserved destinations (separate) -->
         <div class="block-title reserved-label" id="reserved-title" style="display:none">🔖 預留 (<span id="reserved-count">0</span>)</div>
         <div class="dest-cards-row" id="human-reserved"></div>
-      </div>
-
-      <!-- 玩家船隻板塊 -->
-      <div class="ship-tile-block" id="human-ship-block">
-        <div class="block-title">⛵ 船隻板塊</div>
-        <div class="ship-trade-cols" id="human-trade-cols"></div>
       </div>
     </aside>
   </div>

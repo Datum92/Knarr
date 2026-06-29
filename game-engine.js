@@ -80,7 +80,9 @@ function initGame() {
       computer: mkPlayer('knarr_core_ship_tile_2_side_003', '電腦對手'),
     },
     zones: {
-      crewDeck:[], crewDiscard:[], crewMarket:[],
+      crewDeck:[], crewDiscard:[],
+      // Fixed 5 color slots (board positions): slot.color = fixed position, slot.card = current card there
+      crewMarket: COLORS.map(c=>({slot:c, card:null})),
       tradeDeck:[], tradeMarket:[],
       settleDeck:[], settleMarket:[],
     },
@@ -275,18 +277,31 @@ function doRecruitCard(handIdx) {
 
 function takeSameColorFromMarket(pid, color) {
   const p = G.players[pid];
-  const idx = G.zones.crewMarket.findIndex(c=>c.color===color);
-  if(idx!==-1) {
-    const card = G.zones.crewMarket.splice(idx,1)[0];
+  // Take from the FIXED SLOT of that color (the board position), regardless of card color
+  const slot = G.zones.crewMarket.find(s=>s.slot===color);
+  if(slot && slot.card) {
+    const card = slot.card;
+    slot.card = null; // clear slot
     p.hand.push(card);
-    addLog(`  取得市場 ${card.name} 到手牌`, '');
+    addLog(`  從${COLOR_ZH[color]}色格位取得 ${card.name}（${COLOR_ZH[card.color]}色）到手牌`, '');
     refillCrew();
   } else {
-    addLog(`  市場無${COLOR_ZH[color]}色船員`, '');
-    // Human player: offer recruit token option
-    if(pid==='human' && p.tokens.recruit_token > 0 && G.zones.crewMarket.length > 0) {
+    addLog(`  ${COLOR_ZH[color]}色格位無牌`, '');
+    // Human player: offer recruit token option to freely pick any market card
+    if(pid==='human' && p.tokens.recruit_token > 0 && G.zones.crewMarket.some(s=>s.card)) {
       showRecruitTokenPick();
-      return; // don't proceed with updateUI yet — wait for player choice
+      return;
+    }
+    // Computer auto-picks best available slot with token
+    if(pid==='computer' && p.tokens.recruit_token > 0) {
+      const avail = G.zones.crewMarket.filter(s=>s.card);
+      if(avail.length > 0) {
+        p.tokens.recruit_token--;
+        const picked = avail[0];
+        const card = picked.card; picked.card = null;
+        p.hand.push(card); refillCrew();
+        addLog(`  電腦花費⚡標記，選取 ${card.name}到手牌`, '');
+      }
     }
   }
   updateUI(); updateActionBtns();
@@ -297,35 +312,34 @@ function showRecruitTokenPick() {
   document.getElementById('recruit-token-available').textContent = p.tokens.recruit_token;
   const container = document.getElementById('recruit-market-pick');
   container.innerHTML = '';
-  G.zones.crewMarket.forEach(card => {
+  G.zones.crewMarket.forEach(slot => {
+    if(!slot.card) return;
     const div = document.createElement('div');
-    div.className = `recruit-pick-card c${card.color}`;
-    div.title = `${card.name} (${COLOR_ZH[card.color]})`;
-    const colorDot = document.createElement('div');
-    colorDot.className = 'rpcard-color';
-    colorDot.style.background = COLOR_BG[card.color];
-    colorDot.textContent = COLOR_ZH[card.color];
+    div.className = `recruit-pick-card c${slot.card.color}`;
+    div.title = `${slot.card.name}\n牌色：${COLOR_ZH[slot.card.color]}\n格位：${COLOR_ZH[slot.slot]}色`;
+    const slotLbl = document.createElement('div');
+    slotLbl.className = 'rpcard-color';
+    slotLbl.style.background = COLOR_BG[slot.card.color];
+    slotLbl.textContent = COLOR_ZH[slot.card.color];
     const img = document.createElement('img');
-    img.src = GAME_DATA.BASE + card.img;
-    img.alt = card.name;
-    img.onerror = () => { img.style.display='none'; div.style.background=COLOR_BG[card.color]; };
-    div.appendChild(colorDot); div.appendChild(img);
-    div.onclick = () => pickMarketCard(card);
+    img.src = GAME_DATA.BASE + slot.card.img;
+    img.alt = slot.card.name;
+    img.onerror = () => { img.style.display='none'; div.style.background=COLOR_BG[slot.card.color]; };
+    div.appendChild(slotLbl); div.appendChild(img);
+    div.onclick = () => pickMarketCard(slot);
     container.appendChild(div);
   });
   document.getElementById('recruit-token-inline').classList.remove('hidden');
 }
 
-function pickMarketCard(card) {
+function pickMarketCard(slot) {
   const p = G.players.human;
   if(p.tokens.recruit_token <= 0) { showToast('招募標記不足！','bad'); return; }
-  const idx = G.zones.crewMarket.findIndex(c=>c.id===card.id);
-  if(idx === -1) { showToast('找不到該牌！','bad'); return; }
+  if(!slot.card) { showToast('該格位無牌！','bad'); return; }
   p.tokens.recruit_token--;
-  const taken = G.zones.crewMarket.splice(idx,1)[0];
-  p.hand.push(taken);
-  refillCrew();
-  addLog(`  花費⚡招募標記，選取 ${taken.name}（${COLOR_ZH[taken.color]}色）到手牌`, 'good');
+  const taken = slot.card; slot.card = null;
+  p.hand.push(taken); refillCrew();
+  addLog(`  花費⚡招募標記，選取 ${taken.name}（${COLOR_ZH[taken.color]}色，${COLOR_ZH[slot.slot]}色格位）到手牌`, 'good');
   skipRecruitTokenPick();
 }
 
@@ -605,7 +619,9 @@ function applyRes(pid, res, amount, src) {
         if(G.zones.crewDeck.length===0) reshuffleCrew();
         if(G.zones.crewDeck.length>0) {
           const c = G.zones.crewDeck.pop();
-          G.zones.crewMarket.push(c);
+          const emptySlot = G.zones.crewMarket.find(s=>!s.card);
+          if(emptySlot) emptySlot.card = c;
+          else G.zones.crewDiscard.push(c); // all slots full
           addLog(`  抽放船員 ${c.name} 至市場 (${src})`, '');
         }
       }
@@ -615,10 +631,13 @@ function applyRes(pid, res, amount, src) {
 
 // ─── Market Management ────────────────────────────────────────────────
 function refillCrew() {
-  while(G.zones.crewMarket.length<5 && (G.zones.crewDeck.length>0||G.zones.crewDiscard.length>0)) {
-    if(G.zones.crewDeck.length===0) reshuffleCrew();
-    if(G.zones.crewDeck.length>0) G.zones.crewMarket.push(G.zones.crewDeck.pop());
-  }
+  // Fill any empty slot from the deck
+  G.zones.crewMarket.forEach(slot => {
+    if(!slot.card) {
+      if(G.zones.crewDeck.length===0 && G.zones.crewDiscard.length>0) reshuffleCrew();
+      if(G.zones.crewDeck.length>0) slot.card = G.zones.crewDeck.pop();
+    }
+  });
 }
 function reshuffleCrew() {
   if(!G.zones.crewDiscard.length) return;
@@ -823,15 +842,14 @@ function renderPanel(pid) {
     showHide('action-chip', G.mainActionDone);
   }
 
-  // Destinations owned — stacked display
+  // Ship tile (always render first so it's the base layer)
+  renderShipTile(pre, p.tileId);
+
+  // Destinations owned — ALL types in ONE single stack on the ship tile area
   const destEl = document.getElementById(`${pre}-destinations`);
   destEl.innerHTML = '';
   if(p.destinations.length > 0) {
-    // Group by type (settlement / trade_post)
-    const settle = p.destinations.filter(d=>d.id.includes('settlement'));
-    const trade  = p.destinations.filter(d=>!d.id.includes('settlement'));
-    if(settle.length > 0) destEl.appendChild(buildStackedDests(settle, false));
-    if(trade.length  > 0) destEl.appendChild(buildStackedDests(trade,  false));
+    destEl.appendChild(buildAllDestsStack(p.destinations));
   }
   document.getElementById(`${pre}-dest-count`).textContent = p.destinations.length;
 
@@ -848,9 +866,6 @@ function renderPanel(pid) {
       resTitle.style.display='none';
     }
   }
-
-  // Ship tile
-  renderShipTile(pre, p.tileId);
 }
 
 function renderHand(p) {
@@ -943,60 +958,71 @@ function buildOwnedDestCard(dest, isReserved) {
   return d;
 }
 
-// Build a stacked pile of same-type destination cards (latest on top, offset for depth effect)
-function buildStackedDests(dests, isReserved) {
+// All destinations as one single stack (offset cards showing depth)
+function buildAllDestsStack(dests) {
   const wrapper = document.createElement('div');
   wrapper.className = 'dest-stack-wrapper';
-  // Show all as stacked, top card visible
+  const OFFSET = 5; const CARD_H = 120;
+  wrapper.style.height = `${CARD_H + (dests.length-1)*OFFSET}px`;
+  wrapper.style.width = `${90 + (dests.length-1)*OFFSET}px`;
   dests.forEach((dest, i) => {
-    const card = buildOwnedDestCard(dest, isReserved);
+    const card = buildOwnedDestCard(dest, false);
     card.style.position = 'absolute';
-    card.style.top = `${i * 4}px`;
-    card.style.left = `${i * 4}px`;
+    card.style.top = `${i * OFFSET}px`;
+    card.style.left = `${i * OFFSET}px`;
     card.style.zIndex = i + 1;
     wrapper.appendChild(card);
   });
-  // Set wrapper height to accommodate the stack
-  const baseH = 120; // approximate card height
-  wrapper.style.height = `${baseH + (dests.length-1)*4}px`;
-  wrapper.style.width = `${90 + (dests.length-1)*4}px`;
   return wrapper;
 }
 
 function renderCrewMarket() {
   const el = document.getElementById('crew-market');
   el.innerHTML = '';
-  G.zones.crewMarket.forEach(card => {
+  // Show 5 FIXED color slots (board positions)
+  G.zones.crewMarket.forEach(slot => {
     const div = document.createElement('div');
-    div.className = `crew-mkt-card c${card.color}`;
-    div.title = `${card.name}\n${COLOR_ZH[card.color]}色 — ${ICONS[card.resource]?.label}`;
+    div.className = `crew-mkt-card crew-slot-${slot.slot}${!slot.card?' empty-slot':''}`;
+    div.title = slot.card
+      ? `${slot.card.name}\n牌色：${COLOR_ZH[slot.card.color]}色\n格位顏色：${COLOR_ZH[slot.slot]}色`
+      : `${COLOR_ZH[slot.slot]}色格位（空）`;
 
-    // Color badge bar at top
-    const colorBadge = document.createElement('div');
-    colorBadge.className = 'cmc-color-badge';
-    colorBadge.style.background = COLOR_BG[card.color];
-    colorBadge.style.borderBottom = `2px solid ${COLOR_TEXT[card.color]}`;
+    if(slot.card) {
+      const img = document.createElement('img');
+      img.src = GAME_DATA.BASE + slot.card.img;
+      img.alt = slot.card.name;
+      img.onerror=()=>{ img.remove(); div.style.background=COLOR_BG[slot.card.color]; div.style.display='flex'; div.style.alignItems='center'; div.style.justifyContent='center'; div.style.fontSize='2rem'; div.textContent=ICONS[slot.card.resource]?.sym||'?'; };
+      const res = document.createElement('div');
+      res.className = 'cmc-res';
+      res.textContent = ICONS[slot.card.resource]?.sym || '?';
+      res.style.color = ICONS[slot.card.resource]?.col || '#fff';
+      div.appendChild(img); div.appendChild(res);
+      div.onclick = () => showCardInfoModal(slot.card);
+    } else {
+      const emptyTxt = document.createElement('div');
+      emptyTxt.className = 'cmc-empty';
+      emptyTxt.textContent = '\u7a7a';
+      div.appendChild(emptyTxt);
+    }
+
+    // Fixed slot color badge at BOTTOM (matches game board layout)
+    const slotBadge = document.createElement('div');
+    slotBadge.className = 'cmc-slot-badge';
+    slotBadge.style.background = COLOR_BG[slot.slot];
+    slotBadge.style.borderTop = `2px solid ${COLOR_TEXT[slot.slot]}`;
     const dot = document.createElement('span');
     dot.className = 'cmc-color-dot';
-    dot.style.background = COLOR_TEXT[card.color];
-    const label = document.createElement('span');
-    label.className = 'cmc-color-label';
-    label.textContent = COLOR_ZH[card.color];
-    label.style.color = COLOR_TEXT[card.color];
-    colorBadge.appendChild(dot); colorBadge.appendChild(label);
+    dot.style.background = COLOR_TEXT[slot.slot];
+    const lbl = document.createElement('span');
+    lbl.textContent = COLOR_ZH[slot.slot];
+    lbl.style.color = COLOR_TEXT[slot.slot];
+    lbl.style.fontFamily = "'Cinzel',serif";
+    lbl.style.fontWeight = '700';
+    lbl.style.fontSize = '.75rem';
+    lbl.style.letterSpacing = '.06em';
+    slotBadge.appendChild(dot); slotBadge.appendChild(lbl);
+    div.appendChild(slotBadge);
 
-    const img = document.createElement('img');
-    img.src = GAME_DATA.BASE + card.img;
-    img.alt = card.name;
-    img.onerror=()=>{ img.remove(); div.style.background=COLOR_BG[card.color]; div.style.display='flex'; div.style.alignItems='center'; div.style.justifyContent='center'; div.style.fontSize='2rem'; div.textContent=ICONS[card.resource]?.sym||'?'; };
-
-    const res = document.createElement('div');
-    res.className = 'cmc-res';
-    res.textContent = ICONS[card.resource]?.sym || '?';
-    res.style.color = ICONS[card.resource]?.col || '#fff';
-
-    div.appendChild(colorBadge); div.appendChild(img); div.appendChild(res);
-    div.onclick = () => showCardInfoModal(card);
     el.appendChild(div);
   });
 }
