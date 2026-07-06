@@ -1360,7 +1360,7 @@ function showDestInfoModal(dest) {
   const trade = (dest.trade_cols||[]).map((t,i)=>t?`<span>${['左','中','右'][i]}欄：<span style="color:${ICONS[t]?.col}">${ICONS[t]?.sym} ${ICONS[t]?.label}</span></span>`:null).filter(Boolean).join('  ');
   document.getElementById('modal-card-body').innerHTML = `
     ${dest.points>0?`<p>分數：<strong style="color:#f0cc6e">${dest.points}</strong> 分</p>`:''}
-    <p>探索費用：同色任意 4 張船員（⚡招募標記可各代替1張）</p>
+    <p>探索費用：<strong style="color:#f0cc6e">${getCostDesc(dest)}</strong>（⚡招募標記可各代替1張）</p>
     <p style="margin-top:6px">右上角獎勵：${rwd||'無'}</p>
     ${trade?`<p style="margin-top:4px">貿易欄：${trade}</p>`:''}
   `;
