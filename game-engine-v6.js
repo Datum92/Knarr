@@ -1412,11 +1412,28 @@ function updateDeckBadges() {
 function updateRoundLabel() { document.getElementById('round-label').textContent=`回合 ${G.round}`; }
 
 // ─── Log ──────────────────────────────────────────────────────────────
+const LOG_MAX = 100;
+let _lastLogMsg = null;
 function addLog(msg, type) {
+  // 忽略空白或無效訊息
+  if (msg === null || msg === undefined) return;
+  const s = String(msg).trim();
+  if (s === '') return;
+  // 忽略連續相同訊息
+  if (s === _lastLogMsg) return;
+  _lastLogMsg = s;
+
   const el = document.getElementById('log-entries');
+  if (!el) return;
+
+  // 限制最多 LOG_MAX 筆
+  while (el.children.length >= LOG_MAX) {
+    el.removeChild(el.firstChild);
+  }
+
   const d = document.createElement('div');
-  d.className = `log-entry ${type||''}`;
-  d.textContent = msg;
+  d.className = `log-entry ${type || ''}`.trim();
+  d.textContent = s;
   el.appendChild(d);
   el.scrollTop = el.scrollHeight;
 }

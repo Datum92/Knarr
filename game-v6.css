@@ -447,6 +447,7 @@ img{display:block}
 .log-entry.good{color:#86efac}
 .log-entry.bad{color:#fca5a5}
 .log-entry.turn-hdr{color:var(--teal);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.06em;padding-top:5px}
+.log-entry:empty{display:none}
 
 /* ═══════════════ GAMEOVER ═══════════════ */
 #screen-gameover{align-items:center;justify-content:center}
