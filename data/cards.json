@@ -18,7 +18,7 @@
     "recruit_token": "招募標記",
     "reputation": "聲望值",
     "draw_crew_card": "從船員牌庫頂部抽取並放置 1 張船員",
-    "same_color_any_4_cost": "探索費用：同色任意 4 張船員卡；招募標記可各代替 1 張。",
+    "destination_cost_icons": "探索費用從船員區域依目的地卡牌最左側圖示支付：彩色格為指定顏色，白底 = 為任意同色，黑底 ≠ 為不同顏色；招募標記可各代替 1 張船員區域的船員卡。",
     "empty_trade_column": "此貿易欄無資源圖標。"
   },
   "effect_class_defaults": {
@@ -1580,22 +1580,34 @@
       "side": "front",
       "name_zh": "定居點 01",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple",
+          "purple",
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 8,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple",
+          "purple",
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1614,7 +1626,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1630,22 +1642,32 @@
       "side": "front",
       "name_zh": "定居點 02",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple",
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 6,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple",
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1659,7 +1681,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1675,22 +1697,34 @@
       "side": "front",
       "name_zh": "定居點 03",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue",
+          "blue",
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 7,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue",
+          "blue",
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1709,7 +1743,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1725,22 +1759,32 @@
       "side": "front",
       "name_zh": "定居點 04",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue",
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 6,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue",
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1754,7 +1798,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1770,22 +1814,22 @@
       "side": "front",
       "name_zh": "定居點 05",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "same_color",
+        "count": 4,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 5,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "same_color",
+        "count": 4,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1804,7 +1848,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1820,22 +1864,22 @@
       "side": "front",
       "name_zh": "定居點 06",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "same_color",
+        "count": 4,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 5,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "same_color",
+        "count": 4,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1854,7 +1898,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1870,22 +1914,34 @@
       "side": "front",
       "name_zh": "定居點 07",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow",
+          "yellow",
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 9,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow",
+          "yellow",
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1899,7 +1955,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1915,22 +1971,32 @@
       "side": "front",
       "name_zh": "定居點 08",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow",
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 6,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow",
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -1944,7 +2010,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -1960,22 +2026,34 @@
       "side": "front",
       "name_zh": "定居點 09",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "yellow",
+          "green",
+          "blue",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 4,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "yellow",
+          "green",
+          "blue",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2009,7 +2087,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2025,22 +2103,32 @@
       "side": "front",
       "name_zh": "定居點 10",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green",
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 6,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green",
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2054,7 +2142,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2070,22 +2158,22 @@
       "side": "front",
       "name_zh": "定居點 11",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "same_color",
+        "count": 4,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 5,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "same_color",
+        "count": 4,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2104,7 +2192,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2120,22 +2208,32 @@
       "side": "front",
       "name_zh": "定居點 12",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red",
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 6,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red",
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2149,7 +2247,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2165,22 +2263,34 @@
       "side": "front",
       "name_zh": "定居點 13",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "yellow",
+          "green",
+          "blue",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 4,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "yellow",
+          "green",
+          "blue",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2214,7 +2324,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2230,22 +2340,34 @@
       "side": "front",
       "name_zh": "定居點 14",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green",
+          "green",
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 8,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green",
+          "green",
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2264,7 +2386,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2280,22 +2402,34 @@
       "side": "front",
       "name_zh": "定居點 15",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red",
+          "red",
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": 7,
       "abilities": [],
       "confidence": "high",
       "destination_type": "settlement",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red",
+          "red",
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2314,7 +2448,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2330,22 +2464,28 @@
       "side": "front",
       "name_zh": "貿易點 01",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2359,7 +2499,7 @@
         "draw_crew_card",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2375,22 +2515,28 @@
       "side": "front",
       "name_zh": "貿易點 02",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2409,7 +2555,7 @@
         null,
         "recruit_token"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2425,22 +2571,28 @@
       "side": "front",
       "name_zh": "貿易點 03",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2459,7 +2611,7 @@
         "reputation",
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2475,22 +2627,28 @@
       "side": "front",
       "name_zh": "貿易點 04",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2509,7 +2667,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2525,22 +2683,28 @@
       "side": "front",
       "name_zh": "貿易點 05",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2559,7 +2723,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2575,22 +2739,28 @@
       "side": "front",
       "name_zh": "貿易點 06",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2604,7 +2774,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2620,22 +2790,28 @@
       "side": "front",
       "name_zh": "貿易點 07",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [],
       "trade_column_icons": [
@@ -2643,7 +2819,7 @@
         "victory_point",
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2659,22 +2835,28 @@
       "side": "front",
       "name_zh": "貿易點 08",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2688,7 +2870,7 @@
         "recruit_token",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2704,22 +2886,28 @@
       "side": "front",
       "name_zh": "貿易點 09",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "green",
+          "green"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2733,7 +2921,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2749,22 +2937,22 @@
       "side": "front",
       "name_zh": "貿易點 10",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2788,7 +2976,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2804,22 +2992,28 @@
       "side": "front",
       "name_zh": "貿易點 11",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2838,7 +3032,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2854,22 +3048,28 @@
       "side": "front",
       "name_zh": "貿易點 12",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "red",
+          "red"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2883,7 +3083,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2899,22 +3099,22 @@
       "side": "front",
       "name_zh": "貿易點 13",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2938,7 +3138,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2954,22 +3154,28 @@
       "side": "front",
       "name_zh": "貿易點 14",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "blue",
+          "blue"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -2983,7 +3189,7 @@
         "victory_point",
         "reputation"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -2999,22 +3205,28 @@
       "side": "front",
       "name_zh": "貿易點 15",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "yellow",
+          "yellow"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -3028,7 +3240,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -3044,22 +3256,22 @@
       "side": "front",
       "name_zh": "貿易點 16",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -3073,7 +3285,7 @@
         "reputation",
         "recruit_token"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -3089,22 +3301,22 @@
       "side": "front",
       "name_zh": "貿易點 17",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -3118,7 +3330,7 @@
         "reputation",
         "recruit_token"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -3134,22 +3346,22 @@
       "side": "front",
       "name_zh": "貿易點 18",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "different",
+        "count": 3,
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -3173,7 +3385,7 @@
         "victory_point",
         null
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -3189,22 +3401,28 @@
       "side": "front",
       "name_zh": "貿易點 19",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -3218,7 +3436,7 @@
         null,
         "victory_point"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },
@@ -3234,22 +3452,28 @@
       "side": "front",
       "name_zh": "貿易點 20",
       "cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "points": null,
       "abilities": [],
       "confidence": "high",
       "destination_type": "trade_post",
       "exploration_cost": {
-        "type": "same_color_any",
-        "crew_cards": 4,
+        "type": "specified",
+        "list": [
+          "purple",
+          "purple"
+        ],
         "can_substitute_recruit_tokens": true,
-        "source": "user_confirmed_2026-06-16",
-        "notes": "使用者確認：探索費用為同色任意 4 張；招募標記可各代替任意 1 張。"
+        "source": "card_left_requirement_icons_confirmed_2026-07-06",
+        "notes": "Exploration cost follows the card-left requirement icons; recruit tokens each replace one required crew card."
       },
       "reward_icons": [
         {
@@ -3268,7 +3492,7 @@
         "victory_point",
         "draw_crew_card"
       ],
-      "notes": "探索費用採使用者確認的同色任意 4 張；目的地右上角獎勵與底部貿易欄已依 high-res audit 校對。",
+      "notes": "Exploration cost follows card-left requirement icons; top-right rewards and bottom trade columns verified by high-res audit.",
       "icon_audit_confidence": "high",
       "icon_audit_source": "high-res review sheet manual audit 2026-06-16"
     },

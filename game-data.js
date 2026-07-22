@@ -9,20 +9,21 @@ const GAME_DATA = {
 
   // Static data
   SHIP_TILES: [
-    { id:'knarr_core_ship_tile_1_side_001', label:'船A-面1', trade_columns:[['draw_crew_card','draw_crew_card'],['recruit_token'],['silver_bracelet']] },
-    { id:'knarr_core_ship_tile_1_side_002', label:'船A-面2', trade_columns:[['draw_crew_card'],['silver_bracelet','silver_bracelet'],['victory_point']] },
-    { id:'knarr_core_ship_tile_2_side_003', label:'船B-面1', trade_columns:[['recruit_token','recruit_token'],['draw_crew_card'],['silver_bracelet']] },
-    { id:'knarr_core_ship_tile_2_side_004', label:'船B-面2', trade_columns:[['silver_bracelet'],['victory_point'],['recruit_token','recruit_token']] },
-    { id:'knarr_core_ship_tile_3_side_005', label:'船C-面1', trade_columns:[['draw_crew_card','draw_crew_card'],['victory_point'],['recruit_token']] },
-    { id:'knarr_core_ship_tile_3_side_006', label:'船C-面2', trade_columns:[['reputation'],['silver_bracelet'],['draw_crew_card','draw_crew_card']] },
-    { id:'knarr_core_ship_tile_4_side_007', label:'船D-面1', trade_columns:[['victory_point'],['recruit_token','recruit_token'],['draw_crew_card']] },
-    { id:'knarr_core_ship_tile_4_side_008', label:'船D-面2', trade_columns:[['silver_bracelet','silver_bracelet'],['reputation'],['victory_point']] },
+    { id:'knarr_core_ship_tile_1_side_001', label:'船A-面1', trade_columns:[['victory_point'],[],['silver_bracelet']] },
+    { id:'knarr_core_ship_tile_1_side_002', label:'船A-面2', trade_columns:[[],['recruit_token'],[]] },
+    { id:'knarr_core_ship_tile_2_side_003', label:'船B-面1', trade_columns:[[],['recruit_token'],[]] },
+    { id:'knarr_core_ship_tile_2_side_004', label:'船B-面2', trade_columns:[['victory_point'],[],['silver_bracelet']] },
+    { id:'knarr_core_ship_tile_3_side_005', label:'船C-面1', trade_columns:[['victory_point'],[],['silver_bracelet']] },
+    { id:'knarr_core_ship_tile_3_side_006', label:'船C-面2', trade_columns:[[],['recruit_token'],[]] },
+    { id:'knarr_core_ship_tile_4_side_007', label:'船D-面1', trade_columns:[[],['recruit_token'],[]] },
+    { id:'knarr_core_ship_tile_4_side_008', label:'船D-面2', trade_columns:[['victory_point'],[],['silver_bracelet']] },
   ],
 
   // Loaded from JSON
   CREW_CARDS: [],
   SETTLEMENTS: [],
   TRADE_POSTS: [],
+  ARTIFACTS: [],
 
   _loaded: false,
 };
@@ -30,13 +31,48 @@ const GAME_DATA = {
 // ── Load all card data from JSON files ──
 async function loadGameData() {
   try {
-    const [cardsResp, shipResp] = await Promise.all([
+    const [cardsResp, shipResp, artifactResp] = await Promise.all([
       fetch('data/cards.json'),
       fetch('data/ship_tiles.json').catch(()=>null),
+      fetch('data/artifacts.json').catch(()=>null),
     ]);
 
     const cardsJson = await cardsResp.json();
     const cards = cardsJson.cards || [];
+    if(artifactResp) {
+      try {
+        const artifactJson = await artifactResp.json();
+        GAME_DATA.ARTIFACTS = (artifactJson.artifacts || []).map((a, idx) => ({
+          id: a.id,
+          name: a.name_zh || a.id,
+          condition: a.condition_zh || '',
+          effect: a.effect_zh || '',
+          img: `knarr_relic_variant_relic_${String(idx + 1).padStart(3, '0')}.png`,
+          confidence: a.confidence || 'unknown',
+        }));
+      } catch(err) {
+        console.warn('[KNARR] Artifact JSON load failed, using static artifacts:', err);
+      }
+    }
+    if(shipResp) {
+      try {
+        const shipJson = await shipResp.json();
+        const sides = shipJson.sides || [];
+        if(sides.length) {
+          GAME_DATA.SHIP_TILES = sides.map((s, idx) => {
+            const tileNo = Math.floor(idx / 2);
+            const face = s.face_index_on_physical_tile || (idx % 2) + 1;
+            return {
+              id: s.id,
+              label: `船${String.fromCharCode(65 + tileNo)}-面${face}`,
+              trade_columns: s.top_printed_columns || s.trade_columns || [[],[],[]],
+            };
+          });
+        }
+      } catch(err) {
+        console.warn('[KNARR] Ship tile JSON load failed, using static ship tiles:', err);
+      }
+    }
 
     // Crew cards (type=crew, front side only)
     GAME_DATA.CREW_CARDS = cards
@@ -63,6 +99,7 @@ async function loadGameData() {
         img: d.id + '.png',
         rewards: buildRewards(d),
         trade_cols: buildTradeCols(d),
+        cost: normalizeCost(d.cost || d.exploration_cost),
         type: isSettle ? 'settlement' : 'trade_post',
       };
       if(isSettle) GAME_DATA.SETTLEMENTS.push(obj);
@@ -71,6 +108,7 @@ async function loadGameData() {
 
     // Fallback: if no JSON data, use hardcoded
     if(GAME_DATA.CREW_CARDS.length === 0) useHardcodedData();
+    if(GAME_DATA.ARTIFACTS.length === 0) useHardcodedArtifacts();
 
     GAME_DATA._loaded = true;
     console.log(`[KNARR] Loaded: ${GAME_DATA.CREW_CARDS.length} crew, ${GAME_DATA.SETTLEMENTS.length} settlements, ${GAME_DATA.TRADE_POSTS.length} trade posts`);
@@ -103,6 +141,7 @@ function buildRewards(card) {
       }
     });
   }
+  if(Array.isArray(card.reward_icons)) return rewards;
   return rewards.length ? rewards : [{icon:'victory_point', amount:card.points||0}];
 }
 
@@ -114,8 +153,38 @@ function buildTradeCols(card) {
   return [null, null, null];
 }
 
+function normalizeCost(cost) {
+  if(!cost) return {type:'same_color', count:4};
+  if(cost.type === 'same_color_any') {
+    return {type:'same_color', count:cost.crew_cards || cost.count || 4};
+  }
+  if(cost.type === 'same_color') {
+    return {type:'same_color', count:cost.count || cost.crew_cards || 4};
+  }
+  if(cost.type === 'different') {
+    return {type:'different', count:cost.count || cost.crew_cards || 3};
+  }
+  if(cost.type === 'specified') {
+    return {type:'specified', list:[...(cost.list || cost.colors || cost.crew_colors || [])]};
+  }
+  return {type:'same_color', count:4};
+}
+
+function useHardcodedArtifacts() {
+  GAME_DATA.ARTIFACTS = [
+    {id:'knarr_relic_windsock',name:'風向標',condition:'完成 5 色橫排',effect:'立即執行一次探索，仍需支付探索費用。',img:'knarr_relic_variant_relic_001.png',confidence:'high'},
+    {id:'knarr_relic_gold_bracelet',name:'金臂鐲',condition:'招募行動放入的同色船員剛好是第 3 張',effect:'可預留 1 張目的地卡，並立即補同類型目的地市場；每位玩家最多同時預留 2 張。',img:'knarr_relic_variant_relic_002.png',confidence:'high'},
+    {id:'knarr_relic_cauldron',name:'大煮釜',condition:'招募行動放入的同色船員剛好是第 2 張',effect:'本次拿取公開船員時可從 5 張任選。',img:'knarr_relic_variant_relic_003.png',confidence:'high'},
+    {id:'knarr_relic_iron_helmet',name:'鐵戰盔',condition:'探索取得定居點卡，並將其放在貿易點卡上方且相鄰',effect:'立即執行一次招募。',img:'knarr_relic_variant_relic_004.png',confidence:'high'},
+    {id:'knarr_relic_mead_cup',name:'蜜酒杯',condition:'執行探索行動',effect:'可棄置 1 張版圖下方公開船員卡，並用船員牌庫頂牌替換。',img:'knarr_relic_variant_relic_005.png',confidence:'high'},
+    {id:'knarr_relic_silver_coin',name:'銀錢幣',condition:'招募行動放入的同色船員是第 4 張或更多',effect:'獲得 1 點勝利分數。',img:'knarr_relic_variant_relic_006.png',confidence:'medium'},
+    {id:'knarr_relic_amulet',name:'護身符',condition:'透過招募或探索完成一條由 5 種不同顏色船員構成的橫排',effect:'獲得 1 枚銀臂鐲、1 枚招募標記與 1 點聲望值。',img:'knarr_relic_variant_relic_007.png',confidence:'high'},
+  ];
+}
+
 // ── Hardcoded fallback data ──
 function useHardcodedData() {
+  useHardcodedArtifacts();
   // Crew Cards — representative set for 2-player
   GAME_DATA.CREW_CARDS = [
     // Blue
@@ -171,44 +240,44 @@ function useHardcodedData() {
 
   // Settlements
   GAME_DATA.SETTLEMENTS = [
-    {id:'knarr_core_settlement_001',name:'定居點 01',points:8,img:'knarr_core_settlement_001.png',rewards:[{icon:'victory_point',amount:8},{icon:'draw_crew_card',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['blue','blue','blue']}},
-    {id:'knarr_core_settlement_002',name:'定居點 02',points:6,img:'knarr_core_settlement_002.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,'victory_point',null],cost:{type:'same_color',count:2}},
-    {id:'knarr_core_settlement_003',name:'定居點 03',points:7,img:'knarr_core_settlement_003.png',rewards:[{icon:'victory_point',amount:7},{icon:'reputation',amount:2}],trade_cols:[null,null,'victory_point'],cost:{type:'same_color',count:3}},
-    {id:'knarr_core_settlement_004',name:'定居點 04',points:6,img:'knarr_core_settlement_004.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:['victory_point',null,null],cost:{type:'specified',list:['blue','blue']}},
-    {id:'knarr_core_settlement_005',name:'定居點 05',points:5,img:'knarr_core_settlement_005.png',rewards:[{icon:'victory_point',amount:5},{icon:'recruit_token',amount:1}],trade_cols:['silver_bracelet',null,null],cost:{type:'same_color',count:3}},
-    {id:'knarr_core_settlement_006',name:'定居點 06',points:5,img:'knarr_core_settlement_006.png',rewards:[{icon:'victory_point',amount:5},{icon:'reputation',amount:1}],trade_cols:[null,null,'recruit_token'],cost:{type:'same_color',count:3}},
-    {id:'knarr_core_settlement_007',name:'定居點 07',points:7,img:'knarr_core_settlement_007.png',rewards:[{icon:'victory_point',amount:7}],trade_cols:['victory_point',null,null],cost:{type:'specified',list:['yellow','yellow','yellow']}},
-    {id:'knarr_core_settlement_008',name:'定居點 08',points:6,img:'knarr_core_settlement_008.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['yellow','yellow']}},
-    {id:'knarr_core_settlement_009',name:'定居點 09',points:8,img:'knarr_core_settlement_009.png',rewards:[{icon:'victory_point',amount:8}],trade_cols:[null,'recruit_token',null],cost:{type:'specified',list:['purple','yellow','yellow']}},
-    {id:'knarr_core_settlement_010',name:'定居點 10',points:6,img:'knarr_core_settlement_010.png',rewards:[{icon:'victory_point',amount:6},{icon:'silver_bracelet',amount:1}],trade_cols:['silver_bracelet',null,null],cost:{type:'specified',list:['green','green','green']}},
-    {id:'knarr_core_settlement_011',name:'定居點 11',points:5,img:'knarr_core_settlement_011.png',rewards:[{icon:'victory_point',amount:5},{icon:'silver_bracelet',amount:1}],trade_cols:[null,null,'silver_bracelet'],cost:{type:'same_color',count:3}},
-    {id:'knarr_core_settlement_012',name:'定居點 12',points:6,img:'knarr_core_settlement_012.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:['victory_point',null,null],cost:{type:'specified',list:['red','red','red']}},
-    {id:'knarr_core_settlement_013',name:'定居點 13',points:7,img:'knarr_core_settlement_013.png',rewards:[{icon:'victory_point',amount:7},{icon:'recruit_token',amount:1}],trade_cols:[null,'victory_point',null],cost:{type:'specified',list:['red','yellow','blue']}},
-    {id:'knarr_core_settlement_014',name:'定居點 14',points:6,img:'knarr_core_settlement_014.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['green','green','green']}},
-    {id:'knarr_core_settlement_015',name:'定居點 15',points:7,img:'knarr_core_settlement_015.png',rewards:[{icon:'victory_point',amount:7},{icon:'silver_bracelet',amount:1}],trade_cols:['victory_point',null,null],cost:{type:'specified',list:['red','red','red']}},
+    {id:'knarr_core_settlement_001',name:'定居點 01',points:8,img:'knarr_core_settlement_001.png',rewards:[{icon:'victory_point',amount:8},{icon:'draw_crew_card',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['purple','purple','purple','red','red']}},
+    {id:'knarr_core_settlement_002',name:'定居點 02',points:6,img:'knarr_core_settlement_002.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,'victory_point',null],cost:{type:'specified',list:['purple','purple','yellow','yellow']}},
+    {id:'knarr_core_settlement_003',name:'定居點 03',points:7,img:'knarr_core_settlement_003.png',rewards:[{icon:'victory_point',amount:7},{icon:'reputation',amount:2}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['blue','blue','blue','purple','purple']}},
+    {id:'knarr_core_settlement_004',name:'定居點 04',points:6,img:'knarr_core_settlement_004.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,'victory_point',null],cost:{type:'specified',list:['blue','blue','red','red']}},
+    {id:'knarr_core_settlement_005',name:'定居點 05',points:5,img:'knarr_core_settlement_005.png',rewards:[{icon:'victory_point',amount:5},{icon:'recruit_token',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'same_color',count:4}},
+    {id:'knarr_core_settlement_006',name:'定居點 06',points:5,img:'knarr_core_settlement_006.png',rewards:[{icon:'victory_point',amount:5},{icon:'reputation',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'same_color',count:4}},
+    {id:'knarr_core_settlement_007',name:'定居點 07',points:9,img:'knarr_core_settlement_007.png',rewards:[{icon:'victory_point',amount:9}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['yellow','yellow','yellow','green','green']}},
+    {id:'knarr_core_settlement_008',name:'定居點 08',points:6,img:'knarr_core_settlement_008.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,'victory_point',null],cost:{type:'specified',list:['yellow','yellow','blue','blue']}},
+    {id:'knarr_core_settlement_009',name:'定居點 09',points:4,img:'knarr_core_settlement_009.png',rewards:[{icon:'victory_point',amount:4},{icon:'silver_bracelet',amount:1},{icon:'recruit_token',amount:1},{icon:'reputation',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['red','yellow','green','blue','purple']}},
+    {id:'knarr_core_settlement_010',name:'定居點 10',points:6,img:'knarr_core_settlement_010.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,'victory_point',null],cost:{type:'specified',list:['green','green','purple','purple']}},
+    {id:'knarr_core_settlement_011',name:'定居點 11',points:5,img:'knarr_core_settlement_011.png',rewards:[{icon:'victory_point',amount:5},{icon:'silver_bracelet',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'same_color',count:4}},
+    {id:'knarr_core_settlement_012',name:'定居點 12',points:6,img:'knarr_core_settlement_012.png',rewards:[{icon:'victory_point',amount:6}],trade_cols:[null,'victory_point',null],cost:{type:'specified',list:['red','red','green','green']}},
+    {id:'knarr_core_settlement_013',name:'定居點 13',points:4,img:'knarr_core_settlement_013.png',rewards:[{icon:'victory_point',amount:4},{icon:'silver_bracelet',amount:1},{icon:'recruit_token',amount:1},{icon:'reputation',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['red','yellow','green','blue','purple']}},
+    {id:'knarr_core_settlement_014',name:'定居點 14',points:8,img:'knarr_core_settlement_014.png',rewards:[{icon:'victory_point',amount:8},{icon:'recruit_token',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['green','green','green','blue','blue']}},
+    {id:'knarr_core_settlement_015',name:'定居點 15',points:7,img:'knarr_core_settlement_015.png',rewards:[{icon:'victory_point',amount:7},{icon:'silver_bracelet',amount:1}],trade_cols:[null,null,'victory_point'],cost:{type:'specified',list:['red','red','red','yellow','yellow']}},
   ];
 
   // Trade Posts
   GAME_DATA.TRADE_POSTS = [
-    {id:'knarr_core_trade_post_001',name:'貿易點 01',points:0,img:'knarr_core_trade_post_001.png',rewards:[{icon:'draw_crew_card',amount:1}],trade_cols:['victory_point','victory_point',null],cost:{type:'specified',list:['purple','purple']}},
-    {id:'knarr_core_trade_post_002',name:'貿易點 02',points:0,img:'knarr_core_trade_post_002.png',rewards:[{icon:'recruit_token',amount:2}],trade_cols:[null,'victory_point','victory_point'],cost:{type:'specified',list:['green','green']}},
-    {id:'knarr_core_trade_post_003',name:'貿易點 03',points:0,img:'knarr_core_trade_post_003.png',rewards:[{icon:'silver_bracelet',amount:2}],trade_cols:['victory_point',null,'victory_point'],cost:{type:'specified',list:['blue','blue']}},
-    {id:'knarr_core_trade_post_004',name:'貿易點 04',points:0,img:'knarr_core_trade_post_004.png',rewards:[{icon:'reputation',amount:3}],trade_cols:['recruit_token',null,null],cost:{type:'specified',list:['blue','blue']}},
-    {id:'knarr_core_trade_post_005',name:'貿易點 05',points:0,img:'knarr_core_trade_post_005.png',rewards:[{icon:'draw_crew_card',amount:2}],trade_cols:[null,'recruit_token',null],cost:{type:'specified',list:['red','red']}},
-    {id:'knarr_core_trade_post_006',name:'貿易點 06',points:0,img:'knarr_core_trade_post_006.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'recruit_token',amount:1}],trade_cols:[null,null,'recruit_token'],cost:{type:'specified',list:['yellow','yellow']}},
-    {id:'knarr_core_trade_post_007',name:'貿易點 07',points:0,img:'knarr_core_trade_post_007.png',rewards:[{icon:'recruit_token',amount:1},{icon:'reputation',amount:2}],trade_cols:['silver_bracelet','silver_bracelet',null],cost:{type:'specified',list:['yellow','yellow']}},
-    {id:'knarr_core_trade_post_008',name:'貿易點 08',points:0,img:'knarr_core_trade_post_008.png',rewards:[{icon:'victory_point',amount:2}],trade_cols:[null,'silver_bracelet','silver_bracelet'],cost:{type:'specified',list:['green','green']}},
-    {id:'knarr_core_trade_post_009',name:'貿易點 09',points:0,img:'knarr_core_trade_post_009.png',rewards:[{icon:'draw_crew_card',amount:1},{icon:'silver_bracelet',amount:1}],trade_cols:['silver_bracelet',null,'silver_bracelet'],cost:{type:'specified',list:['green','green']}},
-    {id:'knarr_core_trade_post_010',name:'貿易點 10',points:0,img:'knarr_core_trade_post_010.png',rewards:[{icon:'reputation',amount:2},{icon:'recruit_token',amount:1}],trade_cols:['victory_point','recruit_token',null],cost:{type:'different',count:3}},
-    {id:'knarr_core_trade_post_011',name:'貿易點 11',points:0,img:'knarr_core_trade_post_011.png',rewards:[{icon:'silver_bracelet',amount:1}],trade_cols:[null,'victory_point','recruit_token'],cost:{type:'specified',list:['red','red']}},
-    {id:'knarr_core_trade_post_012',name:'貿易點 12',points:0,img:'knarr_core_trade_post_012.png',rewards:[{icon:'recruit_token',amount:2},{icon:'draw_crew_card',amount:1}],trade_cols:['recruit_token',null,'victory_point'],cost:{type:'specified',list:['red','red']}},
-    {id:'knarr_core_trade_post_013',name:'貿易點 13',points:0,img:'knarr_core_trade_post_013.png',rewards:[{icon:'silver_bracelet',amount:2},{icon:'recruit_token',amount:1}],trade_cols:['recruit_token','victory_point',null],cost:{type:'different',count:3}},
-    {id:'knarr_core_trade_post_014',name:'貿易點 14',points:0,img:'knarr_core_trade_post_014.png',rewards:[{icon:'reputation',amount:4}],trade_cols:[null,'recruit_token','victory_point'],cost:{type:'specified',list:['blue','blue']}},
-    {id:'knarr_core_trade_post_015',name:'貿易點 15',points:0,img:'knarr_core_trade_post_015.png',rewards:[{icon:'draw_crew_card',amount:2},{icon:'reputation',amount:1}],trade_cols:['victory_point',null,'recruit_token'],cost:{type:'specified',list:['yellow','yellow']}},
-    {id:'knarr_core_trade_post_016',name:'貿易點 16',points:0,img:'knarr_core_trade_post_016.png',rewards:[{icon:'recruit_token',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,'victory_point',null],cost:{type:'different',count:3}},
-    {id:'knarr_core_trade_post_017',name:'貿易點 17',points:0,img:'knarr_core_trade_post_017.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'reputation',amount:1}],trade_cols:['victory_point',null,'victory_point'],cost:{type:'different',count:3}},
-    {id:'knarr_core_trade_post_018',name:'貿易點 18',points:0,img:'knarr_core_trade_post_018.png',rewards:[{icon:'recruit_token',amount:2},{icon:'silver_bracelet',amount:1}],trade_cols:[null,'silver_bracelet',null],cost:{type:'different',count:3}},
-    {id:'knarr_core_trade_post_019',name:'貿易點 19',points:0,img:'knarr_core_trade_post_019.png',rewards:[{icon:'draw_crew_card',amount:1},{icon:'recruit_token',amount:1}],trade_cols:['silver_bracelet',null,'silver_bracelet'],cost:{type:'specified',list:['purple','purple']}},
-    {id:'knarr_core_trade_post_020',name:'貿易點 20',points:0,img:'knarr_core_trade_post_020.png',rewards:[{icon:'reputation',amount:3},{icon:'silver_bracelet',amount:1}],trade_cols:[null,null,'silver_bracelet'],cost:{type:'specified',list:['purple','purple']}},
+    {id:'knarr_core_trade_post_001',name:'貿易點 01',points:0,img:'knarr_core_trade_post_001.png',rewards:[{icon:'draw_crew_card',amount:1}],trade_cols:['victory_point','draw_crew_card',null],cost:{type:'specified',list:['purple','purple']}},
+    {id:'knarr_core_trade_post_002',name:'貿易點 02',points:0,img:'knarr_core_trade_post_002.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'recruit_token',amount:1}],trade_cols:['victory_point',null,'recruit_token'],cost:{type:'specified',list:['green','green']}},
+    {id:'knarr_core_trade_post_003',name:'貿易點 03',points:0,img:'knarr_core_trade_post_003.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'reputation',amount:1}],trade_cols:[null,'reputation','victory_point'],cost:{type:'specified',list:['blue','blue']}},
+    {id:'knarr_core_trade_post_004',name:'貿易點 04',points:0,img:'knarr_core_trade_post_004.png',rewards:[{icon:'recruit_token',amount:1},{icon:'reputation',amount:1}],trade_cols:['reputation',null,'victory_point'],cost:{type:'specified',list:['blue','blue']}},
+    {id:'knarr_core_trade_post_005',name:'貿易點 05',points:0,img:'knarr_core_trade_post_005.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:['victory_point',null,'victory_point'],cost:{type:'specified',list:['red','red']}},
+    {id:'knarr_core_trade_post_006',name:'貿易點 06',points:0,img:'knarr_core_trade_post_006.png',rewards:[{icon:'recruit_token',amount:1}],trade_cols:['victory_point','victory_point',null],cost:{type:'specified',list:['yellow','yellow']}},
+    {id:'knarr_core_trade_post_007',name:'貿易點 07',points:0,img:'knarr_core_trade_post_007.png',rewards:[],trade_cols:['victory_point','victory_point','victory_point'],cost:{type:'specified',list:['yellow','yellow']}},
+    {id:'knarr_core_trade_post_008',name:'貿易點 08',points:0,img:'knarr_core_trade_post_008.png',rewards:[{icon:'recruit_token',amount:2}],trade_cols:[null,'recruit_token',null],cost:{type:'specified',list:['green','green']}},
+    {id:'knarr_core_trade_post_009',name:'貿易點 09',points:0,img:'knarr_core_trade_post_009.png',rewards:[{icon:'recruit_token',amount:1}],trade_cols:['recruit_token','victory_point',null],cost:{type:'specified',list:['green','green']}},
+    {id:'knarr_core_trade_post_010',name:'貿易點 10',points:0,img:'knarr_core_trade_post_010.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'reputation',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,'victory_point',null],cost:{type:'different',count:3}},
+    {id:'knarr_core_trade_post_011',name:'貿易點 11',points:0,img:'knarr_core_trade_post_011.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'reputation',amount:1}],trade_cols:['victory_point',null,'victory_point'],cost:{type:'specified',list:['red','red']}},
+    {id:'knarr_core_trade_post_012',name:'貿易點 12',points:0,img:'knarr_core_trade_post_012.png',rewards:[{icon:'silver_bracelet',amount:1}],trade_cols:['victory_point','victory_point',null],cost:{type:'specified',list:['red','red']}},
+    {id:'knarr_core_trade_post_013',name:'貿易點 13',points:0,img:'knarr_core_trade_post_013.png',rewards:[{icon:'recruit_token',amount:1},{icon:'reputation',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,'victory_point',null],cost:{type:'different',count:3}},
+    {id:'knarr_core_trade_post_014',name:'貿易點 14',points:0,img:'knarr_core_trade_post_014.png',rewards:[{icon:'reputation',amount:2}],trade_cols:[null,'victory_point','reputation'],cost:{type:'specified',list:['blue','blue']}},
+    {id:'knarr_core_trade_post_015',name:'貿易點 15',points:0,img:'knarr_core_trade_post_015.png',rewards:[{icon:'reputation',amount:1}],trade_cols:['victory_point','victory_point',null],cost:{type:'specified',list:['yellow','yellow']}},
+    {id:'knarr_core_trade_post_016',name:'貿易點 16',points:0,img:'knarr_core_trade_post_016.png',rewards:[{icon:'silver_bracelet',amount:1}],trade_cols:['victory_point','reputation','recruit_token'],cost:{type:'different',count:3}},
+    {id:'knarr_core_trade_post_017',name:'貿易點 17',points:0,img:'knarr_core_trade_post_017.png',rewards:[{icon:'silver_bracelet',amount:1}],trade_cols:['victory_point','reputation','recruit_token'],cost:{type:'different',count:3}},
+    {id:'knarr_core_trade_post_018',name:'貿易點 18',points:0,img:'knarr_core_trade_post_018.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'recruit_token',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,'victory_point',null],cost:{type:'different',count:3}},
+    {id:'knarr_core_trade_post_019',name:'貿易點 19',points:0,img:'knarr_core_trade_post_019.png',rewards:[{icon:'draw_crew_card',amount:1}],trade_cols:['draw_crew_card',null,'victory_point'],cost:{type:'specified',list:['purple','purple']}},
+    {id:'knarr_core_trade_post_020',name:'貿易點 20',points:0,img:'knarr_core_trade_post_020.png',rewards:[{icon:'silver_bracelet',amount:1},{icon:'draw_crew_card',amount:1}],trade_cols:[null,'victory_point','draw_crew_card'],cost:{type:'specified',list:['purple','purple']}},
   ];
 }

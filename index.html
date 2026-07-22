@@ -37,10 +37,8 @@
         <label class="setup-label">你的艦長名稱</label>
         <input type="text" id="player-name-input" class="text-input" placeholder="維京艦長" maxlength="12" value="維京艦長">
         <label class="setup-label" style="margin-top:16px">聖物模組</label>
-        <div class="toggle-row">
-          <label class="toggle-switch"><input type="checkbox" id="relic-toggle" checked><span class="toggle-slider"></span></label>
-          <span class="toggle-desc">金臂鐲 — 招募第3張同色船員時，可預留1張目的地</span>
-        </div>
+        <div id="artifact-selector" class="artifact-grid"></div>
+        <p class="toggle-desc">每局可選 1 張聖物；選「不使用」則只玩核心規則。</p>
       </div>
       <div class="setup-col">
         <label class="setup-label">選擇你的船隻板塊</label>
@@ -117,10 +115,14 @@
         <!-- Ship tile image background -->
         <div class="ship-tile-image-wrapper">
           <img id="opp-ship-img" src="" alt="船隻板塊" class="ship-tile-img">
+          <div class="ship-trade-cols" id="opp-trade-cols"></div>
+          <div class="dest-stack-area" id="opp-destinations"></div>
         </div>
-        <div class="ship-trade-cols" id="opp-trade-cols"></div>
-        <!-- All destinations stacked on ship tile -->
-        <div class="dest-stack-area" id="opp-destinations"></div>
+      </div>
+      <!-- 事件記錄：常駐顯示在左下角 -->
+      <div id="event-log" class="event-log">
+        <div class="log-hdr">📋 事件記錄</div>
+        <div class="log-body" id="log-entries"></div>
       </div>
     </aside>
 
@@ -177,6 +179,11 @@
             <span class="act-name">結束回合</span>
           </button>
         </div>
+        <!-- 招募選牌前：可返回上一部 -->
+        <div id="recruit-inline" class="recruit-inline hidden">
+          <div class="recruit-inline-title">招募模式：點選手牌中的船員執行招募。尚未點選前可以返回上一部。</div>
+          <button class="small-btn cancel-btn" onclick="cancelRecruit()">返回上一部</button>
+        </div>
         <!-- 貿易選項 (inline) -->
         <div id="trade-inline" class="trade-inline hidden">
           <div class="trade-inline-title">選擇銀臂鐲數量（你有 <span id="trade-bracelet-count">0</span> 枚）</div>
@@ -184,15 +191,15 @@
             <button class="trade-opt-btn" onclick="executeTrade(1)"><span class="trade-cost">1 枚⭕</span><span class="trade-gain">取得左欄資源</span></button>
             <button class="trade-opt-btn" onclick="executeTrade(2)"><span class="trade-cost">2 枚⭕</span><span class="trade-gain">左欄 + 中欄</span></button>
             <button class="trade-opt-btn" onclick="executeTrade(3)"><span class="trade-cost">3 枚⭕</span><span class="trade-gain">左 + 中 + 右欄</span></button>
-            <button class="trade-cancel-btn" onclick="cancelTrade()">✕ 取消</button>
+            <button class="trade-cancel-btn" onclick="cancelTrade()">返回上一部</button>
           </div>
         </div>
         <!-- 探索費用說明 (inline) -->
         <div id="explore-inline" class="explore-inline hidden">
-          <div class="explore-inline-title">探索模式：先點選目的地，再從手牌/船員區選擇4張同色船員支付（可用⚡代替）</div>
+          <div class="explore-inline-title">探索模式：先點選目的地，再從船員區域依卡牌最左側需求支付船員（可用⚡代替）</div>
           <div class="explore-inline-state">
             已選目的地：<span id="sel-dest-name">—</span> ／
-            已選費用：<span id="sel-crew-count">0</span>/4 張 ＋ <span id="sel-token-count">0</span> 枚⚡
+            已選費用：<span id="sel-crew-count">0</span>/<span id="sel-cost-total">—</span> 張 ＋ <span id="sel-token-count">0</span> 枚⚡
             <button class="small-btn" id="explore-use-token-btn" onclick="useTokenForExplore()" disabled>使用⚡代替</button>
             <button class="small-btn confirm-btn" id="confirm-explore-btn" onclick="confirmExplore()" disabled>✓ 確認探索</button>
             <button class="small-btn cancel-btn" onclick="cancelExplore()">✕ 取消</button>
@@ -200,19 +207,17 @@
         </div>
         <!-- 招募後：使用招募標記選任意市場牌 (inline) -->
         <div id="recruit-token-inline" class="recruit-token-inline hidden">
-          <div class="recruit-token-title">⚡ 市場無同色船員！花費 1 枚招募標記，可任選一張市場牌加入手牌（你有 <span id="recruit-token-available">0</span> 枚）</div>
+          <div class="recruit-token-title" id="recruit-token-title">招募完成：選擇要拿取的公開船員（你有 <span id="recruit-token-available">0</span> 枚招募標記）</div>
           <div class="recruit-market-cards" id="recruit-market-pick"></div>
           <div style="margin-top:6px;display:flex;gap:8px">
-            <button class="small-btn cancel-btn" onclick="skipRecruitTokenPick()">✕ 略過，不選</button>
+            <button class="small-btn" id="recruit-token-use-btn" onclick="showRecruitTokenPick()">使用招募標記</button>
+            <button class="small-btn cancel-btn" id="recruit-token-skip-btn" onclick="skipRecruitTokenPick()">拿對應格位到手牌</button>
           </div>
         </div>
       </section>
 
-      <!-- 事件記錄 -->
-      <div id="event-log" class="event-log hidden">
-        <div class="log-hdr">📋 事件記錄 <button class="log-close-btn" onclick="toggleLog()">✕</button></div>
-        <div class="log-body" id="log-entries"></div>
-      </div>
+      <!-- 本局聖物 -->
+      <section id="active-relic-display" class="active-relic-display hidden"></section>
     </main>
 
     <!-- ── COL C: 玩家面板 ── -->
@@ -267,11 +272,9 @@
         <!-- Ship tile image background -->
         <div class="ship-tile-image-wrapper">
           <img id="human-ship-img" src="" alt="船隻板塊" class="ship-tile-img">
+          <div class="ship-trade-cols" id="human-trade-cols"></div>
+          <div class="dest-stack-area" id="human-destinations"></div>
         </div>
-        <!-- Ship tile trade column icons -->
-        <div class="ship-trade-cols" id="human-trade-cols"></div>
-        <!-- All destination cards stacked here (overlaid on ship tile area) -->
-        <div class="dest-stack-area" id="human-destinations"></div>
         <!-- Reserved destinations (separate) -->
         <div class="block-title reserved-label" id="reserved-title" style="display:none">🔖 預留 (<span id="reserved-count">0</span>)</div>
         <div class="dest-cards-row" id="human-reserved"></div>
@@ -321,6 +324,17 @@
   </div>
 </div>
 
+<!-- 蜜酒杯替換公開船員 -->
+<div id="modal-mead-cup" class="modal hidden">
+  <div class="modal-overlay"></div>
+  <div class="modal-box">
+    <h3 class="modal-title">🍺 蜜酒杯觸發</h3>
+    <p class="modal-desc">可棄置 1 張公開船員卡，並用船員牌庫頂牌替換。</p>
+    <div class="reserve-dest-row" id="mead-cup-market-list"></div>
+    <button class="btn-ghost" style="margin-top:12px" onclick="skipMeadCup()">略過，不替換</button>
+  </div>
+</div>
+
 <!-- 規則說明 -->
 <div id="modal-rules" class="modal hidden">
   <div class="modal-overlay" onclick="closeModal('modal-rules')"></div>
@@ -338,13 +352,13 @@
         <li><b>結束回合</b></li>
       </ol>
       <h4>⚡ 招募船員</h4>
-      <p>從手牌打出 1 張船員卡放入對應顏色欄位，取得該欄所有可見資源圖標，然後從市場補 1 張同色牌到手（若無同色可花招募標記任選 1 張）。</p>
+      <p>從手牌打出 1 張船員卡放入對應顏色欄位，取得該欄所有可見資源圖標，然後免費拿取對應顏色格位的公開船員；也可花費 1 枚招募標記改選任一公開船員。</p>
       <h4>🧭 探索目的地</h4>
-      <p>選擇市場或預留目的地，支付 4 張同色船員卡（招募標記可各代替 1 張），取得右上角獎勵。</p>
+      <p>選擇市場或預留目的地，從船員區域依卡牌最左側圖示支付船員；彩色格代表指定顏色，白底 = 代表任意同色，黑底 ≠ 代表不同顏色，招募標記可各代替 1 張。</p>
       <h4>💰 貿易</h4>
-      <p>花費 1/2/3 枚銀臂鐲，對應解鎖船隻板塊左欄 / 左+中欄 / 全欄，取得欄位資源及所有已取得目的地卡的相同欄位資源。每回合最多貿易一次。</p>
-      <h4>🔱 金臂鐲聖物（可選模組）</h4>
-      <p>當招募的同色船員剛好是第 3 張時，可預留 1 張目的地卡（每人上限 2 張預留）。</p>
+      <p>每回合最多貿易一次，可在主行動前或主行動後花費 1/2/3 枚銀臂鐲，對應解鎖船隻板塊左欄 / 左+中欄 / 全欄，取得欄位資源及所有已取得目的地卡的相同欄位資源。</p>
+      <h4>🔱 聖物模組（可選）</h4>
+      <p>設置時可選 1 張聖物。已自動化：金臂鐲、大煮釜、蜜酒杯、銀錢幣、護身符；風向標與鐵戰盔目前可選與查看效果文字，但需後續補完整連鎖行動流程。</p>
     </div>
     <button class="btn-ghost" onclick="closeModal('modal-rules')">關閉</button>
   </div>

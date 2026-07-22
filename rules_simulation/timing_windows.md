@@ -7,7 +7,7 @@
 | `reputation.score` | 聲望階段 | 依聲望軌給分 |
 | `action.recruit.commit` | 招募船員放入船員區後 | 取得可見資源、檢查金臂鐲 |
 | `action.recruit.take_market_card` | 招募後拿公開船員 | 大煮釜替代效果 |
-| `action.explore.pay_cost` | 探索支付費用 | 同色任意 4 張與招募標記替代 |
+| `action.explore.pay_cost` | 探索支付費用 | 從船員區域依目的地卡牌最左側圖示需求支付，招募標記可替代 |
 | `action.explore.after` | 取得目的地後 | 右上角獎勵、聖物觸發 |
 | `trade.resolve` | 貿易結算 | 依銀臂鐲數量取得欄位 |
 | `cleanup.refill` | 清理補牌 | 目的地牌庫空時不補 |

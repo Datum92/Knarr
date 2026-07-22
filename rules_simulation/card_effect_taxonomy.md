@@ -12,5 +12,5 @@
 
 - 船員頂端圖標：已寫入 `top_resource_icon`。
 - 船員左下人數標記：已寫入 `player_count_marker` 與 `valid_player_counts`。
-- 目的地探索費：統一為 `same_color_any` + `crew_cards: 4`。
+- 目的地探索費：依卡牌最左側圖示資料化為 `specified`、`same_color` 或 `different`。
 - 目的地右上獎勵與底部貿易欄：已依 high-res review sheet 校對，confidence 為 `high`。

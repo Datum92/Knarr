@@ -4,7 +4,7 @@
 
 - 新增起始設置頁已複製到 `rulebook_images` 並寫入 manifest。
 - `cards.json` 已完成船員卡頂端資源、人數標記與 2P 篩牌資料。
-- 目的地探索費已改為使用者確認的同色任意 4 張。
+- 目的地探索費已改為依卡牌最左側圖示需求支付。
 - 目的地右上角獎勵與貿易欄已完成 high-confidence 校對，並修正 TP001 右上角獎勵。
 - 主板聲望軌給分表已寫入 `data/boards.json`。
 - 船隻板塊 8 面貿易欄與船帆印刷圖標已寫入 `data/ship_tiles.json`。

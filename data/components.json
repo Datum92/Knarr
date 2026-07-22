@@ -30,7 +30,7 @@
     },
     {
       "id": "draw_crew_card",
-      "name_zh": "抽取船員",
+      "name_zh": "抽取並放置船員",
       "limit": null
     }
   ],

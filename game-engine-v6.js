@@ -14,16 +14,68 @@ const ICONS = {
   silver_bracelet:{sym:'⭕', label:'銀臂鐲',   col:'#c8c8c8'},
   recruit_token:  {sym:'⚡', label:'招募標記', col:'#64b4ff'},
   reputation:     {sym:'🔰', label:'聲望值',   col:'#86efac'},
-  draw_crew_card: {sym:'🃏', label:'抽船員牌', col:'#c084fc'},
+  draw_crew_card: {sym:'🃏', label:'抽取並放置船員', col:'#c084fc'},
 };
 const REP_THRESH = [{p:0,s:0},{p:3,s:1},{p:6,s:2},{p:10,s:3},{p:14,s:5}];
+const RELIC_RULE_DETAILS = {
+  knarr_relic_windsock: {
+    timing:'完成 5 色橫排後，立即進入額外探索窗口。',
+    condition:'自己的船員區域形成 1 條由藍、黃、綠、紅、紫各 1 張組成的橫排。',
+    effect:'可立即執行 1 次探索，仍必須從船員區域支付目的地左側探索費用，招募標記仍可各代替 1 張船員。',
+    use:'達成條件時應選擇 1 張公開或預留目的地，再正常支付探索費。若無法支付探索費，不能取得目的地。',
+    compliance:'已自動化：新完成 5 色橫排時開啟額外探索窗口；每條橫排只觸發一次。'
+  },
+  knarr_relic_gold_bracelet: {
+    timing:'招募船員放入同色縱列後立即檢查。',
+    condition:'本次招募放入的同色船員剛好是該色第 3 張。',
+    effect:'可預留 1 張目的地卡，並立即從同類型目的地牌庫補公開市場；每位玩家最多同時預留 2 張。',
+    use:'觸發後會開啟目的地預留視窗。選定目的地後放入自己的預留區，之後可在探索行動選擇該預留目的地。',
+    compliance:'已符合並自動化：第 3 張同色招募、預留上限、預留後補同類型市場。'
+  },
+  knarr_relic_cauldron: {
+    timing:'招募船員後，拿取公開船員的步驟。',
+    condition:'本次招募放入的同色船員剛好是該色第 2 張。',
+    effect:'本次拿取公開船員時可免費從 5 張公開船員中任選 1 張。',
+    use:'觸發後公開船員選擇區會改為免費任選，不需要花費招募標記。',
+    compliance:'已符合並自動化：第 2 張同色招募後，本次公開船員拿取免費任選。'
+  },
+  knarr_relic_iron_helmet: {
+    timing:'探索取得定居點後，依目的地放置位置檢查。',
+    condition:'探索取得定居點卡，並將其放在貿易點卡上方且相鄰。',
+    effect:'立即執行 1 次招募。',
+    use:'數位版目前以取得定居點且已擁有至少 1 張貿易點作為可形成相鄰放置的條件；觸發後可立即招募 1 張手牌船員。',
+    compliance:'已自動化：探索定居點後，若已有貿易點，開啟立即招募確認。'
+  },
+  knarr_relic_mead_cup: {
+    timing:'探索行動完成後。',
+    condition:'本回合執行了探索行動。',
+    effect:'可棄置 1 張版圖下方公開船員卡，並用船員牌庫頂牌替換。',
+    use:'探索成功後會開啟公開船員替換視窗，可選 1 張公開船員替換，或略過不使用。',
+    compliance:'已符合並自動化：探索後可選擇替換 1 張公開船員，也可略過。'
+  },
+  knarr_relic_silver_coin: {
+    timing:'招募船員放入同色縱列後立即檢查。',
+    condition:'本次招募放入的同色船員是該色第 4 張或更多。',
+    effect:'獲得 1 點勝利分數。',
+    use:'達成條件時立即加 1 分；每次符合條件的招募都會檢查。',
+    compliance:'已符合並自動化：第 4 張或更多同色招募立即 +1 分。'
+  },
+  knarr_relic_amulet: {
+    timing:'招募或抽取並放置船員後，檢查船員區域橫排。',
+    condition:'透過招募或探索相關效果完成 1 條由 5 種不同顏色船員構成的橫排。',
+    effect:'獲得 1 枚銀臂鐲、1 枚招募標記與 1 點聲望值。',
+    use:'每條已完成的 5 色橫排只獎勵一次。探索支付船員可能移除橫排；重新完成未領過的橫排時會再檢查。',
+    compliance:'已符合並自動化：招募與抽取並放置船員後會檢查新完成橫排並給予三項獎勵。'
+  }
+};
 
 // ─── Game State ───────────────────────────────────────────────────────
 let G = null;
 
 // UI interaction mode
-let uiMode = 'idle'; // 'idle' | 'recruit' | 'explore-dest' | 'explore-pay'
+let uiMode = 'idle'; // 'idle' | 'trade' | 'recruit' | 'recruit-take' | 'explore-dest' | 'explore-pay'
 let exploreCtx = {destId:null, destIsReserved:false, paidCards:[], tokensUsed:0};
+let recruitTakeCtx = {color:null, pendingGoldBracelet:false, freeAny:false, tokenPickActive:false};
 
 // ─── State Constructors ───────────────────────────────────────────────
 function mkPlayer(tileId, name) {
@@ -40,10 +92,12 @@ function mkPlayer(tileId, name) {
 
 // ─── SETUP SCREEN ─────────────────────────────────────────────────────
 let selectedTileId = 'knarr_core_ship_tile_1_side_001';
+let selectedArtifactId = 'none';
 
 function startSetup() {
   showScreen('screen-setup');
   renderSetupTiles();
+  renderSetupArtifacts();
 }
 
 function renderSetupTiles() {
@@ -52,10 +106,20 @@ function renderSetupTiles() {
   GAME_DATA.SHIP_TILES.forEach(t => {
     const d = document.createElement('div');
     d.className = 'ship-tile-option' + (t.id === selectedTileId ? ' selected' : '');
-    const colIcons = t.trade_columns.map((col,i)=>
-      `<div>${['左','中','右'][i]}：${col.map(r=>ICONS[r]?.sym||r).join('')}</div>`
-    ).join('');
-    d.innerHTML = `<div class="tile-id">${t.label}</div><div class="tile-cols">${colIcons}</div>`;
+    const colIcons = [0,1,2].map(i => {
+      const col = t.trade_columns?.[i] || [];
+      const icons = col.length
+        ? col.map(r=>`<span class="setup-res-icon" title="${ICONS[r]?.label||r}" style="color:${ICONS[r]?.col||'#f0e8d0'}">${ICONS[r]?.sym||r}</span>`).join('')
+        : '<span class="setup-empty-icon">無</span>';
+      return `<div class="tile-preview-col"><span class="tile-preview-label">${['左','中','右'][i]}</span><span class="tile-preview-icons">${icons}</span></div>`;
+    }).join('');
+    d.innerHTML = `
+      <div class="tile-id">${t.label}</div>
+      <div class="tile-preview">
+        <img src="${getShipTileImageSrc(t.id)}" alt="${t.label}">
+        <div class="tile-preview-overlay">${colIcons}</div>
+      </div>
+    `;
     d.onclick = () => {
       selectedTileId = t.id;
       document.querySelectorAll('.ship-tile-option').forEach(el=>el.classList.remove('selected'));
@@ -65,12 +129,72 @@ function renderSetupTiles() {
   });
 }
 
+function getShipTileImageSrc(tileId) {
+  const m = tileId.match(/side_\d+/);
+  const sideNum = m ? m[0] : 'side_001';
+  return `component_images/knarr_core_ship_tile_${sideNum}.png`;
+}
+
+function renderSetupArtifacts() {
+  const box = document.getElementById('artifact-selector');
+  if(!box) return;
+  box.innerHTML = '';
+  const options = [
+    {id:'none', name:'不使用聖物', effect:'核心遊戲規則', img:null},
+    ...GAME_DATA.ARTIFACTS,
+  ];
+  options.forEach(a => {
+    const detail = RELIC_RULE_DETAILS[a.id];
+    const conditionText = detail?.condition || a.condition || '依聖物卡文字。';
+    const effectText = detail?.effect || a.effect || '依聖物卡文字。';
+    const effectHtml = a.id === 'none'
+      ? '<div>不啟用聖物模組，只使用核心遊戲規則。</div>'
+      : `
+        <div><strong>條件：</strong>${conditionText}</div>
+        <div><strong>效果：</strong>${effectText}</div>
+      `;
+    const d = document.createElement('div');
+    d.className = 'artifact-option' + (a.id === selectedArtifactId ? ' selected' : '');
+    d.title = a.id === 'none' ? a.effect : `${a.name}\n條件：${conditionText}\n效果：${effectText}`;
+    const img = a.img
+      ? `<img src="${GAME_DATA.BASE}${a.img}" alt="${a.name}">`
+      : `<div class="artifact-none-icon">—</div>`;
+    d.innerHTML = `
+      <div class="artifact-img">${img}</div>
+      <div class="artifact-name">${a.name}</div>
+      <div class="artifact-effect">${effectHtml}</div>
+      ${a.id === 'none' ? '' : '<button type="button" class="artifact-detail-btn">查看詳細說明</button>'}
+    `;
+    d.onclick = () => {
+      selectedArtifactId = a.id;
+      document.querySelectorAll('.artifact-option').forEach(el=>el.classList.remove('selected'));
+      d.classList.add('selected');
+    };
+    const detailBtn = d.querySelector('.artifact-detail-btn');
+    if(detailBtn) {
+      detailBtn.onclick = (e) => {
+        e.stopPropagation();
+        showRelicInfoModal(a);
+      };
+    }
+    box.appendChild(d);
+  });
+}
+
 function initGame() {
   const name = document.getElementById('player-name-input').value.trim() || '維京艦長';
-  const relicOn = document.getElementById('relic-toggle').checked;
+  const relicOn = selectedArtifactId !== 'none';
+  const activeRelic = relicOn ? GAME_DATA.ARTIFACTS.find(a=>a.id===selectedArtifactId) : null;
 
   G = {
     relicOn,
+    activeRelicId: relicOn ? selectedArtifactId : null,
+    activeRelic,
+    relicState:{
+      amuletRows:{human:[], computer:[]},
+      windsockRows:{human:[], computer:[]},
+      lastTrigger:null
+    },
     activePlayer: 'human', // set by random later
     phase: 'setup',
     round: 0, turn: 0,
@@ -129,6 +253,9 @@ function setupStartCrew(pid) {
 function beginTurn() {
   uiMode = 'idle';
   clearExploreCtx();
+  recruitTakeCtx = {color:null, pendingGoldBracelet:false, freeAny:false, tokenPickActive:false};
+  closeRecruitInline();
+  closeRecruitTokenInline();
   const p = G.players[G.activePlayer];
   p.tradedThisTurn = false;
   G.mainActionDone = false;
@@ -156,8 +283,9 @@ function beginTurn() {
 
 function endTurn() {
   // cleanup
-  closeTradeInline(); closeExploreInline();
+  closeTradeInline(); closeExploreInline(); closeRecruitInline(); closeRecruitTokenInline();
   uiMode = 'idle';
+  recruitTakeCtx = {color:null, pendingGoldBracelet:false, freeAny:false, tokenPickActive:false};
   clearHighlights();
   refillCrew(); refillDest('trade',3); refillDest('settle',3);
   setPhase('check_victory');
@@ -180,19 +308,31 @@ function doTrade() {
   const p = G.players.human;
   if(p.tradedThisTurn){ showToast('本回合已貿易過！','bad'); return; }
   if(p.tokens.silver_bracelet<=0){ showToast('銀臂鐲不足！','bad'); return; }
+  uiMode = 'trade';
   closeExploreInline();
+  closeRecruitInline();
+  closeRecruitTokenInline();
+  clearHighlights();
+  document.getElementById('action-zone-label').textContent = '貿易：選擇要花費的銀臂鐲數量';
   document.getElementById('trade-bracelet-count').textContent = p.tokens.silver_bracelet;
   showElem('trade-inline'); updateActionBtns();
 }
 
-function cancelTrade() { hideElem('trade-inline'); updateActionBtns(); }
+function cancelTrade() {
+  if(uiMode === 'trade') uiMode = 'idle';
+  hideElem('trade-inline');
+  document.getElementById('action-zone-label').textContent = '可執行行動';
+  updateActionBtns();
+}
 
 function executeTrade(amount) {
   const p = G.players.human;
+  if(uiMode !== 'trade') return;
   if(p.tokens.silver_bracelet < amount){ showToast(`銀臂鐲不足！需要${amount}枚`,'bad'); return; }
   p.tokens.silver_bracelet -= amount;
   p.tradedThisTurn = true;
   hideElem('trade-inline');
+  uiMode = 'idle';
 
   const cols = amount===1?[0]:amount===2?[0,1]:[0,1,2];
   const tile = GAME_DATA.SHIP_TILES.find(t=>t.id===p.tileId);
@@ -223,18 +363,27 @@ function enterRecruitMode() {
   const p = G.players.human;
   if(p.hand.length===0){ showToast('手牌為空！','bad'); return; }
   uiMode = 'recruit';
-  closeTradeInline(); closeExploreInline();
+  closeTradeInline(); closeExploreInline(); closeRecruitTokenInline();
   document.getElementById('action-zone-label').textContent = '招募模式：點選手牌中的船員執行招募';
+  showElem('recruit-inline');
   addHighlightToHand('recruit');
   document.getElementById('hand-hint').textContent = '— 點擊招募';
+  updateActionBtns();
+}
+
+function cancelRecruit() {
+  if(uiMode !== 'recruit') return;
+  uiMode = 'idle';
+  closeRecruitInline();
+  clearHighlights();
+  document.getElementById('action-zone-label').textContent = '可執行行動';
+  document.getElementById('hand-hint').textContent = '— 點牌查看';
   updateActionBtns();
 }
 
 function clickHandCard(cardIdx) {
   if(uiMode==='recruit') {
     doRecruitCard(cardIdx);
-  } else if(uiMode==='explore-pay') {
-    togglePayCard(cardIdx);
   } else {
     // Show info
     const card = G.players.human.hand[cardIdx];
@@ -257,22 +406,38 @@ function doRecruitCard(handIdx) {
   // Gain resources from ALL cards in that column
   p.crew[col].forEach(c=>{ applyRes('human', c.resource, 1, `${COLOR_ZH[col]}色縱列`); });
 
-  // Take market card of same color to hand
-  takeSameColorFromMarket('human', col);
-
   G.mainActionDone = true;
-  uiMode = 'idle';
-  clearHighlights();
-  document.getElementById('action-zone-label').textContent = '可執行行動';
-  document.getElementById('hand-hint').textContent = '— 點牌查看';
-
-  updateUI(); updateActionBtns();
-  showToast(`招募成功！${COLOR_ZH[col]}色縱列取得資源`, 'good');
-
-  // Gold bracelet trigger
-  if(G.relicOn && newCount===3) {
-    setTimeout(()=>triggerGoldBracelet(), 300);
+  closeRecruitInline();
+  recruitTakeCtx = {
+    color:col,
+    pendingGoldBracelet:hasRelic('knarr_relic_gold_bracelet') && newCount===3,
+    freeAny:hasRelic('knarr_relic_cauldron') && newCount===2,
+    tokenPickActive:false,
+  };
+  if(hasRelic('knarr_relic_silver_coin') && newCount>=4) {
+    noteRelicTrigger('銀錢幣：獲得 1 點勝利分數');
+    applyRes('human','victory_point',1,'銀錢幣');
   }
+  checkAmulet('human', '護身符');
+  clearHighlights();
+
+  uiMode = 'recruit-take';
+  if(recruitTakeCtx.freeAny) {
+    document.getElementById('action-zone-label').textContent = '招募：大煮釜觸發，選擇要拿取的公開船員';
+    document.getElementById('hand-hint').textContent = '— 大煮釜可任選公開船員';
+    updateUI(); updateActionBtns();
+    noteRelicTrigger('大煮釜：本次可免費任選公開船員');
+    showRecruitTakePrompt(col);
+  } else if(p.tokens.recruit_token > 0 && G.zones.crewMarket.some(s=>s.card)) {
+    document.getElementById('action-zone-label').textContent = '招募：選擇拿對應市場格位，或使用招募標記改選';
+    document.getElementById('hand-hint').textContent = '— 招募已完成，請決定拿公開船員';
+    updateUI(); updateActionBtns();
+    showRecruitTakePrompt(col);
+  } else {
+    takeSameColorFromMarket('human', col);
+    finalizeRecruitTake();
+  }
+  showToast(`招募成功！${COLOR_ZH[col]}色縱列取得資源`, 'good');
 }
 
 function takeSameColorFromMarket(pid, color) {
@@ -283,15 +448,12 @@ function takeSameColorFromMarket(pid, color) {
     const card = slot.card;
     slot.card = null; // clear slot
     p.hand.push(card);
-    addLog(`  從${COLOR_ZH[color]}色格位取得 ${card.name}（${COLOR_ZH[card.color]}色）到手牌`, '');
+    addLog(`  從公開市場${COLOR_ZH[color]}色格位取得 ${card.name}（${COLOR_ZH[card.color]}色）到手牌`, '');
     refillCrew();
+    updateUI(); updateActionBtns();
+    return true;
   } else {
     addLog(`  ${COLOR_ZH[color]}色格位無牌`, '');
-    // Human player: offer recruit token option to freely pick any market card
-    if(pid==='human' && p.tokens.recruit_token > 0 && G.zones.crewMarket.some(s=>s.card)) {
-      showRecruitTokenPick();
-      return;
-    }
     // Computer auto-picks best available slot with token
     if(pid==='computer' && p.tokens.recruit_token > 0) {
       const avail = G.zones.crewMarket.filter(s=>s.card);
@@ -301,51 +463,237 @@ function takeSameColorFromMarket(pid, color) {
         const card = picked.card; picked.card = null;
         p.hand.push(card); refillCrew();
         addLog(`  電腦花費⚡標記，選取 ${card.name}到手牌`, '');
+        updateUI(); updateActionBtns();
+        return true;
       }
     }
   }
   updateUI(); updateActionBtns();
+  return false;
 }
 
 function showRecruitTokenPick() {
+  if(uiMode !== 'recruit-take') return;
+  recruitTakeCtx.tokenPickActive = true;
+  showRecruitMarketChoice(recruitTakeCtx.color);
+  updateUI();
+}
+
+function showRecruitTakePrompt(color) {
   const p = G.players.human;
-  document.getElementById('recruit-token-available').textContent = p.tokens.recruit_token;
+  const inline = document.getElementById('recruit-token-inline');
+  const title = document.getElementById('recruit-token-title') || inline.querySelector('.recruit-token-title');
+  const skipBtn = document.getElementById('recruit-token-skip-btn');
+  const useBtn = document.getElementById('recruit-token-use-btn');
+  const freeSlot = G.zones.crewMarket.find(s=>s.slot===color && s.card);
+  const canUseToken = p.tokens.recruit_token > 0 && G.zones.crewMarket.some(s=>s.card);
+
+  recruitTakeCtx.tokenPickActive = false;
+  if(recruitTakeCtx.freeAny) {
+    showRecruitMarketChoice(color);
+    return;
+  }
+
+  if(title) {
+    title.innerHTML = `招募完成：可直接拿取公開市場${COLOR_ZH[color]}色格位的船員到手牌。若要改選其他公開船員，請按「使用招募標記」（目前 <span id="recruit-token-available">${p.tokens.recruit_token}</span> 枚）。`;
+  }
+  if(skipBtn) {
+    skipBtn.textContent = freeSlot ? `拿對應${COLOR_ZH[color]}色市場格到手牌` : '完成，不拿牌';
+  }
+  if(useBtn) {
+    useBtn.hidden = !canUseToken;
+    useBtn.disabled = !canUseToken;
+  }
+  const available = document.getElementById('recruit-token-available');
+  if(available) available.textContent = p.tokens.recruit_token;
+
+  const container = document.getElementById('recruit-market-pick');
+  container.innerHTML = '';
+  if(freeSlot) {
+    container.appendChild(renderRecruitPickCard(freeSlot, true));
+  } else {
+    const note = document.createElement('div');
+    note.className = 'recruit-empty-note';
+    note.textContent = `公開市場${COLOR_ZH[color]}色格位沒有船員可拿。`;
+    container.appendChild(note);
+  }
+  inline.classList.remove('hidden');
+  updateUI();
+}
+
+function showRecruitMarketChoice(color) {
+  const p = G.players.human;
+  const inline = document.getElementById('recruit-token-inline');
+  const title = document.getElementById('recruit-token-title') || inline.querySelector('.recruit-token-title');
+  const skipBtn = document.getElementById('recruit-token-skip-btn');
+  const useBtn = document.getElementById('recruit-token-use-btn');
+  if(title) {
+    title.innerHTML = recruitTakeCtx.freeAny
+      ? `招募完成：大煮釜觸發，本次可免費任選 1 張公開船員（你有 <span id="recruit-token-available">${p.tokens.recruit_token}</span> 枚招募標記）。`
+      : `使用招募標記：選擇要花費 1 枚招募標記拿取的公開船員（目前 <span id="recruit-token-available">${p.tokens.recruit_token}</span> 枚）。`;
+  }
+  if(skipBtn) {
+    skipBtn.textContent = recruitTakeCtx.freeAny
+      ? '完成，不拿牌'
+      : '取消使用招募標記，回到對應格位';
+  }
+  if(useBtn) {
+    useBtn.hidden = true;
+  }
+  const available = document.getElementById('recruit-token-available');
+  if(available) available.textContent = p.tokens.recruit_token;
   const container = document.getElementById('recruit-market-pick');
   container.innerHTML = '';
   G.zones.crewMarket.forEach(slot => {
     if(!slot.card) return;
-    const div = document.createElement('div');
-    div.className = `recruit-pick-card c${slot.card.color}`;
-    div.title = `${slot.card.name}\n牌色：${COLOR_ZH[slot.card.color]}\n格位：${COLOR_ZH[slot.slot]}色`;
-    const slotLbl = document.createElement('div');
-    slotLbl.className = 'rpcard-color';
-    slotLbl.style.background = COLOR_BG[slot.card.color];
-    slotLbl.textContent = COLOR_ZH[slot.card.color];
-    const img = document.createElement('img');
-    img.src = GAME_DATA.BASE + slot.card.img;
-    img.alt = slot.card.name;
-    img.onerror = () => { img.style.display='none'; div.style.background=COLOR_BG[slot.card.color]; };
-    div.appendChild(slotLbl); div.appendChild(img);
-    div.onclick = () => pickMarketCard(slot);
-    container.appendChild(div);
+    const isFree = recruitTakeCtx.freeAny;
+    container.appendChild(renderRecruitPickCard(slot, isFree));
   });
-  document.getElementById('recruit-token-inline').classList.remove('hidden');
+  inline.classList.remove('hidden');
+}
+
+function renderRecruitPickCard(slot, isFree) {
+  const p = G.players.human;
+  const canPick = isFree || p.tokens.recruit_token > 0;
+  const div = document.createElement('div');
+  div.className = `recruit-pick-card c${slot.card.color}${isFree?' free-pick':canPick?' token-pick':' disabled-pick'}`;
+  div.title = `${slot.card.name}\n牌色：${COLOR_ZH[slot.card.color]}色\n格位：${COLOR_ZH[slot.slot]}色\n${isFree?'免費拿取':'花費 1 枚招募標記'}`;
+  const slotLbl = document.createElement('div');
+  slotLbl.className = 'rpcard-color';
+  slotLbl.style.background = COLOR_BG[slot.card.color];
+  slotLbl.textContent = COLOR_ZH[slot.card.color];
+  const costLbl = document.createElement('div');
+  costLbl.className = 'rpcard-cost';
+  costLbl.textContent = isFree ? '免費' : '⚡1';
+  const img = document.createElement('img');
+  img.src = GAME_DATA.BASE + slot.card.img;
+  img.alt = slot.card.name;
+  img.onerror = () => { img.style.display='none'; div.style.background=COLOR_BG[slot.card.color]; };
+  div.appendChild(slotLbl); div.appendChild(costLbl); div.appendChild(img);
+  div.onclick = () => {
+    if(canPick) showRecruitMarketConfirm(slot);
+  };
+  return div;
+}
+
+function getRecruitPickUseToken(slot) {
+  return !(slot.slot === recruitTakeCtx.color || recruitTakeCtx.freeAny);
+}
+
+function showRecruitMarketConfirm(slot) {
+  if(uiMode !== 'recruit-take' || !slot?.card) {
+    if(slot?.card) showCardInfoModal(slot.card);
+    return;
+  }
+  const p = G.players.human;
+  const card = slot.card;
+  const useToken = getRecruitPickUseToken(slot);
+  if(useToken && !recruitTakeCtx.tokenPickActive) {
+    showRecruitTakePrompt(recruitTakeCtx.color);
+    return;
+  }
+  const canPick = !useToken || p.tokens.recruit_token > 0;
+  document.getElementById('modal-card-info').classList.remove('dest-modal', 'relic-modal');
+
+  const img = document.getElementById('modal-card-img');
+  img.src = GAME_DATA.BASE + card.img;
+  img.alt = card.name;
+  img.style.display='block';
+  img.onerror=()=>{ img.style.display='none'; };
+
+  document.getElementById('modal-card-name').textContent = card.name;
+  const body = document.getElementById('modal-card-body');
+  body.innerHTML = `
+    <p>牌色：<span style="color:${COLOR_TEXT[card.color]}">${COLOR_ZH[card.color]}色</span></p>
+    <p>格位：<span style="color:${COLOR_TEXT[slot.slot]}">${COLOR_ZH[slot.slot]}色格位</span></p>
+    <p>資源圖標：<span style="color:${ICONS[card.resource]?.col}">${ICONS[card.resource]?.sym}</span> ${ICONS[card.resource]?.label}</p>
+    <p style="margin-top:8px;color:${canPick?'#f0cc6e':'#fca5a5'}">${useToken ? `花費 1 枚招募標記拿取此船員（目前 ${p.tokens.recruit_token} 枚）` : recruitTakeCtx.freeAny ? '大煮釜觸發，本次可免費任選此船員。' : '此格位符合招募顏色，可免費拿取。'}</p>
+  `;
+  const actions = document.createElement('div');
+  actions.className = 'modal-action-row';
+  const confirm = document.createElement('button');
+  confirm.className = 'btn-primary';
+  confirm.textContent = useToken ? '花費 1 枚招募標記拿取' : '免費拿取';
+  confirm.disabled = !canPick;
+  confirm.onclick = () => {
+    closeModal('modal-card-info');
+    pickRecruitMarketCard(slot, useToken);
+  };
+  actions.appendChild(confirm);
+  const cancel = document.createElement('button');
+  cancel.className = 'btn-ghost';
+  cancel.textContent = '取消，重新選擇';
+  cancel.onclick = () => closeModal('modal-card-info');
+  actions.appendChild(cancel);
+  if(!canPick) {
+    const note = document.createElement('span');
+    note.className = 'modal-action-note';
+    note.textContent = '招募標記不足';
+    actions.appendChild(note);
+  }
+  body.appendChild(actions);
+  showModal('modal-card-info');
+}
+
+function pickRecruitMarketCard(slot, useToken) {
+  const p = G.players.human;
+  if(uiMode !== 'recruit-take') return;
+  if(!slot.card) { showToast('該格位無牌！','bad'); return; }
+  if(useToken) {
+    if(p.tokens.recruit_token <= 0) { showToast('招募標記不足！','bad'); return; }
+    p.tokens.recruit_token--;
+  }
+  const taken = slot.card; slot.card = null;
+  p.hand.push(taken); refillCrew();
+  addLog(useToken
+    ? `  花費⚡招募標記，從公開市場選取 ${taken.name}（${COLOR_ZH[taken.color]}色，${COLOR_ZH[slot.slot]}色格位）到手牌`
+    : `  從公開市場${COLOR_ZH[slot.slot]}色格位取得 ${taken.name}（${COLOR_ZH[taken.color]}色）到手牌`
+  , 'good');
+  finalizeRecruitTake();
 }
 
 function pickMarketCard(slot) {
-  const p = G.players.human;
-  if(p.tokens.recruit_token <= 0) { showToast('招募標記不足！','bad'); return; }
-  if(!slot.card) { showToast('該格位無牌！','bad'); return; }
-  p.tokens.recruit_token--;
-  const taken = slot.card; slot.card = null;
-  p.hand.push(taken); refillCrew();
-  addLog(`  花費⚡招募標記，選取 ${taken.name}（${COLOR_ZH[taken.color]}色，${COLOR_ZH[slot.slot]}色格位）到手牌`, 'good');
-  skipRecruitTokenPick();
+  pickRecruitMarketCard(slot, true);
 }
 
 function skipRecruitTokenPick() {
-  document.getElementById('recruit-token-inline').classList.add('hidden');
+  if(uiMode === 'recruit-take') {
+    if(recruitTakeCtx.tokenPickActive) {
+      showRecruitTakePrompt(recruitTakeCtx.color);
+      return;
+    }
+    if(recruitTakeCtx.freeAny) {
+      finalizeRecruitTake();
+      return;
+    }
+    const freeSlot = G.zones.crewMarket.find(s=>s.slot===recruitTakeCtx.color && s.card);
+    if(freeSlot) {
+      pickRecruitMarketCard(freeSlot, false);
+      return;
+    }
+    finalizeRecruitTake();
+    return;
+  }
+  closeRecruitTokenInline();
   updateUI(); updateActionBtns();
+}
+
+function finalizeRecruitTake() {
+  const pendingGoldBracelet = recruitTakeCtx.pendingGoldBracelet;
+  const shouldCheckWindsock = hasRelic('knarr_relic_windsock');
+  closeRecruitTokenInline();
+  recruitTakeCtx = {color:null, pendingGoldBracelet:false, freeAny:false, tokenPickActive:false};
+  uiMode = 'idle';
+  clearHighlights();
+  document.getElementById('action-zone-label').textContent = '可執行行動';
+  document.getElementById('hand-hint').textContent = '— 點牌查看';
+  updateUI(); updateActionBtns();
+  if(pendingGoldBracelet) {
+    setTimeout(()=>triggerGoldBracelet(), 300);
+  }
+  if(shouldCheckWindsock) {
+    setTimeout(()=>checkWindsock('human'), 300);
+  }
 }
 
 // ── Explore Mode ──
@@ -354,6 +702,8 @@ function enterExploreMode() {
   uiMode = 'explore-dest';
   clearExploreCtx();
   closeTradeInline();
+  closeRecruitInline();
+  closeRecruitTokenInline();
   document.getElementById('action-zone-label').textContent = '探索模式：先點選目的地市場中的卡牌';
   showElem('explore-inline');
   updateExploreSummary();
@@ -396,11 +746,11 @@ function selectExploreDest(destId, isReserved, isSettlement) {
   exploreCtx.tokensUsed = 0;
 
   const dest = findDest(destId);
-  const costDesc = dest ? getCostDesc(dest) : '任意同色船員 4 張';
+  const costDesc = dest ? getCostDesc(dest) : '依卡牌左側需求';
 
   uiMode = 'explore-pay';
-  document.getElementById('action-zone-label').textContent = `探索模式：請點選所需船員（費用需求：${costDesc}）`;
-  document.getElementById('hand-hint').textContent = '— 點牌付費';
+  document.getElementById('action-zone-label').textContent = `探索模式：請從船員區域點選所需船員（費用需求：${costDesc}）`;
+  document.getElementById('hand-hint').textContent = '— 探索費用從船員區域支付';
 
   clearHighlights();
   addHighlightToCrewForPay();
@@ -410,31 +760,7 @@ function selectExploreDest(destId, isReserved, isSettlement) {
 
 function togglePayCard(handIdx) {
   if(uiMode!=='explore-pay') return;
-  const p = G.players.human;
-  const card = p.hand[handIdx];
-  if(!card) return;
-
-  const key = `hand_${handIdx}`;
-  const exi = exploreCtx.paidCards.findIndex(pc=>pc.key===key);
-  if(exi!==-1) {
-    exploreCtx.paidCards.splice(exi,1);
-  } else {
-    const tempPaid = [...exploreCtx.paidCards, {key, source:'hand', handIdx, color:card.color, card}];
-    const dest = findDest(exploreCtx.destId);
-    const check = checkExplorePayment(dest, tempPaid, exploreCtx.tokensUsed);
-    if(check.valid === false && check.reason) {
-      showToast(check.reason, 'bad');
-      return;
-    }
-    const maxCards = check.maxCards || 4;
-    if(tempPaid.length + exploreCtx.tokensUsed > maxCards) {
-      showToast('已選足費用！', 'bad');
-      return;
-    }
-    exploreCtx.paidCards.push({key, source:'hand', handIdx, color:card.color, card});
-  }
-  updateExploreSummary();
-  updateUI();
+  showToast('探索費用需從船員區域選擇，不能使用手牌。', 'bad');
 }
 
 function togglePayCrewCard(color, crewIdx) {
@@ -481,8 +807,35 @@ function useTokenForExplore() {
   updateExploreSummary();
 }
 
+function getExploreCost(dest) {
+  return normalizeExploreCost(dest?.cost || dest?.exploration_cost);
+}
+
+function normalizeExploreCost(cost) {
+  if(!cost) return {type:'same_color', count:4};
+  if(cost.type === 'same_color_any') {
+    return {type:'same_color', count:cost.crew_cards || cost.count || 4};
+  }
+  if(cost.type === 'same_color') {
+    return {type:'same_color', count:cost.count || cost.crew_cards || 4};
+  }
+  if(cost.type === 'different') {
+    return {type:'different', count:cost.count || cost.crew_cards || 3};
+  }
+  if(cost.type === 'specified') {
+    return {type:'specified', list:[...(cost.list || cost.colors || cost.crew_colors || [])]};
+  }
+  return {type:'same_color', count:4};
+}
+
+function getCostMaxCards(dest) {
+  const cost = getExploreCost(dest);
+  if(cost.type === 'specified') return cost.list.length;
+  return cost.count || 4;
+}
+
 function checkExplorePayment(dest, paidCards, tokensUsed) {
-  const cost = dest.cost || {type: 'same_color', count: 4};
+  const cost = getExploreCost(dest);
   const paidColors = paidCards.map(c => c.color);
 
   if (cost.type === 'same_color') {
@@ -537,7 +890,7 @@ function checkExplorePayment(dest, paidCards, tokensUsed) {
 }
 
 function getCostDesc(dest) {
-  const cost = dest.cost || {type: 'same_color', count: 4};
+  const cost = getExploreCost(dest);
   if (cost.type === 'same_color') {
     return `任意同色 ${cost.count}張`;
   }
@@ -547,9 +900,9 @@ function getCostDesc(dest) {
   if (cost.type === 'specified') {
     const counts = {};
     cost.list.forEach(c => counts[c] = (counts[c]||0) + 1);
-    return Object.entries(counts).map(([color, amt]) => `${COLOR_ZH[color]}色 ${amt}張`).join(' ＋ ');
+    return Object.entries(counts).map(([color, amt]) => `${COLOR_ZH[color] || color}色 ${amt}張`).join(' ＋ ');
   }
-  return '任意同色 4張';
+  return '依卡牌左側需求';
 }
 
 function updateExploreSummary() {
@@ -557,6 +910,8 @@ function updateExploreSummary() {
   if(!dest) {
     document.getElementById('sel-dest-name').textContent = '—';
     document.getElementById('sel-crew-count').textContent = '0';
+    const costTotalEl = document.getElementById('sel-cost-total');
+    if(costTotalEl) costTotalEl.textContent = '—';
     document.getElementById('sel-token-count').textContent = '0';
     document.getElementById('explore-use-token-btn').disabled = true;
     document.getElementById('confirm-explore-btn').disabled = true;
@@ -573,6 +928,8 @@ function updateExploreSummary() {
   const p = G.players.human;
 
   const maxCards = check.maxCards || 4;
+  const costTotalEl = document.getElementById('sel-cost-total');
+  if(costTotalEl) costTotalEl.textContent = maxCards;
   const total = exploreCtx.paidCards.length + exploreCtx.tokensUsed;
   
   tokenBtn.disabled = total >= maxCards || p.tokens.recruit_token <= exploreCtx.tokensUsed;
@@ -591,6 +948,11 @@ function confirmExplore() {
     showToast('費用不符合要求！', 'bad');
     return;
   }
+  if(exploreCtx.paidCards.some(pc => pc.source !== 'crew')) {
+    showToast('探索費用需從船員區域支付，不能使用手牌。', 'bad');
+    return;
+  }
+  const hadTradePost = p.destinations.some(d=>d.type==='trade_post');
 
   // Find and remove dest from market/reserved
   let fromType = null;
@@ -603,19 +965,14 @@ function confirmExplore() {
     else { let ti=G.zones.tradeMarket.findIndex(d=>d.id===destId); if(ti!==-1){ G.zones.tradeMarket.splice(ti,1); fromType='trade'; } }
   }
 
-  // Pay crew cards (remove from crew/hand, sorted desc by idx to avoid index shift)
+  // Pay crew cards from the crew area, sorted desc by idx to avoid index shift.
   const paidSorted = [...exploreCtx.paidCards].sort((a,b)=>{
     if(a.source==='crew' && b.source==='crew') return b.crewIdx - a.crewIdx;
     return 0;
   });
   paidSorted.forEach(pc=>{
-    if(pc.source==='hand') {
-      const idx = p.hand.findIndex(c=>c.id===pc.card.id && !G._removed_hand?.[c.id]);
-      if(idx!==-1){ G.zones.crewDiscard.push(p.hand.splice(idx,1)[0]); }
-    } else {
-      const idx = p.crew[pc.color].findIndex(c=>c.id===pc.card.id);
-      if(idx!==-1){ G.zones.crewDiscard.push(p.crew[pc.color].splice(idx,1)[0]); }
-    }
+    const idx = p.crew[pc.color].findIndex(c=>c.id===pc.card.id);
+    if(idx!==-1){ G.zones.crewDiscard.push(p.crew[pc.color].splice(idx,1)[0]); }
   });
 
   // Pay tokens
@@ -628,6 +985,8 @@ function confirmExplore() {
   if(dest.rewards) dest.rewards.forEach(r=>applyRes('human',r.icon,r.amount,dest.name));
   if(fromType==='settle') refillDest('settle',3);
   else if(fromType==='trade') refillDest('trade',3);
+  const triggerMeadCup = hasRelic('knarr_relic_mead_cup') && G.zones.crewMarket.some(s=>s.card);
+  const triggerIronHelmet = hasRelic('knarr_relic_iron_helmet') && dest.type === 'settlement' && hadTradePost;
 
   G.mainActionDone = true;
   uiMode = 'idle';
@@ -638,12 +997,102 @@ function confirmExplore() {
 
   updateUI(); updateActionBtns();
   showToast(`探索成功！${dest.points>0?'+'+dest.points+'分':''}取得獎勵`, 'gold');
+  if(triggerIronHelmet) setTimeout(()=>showIronHelmetChoice(dest), 250);
+  else if(triggerMeadCup) setTimeout(()=>showMeadCupChoice(), 250);
+}
+
+function showRelicActionModal(title, desc, confirmText, onConfirm, cancelText='略過') {
+  const relic = G?.activeRelic;
+  const modal = document.getElementById('modal-card-info');
+  modal.classList.remove('dest-modal');
+  modal.classList.add('relic-modal');
+
+  const img = document.getElementById('modal-card-img');
+  if(relic?.img) {
+    img.src = GAME_DATA.BASE + relic.img;
+    img.alt = relic.name;
+    img.style.display = 'block';
+    img.onerror = () => { img.style.display = 'none'; };
+  } else {
+    img.style.display = 'none';
+  }
+
+  document.getElementById('modal-card-name').textContent = title;
+  const body = document.getElementById('modal-card-body');
+  body.innerHTML = `<p>${desc}</p>`;
+
+  const actions = document.createElement('div');
+  actions.className = 'modal-action-row';
+
+  const confirm = document.createElement('button');
+  confirm.className = 'btn-primary';
+  confirm.textContent = confirmText;
+  confirm.onclick = () => {
+    closeModal('modal-card-info');
+    if(onConfirm) onConfirm();
+  };
+  actions.appendChild(confirm);
+
+  const cancel = document.createElement('button');
+  cancel.className = 'btn-ghost';
+  cancel.textContent = cancelText;
+  cancel.onclick = () => {
+    closeModal('modal-card-info');
+    addLog(`${title}：略過`, '');
+  };
+  actions.appendChild(cancel);
+
+  body.appendChild(actions);
+  showModal('modal-card-info');
+}
+
+function startRelicExplore(source) {
+  uiMode = 'explore-dest';
+  clearExploreCtx();
+  closeTradeInline();
+  closeRecruitInline();
+  closeRecruitTokenInline();
+  document.getElementById('action-zone-label').textContent = `${source}：立即探索，先選擇目的地`;
+  showElem('explore-inline');
+  updateExploreSummary();
+  addHighlightToDests();
+  updateActionBtns();
+}
+
+function startRelicRecruit(source) {
+  const p = G.players.human;
+  if(p.hand.length === 0) {
+    addLog(`${source}：手牌為空，無法立即招募`, 'bad');
+    showToast('手牌為空，無法立即招募', 'bad');
+    return;
+  }
+  uiMode = 'recruit';
+  closeTradeInline();
+  closeExploreInline();
+  closeRecruitTokenInline();
+  document.getElementById('action-zone-label').textContent = `${source}：立即招募，點選手牌中的船員`;
+  showElem('recruit-inline');
+  addHighlightToHand('recruit');
+  document.getElementById('hand-hint').textContent = '— 聖物立即招募';
+  updateActionBtns();
+}
+
+function showIronHelmetChoice(dest) {
+  noteRelicTrigger(`鐵戰盔：探索 ${dest.name} 後可立即招募`);
+  addLog('鐵戰盔觸發！可立即執行一次招募', 'important');
+  showRelicActionModal(
+    '鐵戰盔觸發',
+    `你已取得定居點「${dest.name}」，且已有貿易點可形成相鄰放置。可以立即執行一次招募。`,
+    '立即招募',
+    () => startRelicRecruit('鐵戰盔')
+  );
 }
 
 // Gold Bracelet
 function triggerGoldBracelet() {
   const p = G.players.human;
   if(p.reserved.length>=2){ addLog('金臂鐲：預留上限2張，略過',''); return; }
+  noteRelicTrigger('金臂鐲：可預留 1 張目的地');
   addLog('🔱 金臂鐲觸發！可預留1張目的地', 'important');
 
   const container = document.getElementById('reserve-dest-list');
@@ -658,14 +1107,32 @@ function triggerGoldBracelet() {
 
 function buildReserveDestBtn(dest) {
   const d = document.createElement('div');
-  d.className = 'dest-owned-card';
+  const isSett = dest.type === 'settlement' || dest.id.includes('settlement');
+  d.className = `dest-owned-card reserve-choice-card ${isSett?'settlement-owned':'trade-post-owned'}`;
   d.style.cursor = 'pointer';
+  d.title = `${dest.name}\n探索費：${getCostDesc(dest)}\n點擊預留`;
   const img = document.createElement('img');
   img.src = GAME_DATA.BASE + dest.img;
+  img.alt = dest.name;
   img.onerror = ()=>{ img.style.display='none'; };
+  const rewards = (dest.rewards||[]).map(r=>
+    `<span class="reserve-chip" title="${ICONS[r.icon]?.label||r.icon}"><span style="color:${ICONS[r.icon]?.col||'#f0e8d0'}">${ICONS[r.icon]?.sym||'?'}</span>×${r.amount}</span>`
+  ).join('');
+  const tradeRow = (dest.trade_cols||[null,null,null]).map((t,i)=>
+    `<span class="reserve-trade-cell" title="${['左','中','右'][i]}欄：${t?ICONS[t]?.label:'無'}">${t?ICONS[t]?.sym:'—'}</span>`
+  ).join('');
   const body = document.createElement('div');
   body.className = 'dcard-body';
-  body.innerHTML = `<div class="dcard-name">${dest.name}</div><div class="dcard-pts">${dest.points||''}</div>`;
+  body.innerHTML = `
+    <div class="dcard-name">${dest.name}</div>
+    <div class="reserve-meta-row">
+      ${dest.points>0?`<span class="dcard-pts">${dest.points}</span><span class="reserve-small-label">分</span>`:'<span class="reserve-small-label">見獎勵</span>'}
+      <span class="reserve-cost">費用：${getCostDesc(dest)}</span>
+    </div>
+    <div class="reserve-rewards">${rewards||'右上角獎勵：無'}</div>
+    <div class="reserve-trade-row">${tradeRow}</div>
+    <button type="button" class="reserve-pick-btn">預留此目的地</button>
+  `;
   d.appendChild(img); d.appendChild(body);
   d.onclick = ()=>doReserve(dest.id);
   return d;
@@ -691,6 +1158,49 @@ function skipReserve() {
   updateUI(); updateActionBtns();
 }
 
+function showMeadCupChoice() {
+  const container = document.getElementById('mead-cup-market-list');
+  if(!container) return;
+  noteRelicTrigger('蜜酒杯：可替換 1 張公開船員');
+  container.innerHTML = '';
+  G.zones.crewMarket.forEach((slot, idx) => {
+    if(!slot.card) return;
+    const d = document.createElement('div');
+    d.className = `recruit-pick-card c${slot.card.color}`;
+    d.title = `${slot.card.name}\n棄置後從牌庫補 1 張公開船員`;
+    const img = document.createElement('img');
+    img.src = GAME_DATA.BASE + slot.card.img;
+    img.alt = slot.card.name;
+    img.onerror = () => { img.style.display='none'; d.style.background=COLOR_BG[slot.card.color]; };
+    const badge = document.createElement('div');
+    badge.className = 'rpcard-cost';
+    badge.textContent = '替換';
+    d.appendChild(img); d.appendChild(badge);
+    d.onclick = () => useMeadCup(idx);
+    container.appendChild(d);
+  });
+  showModal('modal-mead-cup');
+}
+
+function useMeadCup(slotIdx) {
+  const slot = G.zones.crewMarket[slotIdx];
+  if(!slot || !slot.card) { showToast('該格位無公開船員','bad'); return; }
+  const old = slot.card;
+  G.zones.crewDiscard.push(old);
+  slot.card = null;
+  if(G.zones.crewDeck.length===0) reshuffleCrew();
+  if(G.zones.crewDeck.length>0) slot.card = G.zones.crewDeck.pop();
+  noteRelicTrigger(`蜜酒杯：替換 ${old.name}`);
+  addLog(`蜜酒杯：棄置 ${old.name}${slot.card?`，補上 ${slot.card.name}`:''}`, 'good');
+  closeModal('modal-mead-cup');
+  updateUI(); updateActionBtns();
+}
+
+function skipMeadCup() {
+  closeModal('modal-mead-cup');
+  updateUI(); updateActionBtns();
+}
+
 // ─── Resource Application ─────────────────────────────────────────────
 function applyRes(pid, res, amount, src) {
   const p = G.players[pid];
@@ -713,14 +1223,10 @@ function applyRes(pid, res, amount, src) {
       break;
     case 'draw_crew_card':
       for(let i=0;i<amount;i++) {
-        if(G.zones.crewDeck.length===0) reshuffleCrew();
-        if(G.zones.crewDeck.length>0) {
-          const c = G.zones.crewDeck.pop();
-          const emptySlot = G.zones.crewMarket.find(s=>!s.card);
-          if(emptySlot) emptySlot.card = c;
-          else G.zones.crewDiscard.push(c); // all slots full
-          addLog(`  抽放船員 ${c.name} 至市場 (${src})`, '');
-        }
+        const c = drawToCrewArea(pid);
+        if(c) addLog(`  ${p.name} 牌庫頂抽取並放置 ${c.name} 到${COLOR_ZH[c.color]}色船員區（資源圖標效果，不是公開市場拿牌；不取得該牌資源，來源：${src}）`, '');
+        if(c) checkAmulet(pid, '護身符');
+        if(c && !(pid === 'human' && uiMode === 'recruit')) checkWindsock(pid);
       }
       break;
   }
@@ -749,7 +1255,21 @@ function refillDest(type, max) {
 }
 function drawToHand(pid) {
   if(G.zones.crewDeck.length===0) reshuffleCrew();
-  if(G.zones.crewDeck.length>0) G.players[pid].hand.push(G.zones.crewDeck.pop());
+  if(G.zones.crewDeck.length>0) {
+    const card = G.zones.crewDeck.pop();
+    G.players[pid].hand.push(card);
+    return card;
+  }
+  return null;
+}
+function drawToCrewArea(pid) {
+  if(G.zones.crewDeck.length===0) reshuffleCrew();
+  if(G.zones.crewDeck.length>0) {
+    const card = G.zones.crewDeck.pop();
+    G.players[pid].crew[card.color].push(card);
+    return card;
+  }
+  return null;
 }
 
 // ─── COMPUTER AI ──────────────────────────────────────────────────────
@@ -788,11 +1308,8 @@ function aiTrade() {
 }
 
 function aiCanPayDest(p, dest) {
-  const cost = dest.cost || {type: 'same_color', count: 4};
+  const cost = getExploreCost(dest);
   const availableCrews = [];
-  p.hand.forEach((card, idx) => {
-    availableCrews.push({ source: 'hand', color: card.color, card, handIdx: idx });
-  });
   COLORS.forEach(col => {
     p.crew[col].forEach((card, idx) => {
       availableCrews.push({ source: 'crew', color: col, card, crewIdx: idx });
@@ -857,22 +1374,26 @@ function aiExplore() {
   for(const dest of scSorted) {
     const payResult = aiCanPayDest(p, dest);
     if(payResult.possible) {
+      const invalidPayment = payResult.cards.some(pc =>
+        pc.source !== 'crew' || !p.crew[pc.color]?.some(c => c.id === pc.card.id)
+      );
+      if(invalidPayment) {
+        addLog(`電腦探索 ${dest.name} 的付款來源不合法，已略過`, 'bad');
+        continue;
+      }
+
       const paidSorted = [...payResult.cards].sort((a,b)=>{
         if(a.source==='crew' && b.source==='crew') return b.crewIdx - a.crewIdx;
         return 0;
       });
 
       paidSorted.forEach(pc => {
-        if(pc.source==='hand') {
-          const idx = p.hand.findIndex(c=>c.id===pc.card.id);
-          if(idx!==-1) G.zones.crewDiscard.push(p.hand.splice(idx,1)[0]);
-        } else {
-          const idx = p.crew[pc.color].findIndex(c=>c.id===pc.card.id);
-          if(idx!==-1) G.zones.crewDiscard.push(p.crew[pc.color].splice(idx,1)[0]);
-        }
+        const idx = p.crew[pc.color].findIndex(c=>c.id===pc.card.id);
+        if(idx!==-1) G.zones.crewDiscard.push(p.crew[pc.color].splice(idx,1)[0]);
       });
 
       p.tokens.recruit_token -= payResult.tokens;
+      const hadTradePost = p.destinations.some(d=>d.type==='trade_post');
       p.destinations.push(dest);
 
       let ft=null;
@@ -884,12 +1405,14 @@ function aiExplore() {
       addLog(`電腦 探索取得 ${dest.name}（花費船員卡 ${payResult.cards.length}張 ＋ 招募標記 ${payResult.tokens}枚）`, 'good');
       if(dest.rewards) dest.rewards.forEach(r=>applyRes('computer',r.icon,r.amount,dest.name));
       if(ft==='settle') refillDest('settle',3); else if(ft==='trade') refillDest('trade',3);
-
-      if(G.relicOn) {
-        COLORS.forEach(col => {
-          if(p.crew[col].length === 3) aiCheckGoldBracelet(col);
-        });
+      if(hasRelic('knarr_relic_iron_helmet') && dest.type === 'settlement' && hadTradePost) {
+        noteRelicTrigger(`鐵戰盔：電腦探索 ${dest.name} 後立即招募`);
+        addLog('電腦 鐵戰盔：立即執行一次招募', 'important');
+        aiRecruit();
+      } else if(hasRelic('knarr_relic_mead_cup')) {
+        aiUseMeadCup();
       }
+
       return true;
     }
   }
@@ -919,9 +1442,78 @@ function aiRecruit() {
 
   addLog(`電腦 招募 ${best.name}（${COLOR_ZH[col]}色）`, '');
   p.crew[col].forEach(c=>applyRes('computer',c.resource,1,`${COLOR_ZH[col]}色縱列`));
-  takeSameColorFromMarket('computer', col);
+  if(hasRelic('knarr_relic_cauldron') && newCnt===2) {
+    noteRelicTrigger('大煮釜：電腦免費任選公開船員');
+    aiTakeRecruitMarketCard(col, true);
+  } else {
+    aiTakeRecruitMarketCard(col, false);
+  }
 
-  if(G.relicOn && newCnt===3) aiCheckGoldBracelet(col);
+  if(hasRelic('knarr_relic_silver_coin') && newCnt>=4) {
+    noteRelicTrigger('銀錢幣：電腦獲得 1 點勝利分數');
+    applyRes('computer','victory_point',1,'銀錢幣');
+  }
+  checkAmulet('computer', '護身符');
+  checkWindsock('computer');
+  if(hasRelic('knarr_relic_gold_bracelet') && newCnt===3) aiCheckGoldBracelet(col);
+}
+
+function aiMarketCardScore(slot) {
+  if(!slot?.card) return -999;
+  const card = slot.card;
+  let score = 0;
+  if(card.resource === 'victory_point') score += 5;
+  if(card.resource === 'reputation') score += 3;
+  if(card.resource === 'draw_crew_card') score += 2;
+  if(card.resource === 'silver_bracelet') score += 2;
+  if(card.resource === 'recruit_token') score += 1;
+  score += G.players.computer.crew[card.color].length;
+  return score;
+}
+
+function aiTakeRecruitMarketCard(color, freeAny) {
+  const p = G.players.computer;
+  let candidates = freeAny
+    ? G.zones.crewMarket.filter(s=>s.card)
+    : G.zones.crewMarket.filter(s=>s.slot===color && s.card);
+  let useToken = false;
+
+  if(!candidates.length && !freeAny && p.tokens.recruit_token > 0) {
+    candidates = G.zones.crewMarket.filter(s=>s.card);
+    useToken = true;
+  }
+  if(!candidates.length) {
+    addLog(`  電腦沒有可拿取的公開市場船員`, '');
+    return false;
+  }
+
+  const picked = candidates.reduce((best, slot)=>aiMarketCardScore(slot)>aiMarketCardScore(best)?slot:best, candidates[0]);
+  if(useToken) p.tokens.recruit_token--;
+  const card = picked.card;
+  picked.card = null;
+  p.hand.push(card);
+  refillCrew();
+  addLog(useToken
+    ? `  電腦花費⚡標記，從公開市場選取 ${card.name} 到手牌`
+    : freeAny
+      ? `  電腦大煮釜：從公開市場任選 ${card.name} 到手牌`
+      : `  電腦從公開市場${COLOR_ZH[picked.slot]}色格位取得 ${card.name} 到手牌`
+  , '');
+  return true;
+}
+
+function aiUseMeadCup() {
+  const slots = G.zones.crewMarket.filter(s=>s.card);
+  if(!slots.length) return false;
+  const picked = slots.reduce((worst, slot)=>aiMarketCardScore(slot)<aiMarketCardScore(worst)?slot:worst, slots[0]);
+  const old = picked.card;
+  G.zones.crewDiscard.push(old);
+  picked.card = null;
+  if(G.zones.crewDeck.length===0) reshuffleCrew();
+  if(G.zones.crewDeck.length>0) picked.card = G.zones.crewDeck.pop();
+  noteRelicTrigger(`蜜酒杯：電腦替換 ${old.name}`);
+  addLog(`電腦 蜜酒杯：棄置 ${old.name}${picked.card?`，補上 ${picked.card.name}`:''}`, 'important');
+  return true;
 }
 
 function aiCheckGoldBracelet(color) {
@@ -934,10 +1526,49 @@ function aiCheckGoldBracelet(color) {
   if(si!==-1){G.zones.settleMarket.splice(si,1);refillDest('settle',3);}
   else{let ti=G.zones.tradeMarket.findIndex(d=>d.id===best.id);if(ti!==-1){G.zones.tradeMarket.splice(ti,1);refillDest('trade',3);}}
   p.reserved.push(best);
+  noteRelicTrigger(`金臂鐲：電腦預留 ${best.name}`);
   addLog(`電腦 金臂鐲：預留 ${best.name}`, '');
 }
 
 // ─── UI RENDERING ─────────────────────────────────────────────────────
+function renderActiveRelic() {
+  const el = document.getElementById('active-relic-display');
+  if(!el) return;
+  const relic = G?.activeRelic;
+  if(!relic) {
+    el.classList.add('hidden');
+    el.innerHTML = '';
+    return;
+  }
+
+  el.classList.remove('hidden');
+  el.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = GAME_DATA.BASE + relic.img;
+  img.alt = relic.name;
+  img.onerror = () => { img.style.display = 'none'; };
+
+  const copy = document.createElement('div');
+  copy.className = 'active-relic-copy';
+  const name = document.createElement('div');
+  name.className = 'active-relic-name';
+  name.textContent = `聖物：${relic.name}`;
+  const effect = document.createElement('div');
+  effect.className = 'active-relic-effect';
+  effect.textContent = relic.effect || relic.condition || '';
+  const status = document.createElement('div');
+  status.className = 'active-relic-status';
+  status.textContent = G.relicState?.lastTrigger || `條件：${relic.condition || '依聖物效果'}`;
+
+  copy.appendChild(name);
+  copy.appendChild(effect);
+  copy.appendChild(status);
+  el.appendChild(img);
+  el.appendChild(copy);
+  el.title = `${relic.name}\n${relic.condition || ''}\n${relic.effect || ''}`;
+  el.onclick = () => showRelicInfoModal(relic);
+}
+
 function updateUI() {
   if(!G) return;
   try {
@@ -947,6 +1578,7 @@ function updateUI() {
     renderDestMarket();
     updateDeckBadges();
     updateRoundLabel();
+    renderActiveRelic();
 
     // Active panel
     document.querySelector('.side-panel--human').classList.toggle('my-turn', G.activePlayer==='human');
@@ -1076,15 +1708,6 @@ function renderHand(p) {
     if(uiMode==='recruit') {
       div.classList.add('selectable');
       div.onclick = ()=>clickHandCard(idx);
-    } else if(uiMode==='explore-pay') {
-      const paidKey = `hand_${idx}`;
-      const isPaid = exploreCtx.paidCards.some(pc=>pc.key===paidKey);
-      if(isPaid) {
-        div.classList.add('selected-pay');
-      } else {
-        div.classList.add('selectable-pay');
-      }
-      div.onclick = ()=>clickHandCard(idx);
     } else {
       div.onclick = ()=>{ const c=G.players.human.hand[idx]; if(c)showCardInfoModal(c); };
     }
@@ -1131,20 +1754,30 @@ function buildOwnedDestCard(dest, isReserved) {
   return d;
 }
 
-// All destinations as one single stack (offset cards showing depth)
+// Owned destinations are displayed as trade icons stacked on the matching ship columns.
 function buildAllDestsStack(dests) {
   const wrapper = document.createElement('div');
   wrapper.className = 'dest-stack-wrapper';
-  const OFFSET = 5; const CARD_H = 120;
-  wrapper.style.height = `${CARD_H + (dests.length-1)*OFFSET}px`;
-  wrapper.style.width = `${90 + (dests.length-1)*OFFSET}px`;
-  dests.forEach((dest, i) => {
-    const card = buildOwnedDestCard(dest, false);
-    card.style.position = 'absolute';
-    card.style.top = `${i * OFFSET}px`;
-    card.style.left = `${i * OFFSET}px`;
-    card.style.zIndex = i + 1;
-    wrapper.appendChild(card);
+  const colNames = ['左欄','中欄','右欄'];
+  [0,1,2].forEach(ci => {
+    const col = document.createElement('div');
+    col.className = 'dest-overlay-col';
+    col.title = `${colNames[ci]}目的地貿易圖示`;
+    dests.forEach((dest, di) => {
+      const iconId = dest.trade_cols?.[ci];
+      if(!iconId) return;
+      const icon = ICONS[iconId];
+      const isSett = dest.id.includes('settlement');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `dest-overlay-token ${isSett?'settlement-token':'trade-post-token'}`;
+      btn.style.zIndex = String(di + 1);
+      btn.title = `${dest.name} ${colNames[ci]}：${icon?.label||iconId}`;
+      btn.innerHTML = `<span>${icon?.sym||iconId}</span>`;
+      btn.onclick = (e)=>{ e.stopPropagation(); showDestInfoModal(dest); };
+      col.appendChild(btn);
+    });
+    wrapper.appendChild(col);
   });
   return wrapper;
 }
@@ -1161,6 +1794,14 @@ function renderCrewMarket() {
       : `${COLOR_ZH[slot.slot]}色格位（空）`;
 
     if(slot.card) {
+      if(uiMode === 'recruit-take') {
+        const canSelect = slot.slot === recruitTakeCtx.color || recruitTakeCtx.freeAny || recruitTakeCtx.tokenPickActive;
+        const useToken = getRecruitPickUseToken(slot);
+        if(canSelect) {
+          div.classList.add('recruit-choice');
+          if(useToken && G.players.human.tokens.recruit_token <= 0) div.classList.add('disabled-choice');
+        }
+      }
       const img = document.createElement('img');
       img.src = GAME_DATA.BASE + slot.card.img;
       img.alt = slot.card.name;
@@ -1170,7 +1811,20 @@ function renderCrewMarket() {
       res.textContent = ICONS[slot.card.resource]?.sym || '?';
       res.style.color = ICONS[slot.card.resource]?.col || '#fff';
       div.appendChild(img); div.appendChild(res);
-      div.onclick = () => showCardInfoModal(slot.card);
+      if(uiMode === 'recruit-take') {
+        const canSelect = slot.slot === recruitTakeCtx.color || recruitTakeCtx.freeAny || recruitTakeCtx.tokenPickActive;
+        if(canSelect) {
+          const cost = document.createElement('div');
+          cost.className = 'cmc-recruit-cost';
+          cost.textContent = getRecruitPickUseToken(slot) ? '⚡1' : '免費';
+          div.appendChild(cost);
+          div.onclick = () => showRecruitMarketConfirm(slot);
+        } else {
+          div.onclick = () => showCardInfoModal(slot.card);
+        }
+      } else {
+        div.onclick = () => showCardInfoModal(slot.card);
+      }
     } else {
       const emptyTxt = document.createElement('div');
       emptyTxt.className = 'cmc-empty';
@@ -1239,7 +1893,7 @@ function renderDestRow(containerId, cards, typeClass) {
       <div class="dmcard-pts-row">
         ${card.points>0?`<span class="dmcard-pts">${card.points}</span><span class="dmcard-pts-lbl">分</span>`:'<span style="font-size:.6rem;color:#888">見獎勵</span>'}
       </div>
-      <div class="dmcard-cost">費用：同色 4 張（⚡可代替）</div>
+      <div class="dmcard-cost">費用：${getCostDesc(card)}（⚡可代替）</div>
       <div class="dmcard-rewards">${rewards}</div>
       <div class="dmcard-trade">${tradeRow}</div>
     `;
@@ -1267,9 +1921,7 @@ function renderShipTile(prefix, tileId) {
   // Render the ship plate background image
   const imgEl = document.getElementById(`${prefix}-ship-img`);
   if(imgEl) {
-    const m = tileId.match(/side_\d+/);
-    const sideNum = m ? m[0] : 'side_001';
-    imgEl.src = `component_images/knarr_core_ship_tile_${sideNum}.png`;
+    imgEl.src = getShipTileImageSrc(tileId);
   }
 }
 
@@ -1283,7 +1935,13 @@ function renderRepTrack(prefix, rep) {
     if(milestones[i]) d.classList.add('milestone');
     if(i<rep) d.classList.add('filled');
     if(i===rep) d.classList.add('current');
-    d.title = `格${i}${milestones[i]?` (+${milestones[i]}分/回合)`:''} — 當前:${rep}`;
+    if(milestones[i]) {
+      const score = document.createElement('span');
+      score.className = 'rep-score-label';
+      score.textContent = `+${milestones[i]}`;
+      d.appendChild(score);
+    }
+    d.title = `格${i}${milestones[i]?`：每回合開始 +${milestones[i]}分`:''} — 當前:${rep}`;
     el.appendChild(d);
   }
 }
@@ -1310,6 +1968,8 @@ function updateActionBtns() {
   let phaseTxt = '';
   if(!isMyTurn) phaseTxt = '電腦回合中';
   else if(uiMode==='recruit') phaseTxt = '招募模式';
+  else if(uiMode==='recruit-take') phaseTxt = '招募：拿公開船員';
+  else if(uiMode==='trade') phaseTxt = '貿易：選銀臂鐲';
   else if(uiMode==='explore-dest') phaseTxt = '探索：選目的地';
   else if(uiMode==='explore-pay') phaseTxt = '探索：選費用';
   else if(G.mainActionDone && !p.tradedThisTurn) phaseTxt = '可行後貿易';
@@ -1335,6 +1995,7 @@ function clearHighlights() { renderHand(G.players.human); renderDestMarket(); re
 
 // ─── Info Modals ──────────────────────────────────────────────────────
 function showCardInfoModal(card) {
+  document.getElementById('modal-card-info').classList.remove('dest-modal', 'relic-modal');
   const img = document.getElementById('modal-card-img');
   img.src = GAME_DATA.BASE + card.img;
   img.alt = card.name;
@@ -1344,12 +2005,15 @@ function showCardInfoModal(card) {
   document.getElementById('modal-card-body').innerHTML = `
     <p>顏色：<span style="color:${COLOR_TEXT[card.color]}">${COLOR_ZH[card.color]}色</span></p>
     <p>資源圖標：<span style="color:${ICONS[card.resource]?.col}">${ICONS[card.resource]?.sym}</span> ${ICONS[card.resource]?.label}</p>
-    <p style="margin-top:6px;font-size:.75rem;color:#706045">招募後取得所在縱列所有可見資源，並補充1張同色手牌。</p>
+    <p style="margin-top:6px;font-size:.75rem;color:#706045">招募後取得所在縱列所有可見資源，並拿取對應顏色格位的公開船員；也可花費招募標記改選。</p>
   `;
   showModal('modal-card-info');
 }
 
 function showDestInfoModal(dest) {
+  const modal = document.getElementById('modal-card-info');
+  modal.classList.remove('relic-modal');
+  modal.classList.add('dest-modal');
   const img = document.getElementById('modal-card-img');
   img.src = GAME_DATA.BASE + dest.img;
   img.alt = dest.name;
@@ -1360,9 +2024,36 @@ function showDestInfoModal(dest) {
   const trade = (dest.trade_cols||[]).map((t,i)=>t?`<span>${['左','中','右'][i]}欄：<span style="color:${ICONS[t]?.col}">${ICONS[t]?.sym} ${ICONS[t]?.label}</span></span>`:null).filter(Boolean).join('  ');
   document.getElementById('modal-card-body').innerHTML = `
     ${dest.points>0?`<p>分數：<strong style="color:#f0cc6e">${dest.points}</strong> 分</p>`:''}
-    <p>探索費用：<strong style="color:#f0cc6e">${getCostDesc(dest)}</strong>（⚡招募標記可各代替1張）</p>
+    <p>探索費用：<strong style="color:#f0cc6e">${getCostDesc(dest)}</strong>（從船員區域支付；⚡招募標記可各代替1張）</p>
     <p style="margin-top:6px">右上角獎勵：${rwd||'無'}</p>
     ${trade?`<p style="margin-top:4px">貿易欄：${trade}</p>`:''}
+  `;
+  showModal('modal-card-info');
+}
+
+function showRelicInfoModal(relic) {
+  if(!relic) return;
+  const modal = document.getElementById('modal-card-info');
+  modal.classList.remove('dest-modal');
+  modal.classList.add('relic-modal');
+
+  const detail = RELIC_RULE_DETAILS[relic.id] || {};
+  const img = document.getElementById('modal-card-img');
+  img.src = GAME_DATA.BASE + relic.img;
+  img.alt = relic.name;
+  img.style.display = 'block';
+  img.onerror = () => { img.style.display = 'none'; };
+
+  document.getElementById('modal-card-name').textContent = `聖物：${relic.name}`;
+  document.getElementById('modal-card-body').innerHTML = `
+    <div class="relic-detail-list">
+      <p><strong>觸發時機：</strong>${detail.timing || '依聖物卡文字檢查。'}</p>
+      <p><strong>觸發條件：</strong>${detail.condition || relic.condition || '未記錄。'}</p>
+      <p><strong>獲得獎勵：</strong>${detail.effect || relic.effect || '未記錄。'}</p>
+      <p><strong>使用方式：</strong>${detail.use || '觸發時依聖物卡效果處理。'}</p>
+      <p><strong>規則確認：</strong>${detail.compliance || '已依目前資料文字顯示；尚未標記自動化程度。'}</p>
+      ${G?.relicState?.lastTrigger ? `<p><strong>本局最近觸發：</strong>${G.relicState.lastTrigger}</p>` : ''}
+    </div>
   `;
   showModal('modal-card-info');
 }
@@ -1394,6 +2085,68 @@ function endGame() {
 
 // ─── Helpers ──────────────────────────────────────────────────────────
 function repScore(pos) { let s=0; REP_THRESH.forEach(t=>{ if(pos>=t.p)s=t.s; }); return s; }
+function hasRelic(id) { return G?.activeRelicId === id; }
+function noteRelicTrigger(text) {
+  if(!G?.activeRelic || !G?.relicState) return;
+  G.relicState.lastTrigger = `觸發：${text}`;
+  renderActiveRelic();
+  const el = document.getElementById('active-relic-display');
+  if(el) {
+    el.classList.add('relic-pulse');
+    setTimeout(()=>el.classList.remove('relic-pulse'), 1400);
+  }
+}
+function completedCrewRows(player) {
+  const maxRows = Math.max(...COLORS.map(c=>player.crew[c].length), 0);
+  const rows = [];
+  for(let i=0; i<maxRows; i++) {
+    if(COLORS.every(c=>player.crew[c].length > i)) rows.push(i);
+  }
+  return rows;
+}
+function checkAmulet(pid, src) {
+  if(!hasRelic('knarr_relic_amulet')) return;
+  const p = G.players[pid];
+  const rows = completedCrewRows(p);
+  const tracked = G.relicState?.amuletRows?.[pid] || [];
+  rows.forEach(row => {
+    if(tracked.includes(row)) return;
+    tracked.push(row);
+    applyRes(pid,'silver_bracelet',1,src);
+    applyRes(pid,'recruit_token',1,src);
+    applyRes(pid,'reputation',1,src);
+    noteRelicTrigger('護身符：+1 銀臂鐲、+1 招募標記、+1 聲望');
+    addLog(`${p.name} 護身符：完成第 ${row+1} 條 5 色橫排`, 'important');
+  });
+  G.relicState.amuletRows[pid] = tracked;
+}
+function checkWindsock(pid) {
+  if(!hasRelic('knarr_relic_windsock')) return;
+  const p = G.players[pid];
+  const rows = completedCrewRows(p);
+  const tracked = G.relicState?.windsockRows?.[pid] || [];
+  const newRows = rows.filter(row => !tracked.includes(row));
+  if(!newRows.length) return;
+
+  newRows.forEach(row => tracked.push(row));
+  G.relicState.windsockRows[pid] = tracked;
+
+  if(pid === 'human') {
+    noteRelicTrigger('風向標：可立即執行一次探索');
+    addLog(`${p.name} 風向標：完成 5 色橫排，可立即探索`, 'important');
+    showRelicActionModal(
+      '風向標觸發',
+      '你完成了 1 條 5 色橫排。可以立即執行一次探索，仍需從船員區域支付目的地探索費用，招募標記可代替船員。',
+      '立即探索',
+      () => startRelicExplore('風向標')
+    );
+    return;
+  }
+
+  noteRelicTrigger('風向標：電腦立即探索');
+  addLog(`${p.name} 風向標：完成 5 色橫排，嘗試立即探索`, 'important');
+  if(!aiExplore()) addLog('電腦風向標：目前無法支付探索費，略過', '');
+}
 function iLabel(id) { return ICONS[id]?.label||id; }
 function findDest(id) {
   if(!id) return null;
@@ -1403,6 +2156,8 @@ function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.
 function clearExploreCtx() { exploreCtx={destId:null,destIsReserved:false,paidCards:[],tokensUsed:0}; }
 function closeTradeInline() { hideElem('trade-inline'); }
 function closeExploreInline() { hideElem('explore-inline'); }
+function closeRecruitInline() { hideElem('recruit-inline'); }
+function closeRecruitTokenInline() { hideElem('recruit-token-inline'); }
 function setPhase(ph) { G.phase=ph; }
 function updateDeckBadges() {
   document.getElementById('crew-deck-count').textContent = G.zones.crewDeck.length;
@@ -1443,7 +2198,13 @@ function showScreen(id) { document.querySelectorAll('.screen').forEach(s=>s.clas
 function showModal(id) { document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 function showRules() { showModal('modal-rules'); }
-function toggleLog() { document.getElementById('event-log').classList.toggle('hidden'); }
+function toggleLog() {
+  const el = document.getElementById('event-log');
+  if(!el) return;
+  el.scrollIntoView({block:'nearest'});
+  el.classList.add('log-flash');
+  setTimeout(()=>el.classList.remove('log-flash'), 1000);
+}
 function showElem(id) { document.getElementById(id).classList.remove('hidden'); }
 function hideElem(id) { document.getElementById(id).classList.add('hidden'); }
 function showHide(id, show) { const el=document.getElementById(id); if(el){ if(show)el.classList.remove('hidden'); else el.classList.add('hidden'); } }
